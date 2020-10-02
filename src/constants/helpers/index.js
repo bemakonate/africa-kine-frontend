@@ -23,6 +23,14 @@ export const truncate = (str, n) => {
 };
 
 
+export const range = (start, end) => {
+    var ans = [];
+    for (let i = start; i <= end; i++) {
+        ans.push(i);
+    }
+    return ans;
+}
+
 //FORMAT PHONE NUMBER
 const isNumericInput = (event) => {
     const key = event.keyCode;

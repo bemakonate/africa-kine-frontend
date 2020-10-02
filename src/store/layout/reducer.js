@@ -2,7 +2,7 @@ import { updatedObj } from '../../constants/helpers';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    isProductModalOpen: true,
+    isProductModalOpen: false,
     productModalItem: null,
 }
 
@@ -11,7 +11,8 @@ const openProductModal = (state, action) => updatedObj(state, {
 })
 
 const closeProductModal = (state, action) => updatedObj(state, {
-    isProductModalOpen: false
+    isProductModalOpen: false,
+    productModalItem: null,
 })
 
 
