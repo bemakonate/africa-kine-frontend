@@ -1,9 +1,9 @@
-// import cartReducer from './cart/reducer';
+import orderReducer from './order/reducer';
 import layoutReducer from './layout/reducer';
 import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
-    // cart: cartReducer,
+    order: orderReducer,
     layout: layoutReducer,
 })
 

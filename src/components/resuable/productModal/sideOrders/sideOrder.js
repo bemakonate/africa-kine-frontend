@@ -5,6 +5,8 @@ const SideOrder = (props) => {
     const [showAllSideOrders, setShowAllSideOrders] = useState(true);
     let selectedSideOrderJSX = 'Not Choosen';
 
+    const noneSideOrder = { name: 'None', extraPrice: 0 }
+
 
     useEffect(() => {
         if (props.getSelectedSideOrder) {
@@ -37,6 +39,7 @@ const SideOrder = (props) => {
                 const extraPriceJSX = sideOrder.extraPrice > 0 ? <span>+${sideOrder.extraPrice}</span> : null;
                 return <li onClick={() => sideOrderClicked(sideOrder)} key={sideOrder.id}>{sideOrder.name} {extraPriceJSX}</li>
             })}
+            <li onClick={() => sideOrderClicked(noneSideOrder)}>None</li>
 
         </ul>
     )

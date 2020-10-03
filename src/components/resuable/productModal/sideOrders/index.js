@@ -6,9 +6,12 @@ const SideOrders = (props) => {
     const sideOrderNums = range(1, props.qty);
 
     const [sideOrders, setSideOrders] = useState([]);
-    console.log(sideOrders);
 
-
+    useEffect(() => {
+        if (props.getSelectedSideOrders) {
+            props.getSelectedSideOrders(sideOrders);
+        }
+    }, [sideOrders])
 
     //Create the side order object for each quantity
     useEffect(() => {
@@ -38,7 +41,6 @@ const SideOrders = (props) => {
 
     const getSelectedSideOrder = ({ seq, data }) => {
         //updated side orders state here
-        console.log(seq);
         const newSideOrders = [...sideOrders].map(sideOrder => {
             if (sideOrder.seq === seq) {
                 return {
@@ -56,8 +58,6 @@ const SideOrders = (props) => {
     return sideOrderNums.map(sideOrderSeq => {
         return (
             <SideOrder
-
-                // sideOrderSeq={sideOrderSeq}
                 key={sideOrderSeq}
                 seq={sideOrderSeq}
                 sideOrderItems={props.sideOrderItems}

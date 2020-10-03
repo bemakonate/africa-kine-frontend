@@ -4,6 +4,7 @@ export default [
         name: 'Chicken dibi',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, velit.',
         price: 10,
+        sideOrdersPerQty: 2,
         sideOrders: [
             {
                 id: 101,
@@ -22,6 +23,7 @@ export default [
         name: 'Neme',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, velit.',
         price: 0,
+        sideOrdersPerQty: 1,
         sideOrders: [
             {
                 id: 101,

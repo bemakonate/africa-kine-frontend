@@ -2,16 +2,54 @@ import ItemQty from '../itemQuantity';
 import React, { useState } from 'react';
 import SideOrders from './sideOrders';
 
+import { connect } from 'react-redux';
+import * as layoutActions from '../../../store/layout/actions';
+import * as orderActions from '../../../store/order/actions';
+
 const productModal = (props) => {
 
-    const { name, description, price, sideOrders } = props.product;
+    const { name, description, price, sideOrders, sideOrdersPerQty } = props.product;
+    const { addToCart, closeProductModal } = props;
+
     const [itemQuantity, setItemQuantity] = useState(props.qty);
+    const [selectedSideOrders, setSelectedSideOrders] = useState(null);
+    const [speicalRequestVal, setSpeicalRequestVal] = useState('');
+
 
     if (!props.product) {
         return <p>product must be passed</p>
     }
 
+    const getSelectedOrders = (data) => setSelectedSideOrders(data);
+    const getSpecialRequest = (e) => setSpeicalRequestVal(e.target.value);
 
+    const addOrderToCart = () => {
+        //Make sure that each side order is determined
+        let isAllSideOrdersSelected = true;
+        selectedSideOrders.forEach(selectedSideOrder => {
+            if (!selectedSideOrder.data) {
+                isAllSideOrdersSelected = false;
+            }
+        })
+
+        if (!isAllSideOrdersSelected) {
+            alert("Must select all side orders given");
+            return null;
+        }
+        const orderData = {
+            product: props.product,
+            qty: itemQuantity,
+            selectedSideOrders: selectedSideOrders,
+            specialRequest: speicalRequestVal,
+        }
+
+        //Make sure side order quantity is right amount
+        //Add the product to the cart
+        addToCart(orderData);
+        closeProductModal();
+        alert("Item was added to cart")
+
+    }
     return (
         <div className="modal">
             <div className="close" onClick={props.close}>X</div>
@@ -31,12 +69,13 @@ const productModal = (props) => {
             </div>
 
             <div className="side-order-container">
-                <SideOrders qty={itemQuantity} sideOrderItems={sideOrders} />
+                <p>You can have {sideOrdersPerQty} side order(s) per quantity</p>
+                <SideOrders qty={itemQuantity * sideOrdersPerQty} sideOrderItems={sideOrders} getSelectedSideOrders={getSelectedOrders} />
             </div>
 
             <div className="special-request">
                 <p>Special Request:</p>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <textarea name="" onChange={getSpecialRequest}></textarea>
             </div>
 
 
@@ -45,7 +84,7 @@ const productModal = (props) => {
                 <p>${price * itemQuantity}</p>
             </div>
 
-            <button>Add To Cart</button>
+            <button onClick={addOrderToCart}>Add To Cart</button>
             <style jsx>{`
         .modal{
             border:1px solid black;
@@ -56,4 +95,11 @@ const productModal = (props) => {
     )
 }
 
-export default productModal
+const mapDispatchToProps = dispatch => {
+    return {
+        addToCart: (cartItem) => dispatch(orderActions.addToCart(cartItem)),
+        closeProductModal: () => dispatch(layoutActions.closeProductModal()),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(productModal)
