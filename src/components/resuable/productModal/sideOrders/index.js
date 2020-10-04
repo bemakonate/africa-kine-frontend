@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react';
 import { range } from '../../../../constants/helpers';
 
 const SideOrders = (props) => {
-    const sideOrderNums = range(1, props.qty);
 
-    const [sideOrders, setSideOrders] = useState([]);
+    const [sideOrders, setSideOrders] = useState(props.selectedSideOrders || []);
 
     useEffect(() => {
         if (props.getSelectedSideOrders) {
@@ -55,12 +54,15 @@ const SideOrders = (props) => {
     }
 
 
-    return sideOrderNums.map(sideOrderSeq => {
+
+    return sideOrders.map(sideOrder => {
+        const sideOrderSeq = sideOrder.seq;
         return (
             <SideOrder
                 key={sideOrderSeq}
                 seq={sideOrderSeq}
                 sideOrderItems={props.sideOrderItems}
+                selectedSideOrder={sideOrder.data}
                 getSelectedSideOrder={(data) => getSelectedSideOrder({ seq: sideOrderSeq, data })}
             />
         )

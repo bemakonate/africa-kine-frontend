@@ -12,11 +12,12 @@ export const closeProductModal = () => {
     }
 }
 
-export const setProductModalItem = ({ product }) => {
+
+export const setProductModalData = ({ props }) => {
     return {
-        type: actionTypes.SET_PRODUCT_MODAL_ITEM,
+        type: actionTypes.SET_PRODUCT_MODAL_DATA,
         payload: {
-            product
+            props
         }
     }
 }

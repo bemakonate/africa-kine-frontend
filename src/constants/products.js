@@ -3,7 +3,7 @@ export default [
         id: 1,
         name: 'Chicken dibi',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, velit.',
-        price: 10,
+        price: 20,
         sideOrdersPerQty: 2,
         sideOrders: [
             {
@@ -22,7 +22,7 @@ export default [
         id: 2,
         name: 'Neme',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, velit.',
-        price: 0,
+        price: 10,
         sideOrdersPerQty: 1,
         sideOrders: [
             {

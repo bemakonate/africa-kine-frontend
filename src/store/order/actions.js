@@ -6,3 +6,29 @@ export const addToCart = (cartItem) => {
         payload: { cartItem }
     }
 }
+
+export const removeFromCart = (index) => {
+    return {
+        type: actionTypes.REMOVE_FROM_CART,
+        payload: { index }
+    }
+}
+
+export const editCartItem = ({ index, newCartItem }) => {
+    return {
+        type: actionTypes.EDIT_CART_ITEM,
+        payload: {
+            index,
+            newCartItem
+        }
+    }
+}
+
+export const updateUserCart = (newCart) => {
+    return {
+        type: actionTypes.UPDATE_USER_CART,
+        payload: {
+            newCart
+        }
+    }
+}

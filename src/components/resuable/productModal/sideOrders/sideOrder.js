@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
 const SideOrder = (props) => {
-    const [selectedSideOrder, setSelectedSideOrder] = useState(null);
+    const [selectedSideOrder, setSelectedSideOrder] = useState(props.selectedSideOrder || null);
     const [showAllSideOrders, setShowAllSideOrders] = useState(true);
     let selectedSideOrderJSX = 'Not Choosen';
 
     const noneSideOrder = { name: 'None', extraPrice: 0 }
 
+    useEffect(() => {
+        if (selectedSideOrder) {
+            setShowAllSideOrders(false);
+        }
+    }, [])
 
     useEffect(() => {
         if (props.getSelectedSideOrder) {
@@ -47,8 +52,8 @@ const SideOrder = (props) => {
     return (
         <div>
             <p>Side Order({props.seq})</p>
-            {!showAllSideOrders && selectedSideOrderJSX}
-            <button onClick={toggleShowAllSideOrders}>{showAllSideOrders ? 'down' : 'up'}</button>
+            {selectedSideOrderJSX}
+            <button onClick={toggleShowAllSideOrders}>{showAllSideOrders ? 'up' : 'down'}</button>
             {showAllSideOrders && sideOrdersListJSX}
         </div>
     )

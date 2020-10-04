@@ -1,6 +1,7 @@
 import ItemQty from '../itemQuantity';
 import React, { useState } from 'react';
 import SideOrders from './sideOrders';
+import { getSingleOrderTotal } from '../../../constants/helpers/custom-helpers';
 
 import { connect } from 'react-redux';
 import * as layoutActions from '../../../store/layout/actions';
@@ -8,23 +9,26 @@ import * as orderActions from '../../../store/order/actions';
 
 const productModal = (props) => {
 
+
+    if (!props.product) {
+        return <p>product prop must be passed</p>
+    }
+
+
     const { name, description, price, sideOrders, sideOrdersPerQty } = props.product;
-    const { addToCart, closeProductModal } = props;
+    const { addToCart, closeProductModal, editCartItem } = props;
 
     const [itemQuantity, setItemQuantity] = useState(props.qty);
     const [selectedSideOrders, setSelectedSideOrders] = useState(null);
-    const [speicalRequestVal, setSpeicalRequestVal] = useState('');
+    const [speicalRequestVal, setSpeicalRequestVal] = useState(props.specialRequest || '');
 
-
-    if (!props.product) {
-        return <p>product must be passed</p>
-    }
 
     const getSelectedOrders = (data) => setSelectedSideOrders(data);
     const getSpecialRequest = (e) => setSpeicalRequestVal(e.target.value);
+    const singleOrderTotal = getSingleOrderTotal({ price: price, qty: itemQuantity, selectedSideOrders: selectedSideOrders })
 
-    const addOrderToCart = () => {
-        //Make sure that each side order is determined
+
+    const validatedOrder = () => {
         let isAllSideOrdersSelected = true;
         selectedSideOrders.forEach(selectedSideOrder => {
             if (!selectedSideOrder.data) {
@@ -36,6 +40,7 @@ const productModal = (props) => {
             alert("Must select all side orders given");
             return null;
         }
+
         const orderData = {
             product: props.product,
             qty: itemQuantity,
@@ -43,13 +48,28 @@ const productModal = (props) => {
             specialRequest: speicalRequestVal,
         }
 
-        //Make sure side order quantity is right amount
-        //Add the product to the cart
-        addToCart(orderData);
-        closeProductModal();
-        alert("Item was added to cart")
+        return orderData;
+    }
+
+    const addOrderToCart = () => {
+        const orderData = validatedOrder();
+        if (orderData) {
+            addToCart(orderData);
+            closeProductModal();
+            alert("Item was added to cart")
+        }
 
     }
+
+    const changeProductOrder = () => {
+        const orderData = validatedOrder();
+        if (orderData) {
+            editCartItem({ index: props.cartIndex, newCartItem: orderData });
+            closeProductModal();
+            alert("Saved item to cart");
+        }
+    }
+
     return (
         <div className="modal">
             <div className="close" onClick={props.close}>X</div>
@@ -59,32 +79,38 @@ const productModal = (props) => {
                 <div>${price}</div>
             </header>
 
-
-
             <p>{description}</p>
 
             <div>
                 <p>Quantity: </p>
-                <ItemQty defualtNum={props.qty} getQuantity={setItemQuantity} />
+                <ItemQty defaultNum={props.qty} getQuantity={setItemQuantity} />
             </div>
 
             <div className="side-order-container">
                 <p>You can have {sideOrdersPerQty} side order(s) per quantity</p>
-                <SideOrders qty={itemQuantity * sideOrdersPerQty} sideOrderItems={sideOrders} getSelectedSideOrders={getSelectedOrders} />
+                <SideOrders
+                    qty={itemQuantity * sideOrdersPerQty}
+                    sideOrderItems={sideOrders}
+                    getSelectedSideOrders={getSelectedOrders}
+                    selectedSideOrders={props.selectedSideOrders}
+                />
             </div>
 
             <div className="special-request">
                 <p>Special Request:</p>
-                <textarea name="" onChange={getSpecialRequest}></textarea>
+                <textarea name="" onChange={getSpecialRequest} defaultValue={speicalRequestVal}></textarea>
             </div>
 
 
             <div className="modal-order-subtotal">
                 <p>Order Subtotal:</p>
-                <p>${price * itemQuantity}</p>
+                <p>${singleOrderTotal}</p>
             </div>
 
-            <button onClick={addOrderToCart}>Add To Cart</button>
+            {!props.editMode && <button onClick={addOrderToCart}>Add To Cart</button>}
+            {props.editMode && <button onClick={changeProductOrder}>Save Changes</button>}
+
+            <button onClick={closeProductModal}>Cancel</button>
             <style jsx>{`
         .modal{
             border:1px solid black;
@@ -98,6 +124,7 @@ const productModal = (props) => {
 const mapDispatchToProps = dispatch => {
     return {
         addToCart: (cartItem) => dispatch(orderActions.addToCart(cartItem)),
+        editCartItem: ({ index, newCartItem }) => dispatch(orderActions.editCartItem({ index, newCartItem })),
         closeProductModal: () => dispatch(layoutActions.closeProductModal()),
     }
 }

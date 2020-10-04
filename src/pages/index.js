@@ -14,7 +14,7 @@ const index = (props) => {
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <div>${product.price}</div>
-          <button onClick={() => props.openProductModal({ product })}>Order Now</button>
+          <button onClick={() => props.openProductModal({ props: { product } })}>Order Now</button>
         </div>
       ))}
 
@@ -24,7 +24,7 @@ const index = (props) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openProductModal: ({ product }) => dispatch(asyncActions.openProductModal({ product })),
+    openProductModal: (data) => dispatch(asyncActions.openProductModal(data)),
   }
 }
 

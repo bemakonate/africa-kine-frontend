@@ -1,16 +1,22 @@
 import React from 'react'
-import Modal from '../resuable/productModal';
+import ProductModal from '../resuable/productModal';
 import { connect } from 'react-redux';
 import * as layoutActions from '../../store/layout/actions';
+import Link from 'next/link';
 
 const Layout = (props) => {
 
-    const { isProductModalOpen, productModalItem, closeProductModal } = props;
+    const { isProductModalOpen, productModalProps, closeProductModal } = props;
 
     return (
         <>
-            {/* <nav>Navbar</nav> */}
-            {isProductModalOpen ? <Modal product={productModalItem} close={closeProductModal} /> : null}
+            <nav>
+                <ul>
+                    <li><Link href="/"><a>Home</a></Link></li>
+                    <li><Link href="/cart"><a>Cart</a></Link></li>
+                </ul>
+            </nav>
+            {isProductModalOpen ? <ProductModal {...productModalProps} close={closeProductModal} /> : null}
             {props.children}
             {/* <footer>Footer</footer> */}
         </>
@@ -20,7 +26,7 @@ const Layout = (props) => {
 const mapStateToProps = state => {
     return {
         isProductModalOpen: state.layout.isProductModalOpen,
-        productModalItem: state.layout.productModalItem,
+        productModalProps: state.layout.productModalData.props,
     }
 }
 
