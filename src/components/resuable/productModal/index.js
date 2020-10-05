@@ -30,11 +30,13 @@ const productModal = (props) => {
 
     const validatedOrder = () => {
         let isAllSideOrdersSelected = true;
-        selectedSideOrders.forEach(selectedSideOrder => {
-            if (!selectedSideOrder.data) {
-                isAllSideOrdersSelected = false;
-            }
-        })
+        if (selectedSideOrders) {
+            selectedSideOrders.forEach(selectedSideOrder => {
+                if (!selectedSideOrder.data) {
+                    isAllSideOrdersSelected = false;
+                }
+            })
+        }
 
         if (!isAllSideOrdersSelected) {
             alert("Must select all side orders given");
@@ -86,7 +88,7 @@ const productModal = (props) => {
                 <ItemQty defaultNum={props.qty} getQuantity={setItemQuantity} />
             </div>
 
-            <div className="side-order-container">
+            {sideOrdersPerQty ? <div className="side-order-container">
                 <p>You can have {sideOrdersPerQty} side order(s) per quantity</p>
                 <SideOrders
                     qty={itemQuantity * sideOrdersPerQty}
@@ -94,7 +96,7 @@ const productModal = (props) => {
                     getSelectedSideOrders={getSelectedOrders}
                     selectedSideOrders={props.selectedSideOrders}
                 />
-            </div>
+            </div> : <p>No Side Orders Available</p>}
 
             <div className="special-request">
                 <p>Special Request:</p>

@@ -35,6 +35,15 @@ export default [
                 name: 'Rice',
                 extraPrice: 3.5,
             },
-        ]
+        ],
+
     },
+    {
+        id: 3,
+        name: 'Hamburger',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, velit.',
+        price: 6,
+        sideOrdersPerQty: 0,
+        sideOrders: [],
+    }
 ]
