@@ -32,8 +32,8 @@ const CartItem = (props) => {
         <div>
             <h3>{cartItem.product.name}</h3>
             <p>Qty: {cartItem.qty}</p>
-            {/* <p>Price: {cartItem.product.price}</p> */}
-            <p>Price: ${getSingleOrderTotal({
+            <p>Single Price: ${cartItem.product.price}</p>
+            <p>Total: ${getSingleOrderTotal({
                 price: cartItem.product.price,
                 qty: cartItem.qty,
                 selectedSideProducts: cartItem.selectedSideProducts
@@ -42,7 +42,9 @@ const CartItem = (props) => {
             <p>Side Products: </p>
             {(cartItem.selectedSideProducts && cartItem.product.sideProducts.length > 0) && <ul>
                 {cartItem.selectedSideProducts.map((selectedSideProduct, index) => {
-                    return <li key={`sideOrder-${index}`}>{selectedSideProduct.data.name}</li>
+                    const additionalCost =
+                        selectedSideProduct.data.additionalCost ? <span>+${selectedSideProduct.data.additionalCost}</span> : null
+                    return <li key={`sideOrder-${index}`}>{selectedSideProduct.data.name} {additionalCost}</li>
                 })}
             </ul>}
             {!props.fixed && controlBtns}

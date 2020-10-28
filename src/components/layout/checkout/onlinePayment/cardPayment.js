@@ -62,7 +62,7 @@ const CardPayment = () => {
         }
 
         try {
-            const res = await axios.post('/orders', customerOrderDetails);
+            const res = await axios.post('restaurant-settings/orders/create', customerOrderDetails);
             setCardBeingProcessed(false);
             setSuccess(true);
             setCreatedOrder(res.data);
