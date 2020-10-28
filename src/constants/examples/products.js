@@ -9,12 +9,12 @@ export default [
             {
                 id: 101,
                 name: 'Alako',
-                extraPrice: 0,
+                addedCost: 0,
             },
             {
                 id: 102,
                 name: 'Rice',
-                extraPrice: 3.5,
+                addedCost: 3.5,
             },
         ]
     },
@@ -28,12 +28,12 @@ export default [
             {
                 id: 101,
                 name: 'Alako',
-                extraPrice: 0,
+                addedCost: 0,
             },
             {
                 id: 102,
                 name: 'Rice',
-                extraPrice: 3.5,
+                addedCost: 3.5,
             },
         ],
 

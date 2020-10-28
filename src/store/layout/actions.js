@@ -22,3 +22,11 @@ export const setProductModalData = ({ props }) => {
     }
 }
 
+
+export const addConfirmOrderPageData = (data) => {
+    return {
+        type: actionTypes.ADD_CONFIRM_ORDER_DATA,
+        payload: { data }
+    }
+
+}

@@ -9,12 +9,6 @@ const Receipt = ({ styleClass, serverSummary }) => {
                         <p className="receipt-row-label">Subtotal:</p>
                         <p className="receipt-row-detail">{serverSummary.subtotal}</p>
                     </div>
-                    <div className="receipt-row">
-                        <p className="receipt-row-label">Shipping:</p>
-                        <p className="receipt-row-detail">
-                            {serverSummary.shouldPayShipping ? serverSummary.shipping : "Free"}
-                        </p>
-                    </div>
 
                     <div className="receipt-row">
                         <p className="receipt-row-label">Estimated Tax:</p>

@@ -1,6 +1,6 @@
 import ItemQty from '../itemQuantity';
 import React, { useState } from 'react';
-import SideOrders from './sideOrders';
+import SideProductOptions from './sideProductOptions';
 import { getSingleOrderTotal } from '../../../constants/helpers/custom-helpers';
 
 import { connect } from 'react-redux';
@@ -15,24 +15,24 @@ const productModal = (props) => {
     }
 
 
-    const { name, description, price, sideOrders, sideOrdersPerQty } = props.product;
+    const { name, description, price, sideProducts, sideProductsPerQuantity } = props.product;
     const { addToCart, closeProductModal, editCartItem } = props;
 
     const [itemQuantity, setItemQuantity] = useState(props.qty);
-    const [selectedSideOrders, setSelectedSideOrders] = useState(null);
+    const [selectedSideProducts, setSelectedProducts] = useState(null);
     const [speicalRequestVal, setSpeicalRequestVal] = useState(props.specialRequest || '');
 
 
-    const getSelectedOrders = (data) => setSelectedSideOrders(data);
+    const getSelectedSideProducts = (data) => setSelectedProducts(data);
     const getSpecialRequest = (e) => setSpeicalRequestVal(e.target.value);
-    const singleOrderTotal = getSingleOrderTotal({ price: price, qty: itemQuantity, selectedSideOrders: selectedSideOrders })
+    const singleOrderTotal = getSingleOrderTotal({ price: price, qty: itemQuantity, selectedSideProducts: selectedSideProducts })
 
 
     const validatedOrder = () => {
         let isAllSideOrdersSelected = true;
-        if (selectedSideOrders) {
-            selectedSideOrders.forEach(selectedSideOrder => {
-                if (!selectedSideOrder.data) {
+        if (selectedSideProducts) {
+            selectedSideProducts.forEach(selectedSideProduct => {
+                if (!selectedSideProduct.data) {
                     isAllSideOrdersSelected = false;
                 }
             })
@@ -46,7 +46,7 @@ const productModal = (props) => {
         const orderData = {
             product: props.product,
             qty: itemQuantity,
-            selectedSideOrders: selectedSideOrders,
+            selectedSideProducts: selectedSideProducts,
             specialRequest: speicalRequestVal,
         }
 
@@ -88,13 +88,13 @@ const productModal = (props) => {
                 <ItemQty defaultNum={props.qty} getQuantity={setItemQuantity} />
             </div>
 
-            {sideOrdersPerQty ? <div className="side-order-container">
-                <p>You can have {sideOrdersPerQty} side order(s) per quantity</p>
-                <SideOrders
-                    qty={itemQuantity * sideOrdersPerQty}
-                    sideOrderItems={sideOrders}
-                    getSelectedSideOrders={getSelectedOrders}
-                    selectedSideOrders={props.selectedSideOrders}
+            {sideProductsPerQuantity && sideProducts.length > 0 ? <div className="side-order-container">
+                <p>You can have {sideProductsPerQuantity} side order(s) per quantity</p>
+                <SideProductOptions
+                    qty={itemQuantity * sideProductsPerQuantity}
+                    sideProducts={sideProducts}
+                    getSelectedSideProducts={getSelectedSideProducts}
+                    selectedSideProducts={props.selectedSideProducts}
                 />
             </div> : <p>No Side Orders Available</p>}
 

@@ -1,22 +1,35 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as asyncActions from '../../store/asyncActions';
-import * as orderActions from '../../store/order/actions';
-import allProducts from '../../constants/products';
+import { withApollo } from '../../graphql/apollo';
+import { PRODUCTS_QUERY } from '../../graphql/queries';
+import { useQuery } from '@apollo/react-hooks';
 
 const RootElmt = (props) => {
     const { getUserCart, cart } = props;
+    const { data, loading, error } = useQuery(PRODUCTS_QUERY);
+
+    const finishedLoading = !loading && data
 
     useEffect(() => {
-        getUserCart(allProducts);
-    }, [])
+        if (finishedLoading) {
+            if (error) {
+                //show there was an error getting products
+            } else {
+                getUserCart(data.restaurantProducts);
+            }
+        }
+    }, [loading]);
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
+        if (finishedLoading) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
     }, [cart])
 
     return props.children;
 }
+
 
 const mapStateToProps = state => {
     return {
@@ -28,4 +41,6 @@ const mapDispatchToProps = dispatch => {
         getUserCart: (allProducts) => dispatch(asyncActions.getUserCart(allProducts)),
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(RootElmt);
+
+
+export default withApollo(connect(mapStateToProps, mapDispatchToProps)(RootElmt));

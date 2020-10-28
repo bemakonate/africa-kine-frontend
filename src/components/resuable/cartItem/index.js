@@ -18,7 +18,7 @@ const CartItem = (props) => {
                     product: cartItem.product,
                     qty: cartItem.qty,
                     specialRequest: cartItem.specialRequest,
-                    selectedSideOrders: cartItem.selectedSideOrders,
+                    selectedSideProducts: cartItem.selectedSideProducts,
                     cartIndex: index,
                     editMode: true,
                 }
@@ -32,18 +32,19 @@ const CartItem = (props) => {
         <div>
             <h3>{cartItem.product.name}</h3>
             <p>Qty: {cartItem.qty}</p>
-            <p>Price: {cartItem.product.price}</p>
-            <p>Cart Item Price: ${getSingleOrderTotal({
+            {/* <p>Price: {cartItem.product.price}</p> */}
+            <p>Price: ${getSingleOrderTotal({
                 price: cartItem.product.price,
                 qty: cartItem.qty,
-                selectedSideOrders: cartItem.selectedSideOrders
+                selectedSideProducts: cartItem.selectedSideProducts
             })}</p>
-            <p>Description: {cartItem.specialRequest}</p>
-            <ul>
-                {cartItem.selectedSideOrders && cartItem.selectedSideOrders.map((selectedSideOrder, index) => {
-                    return <li key={`sideOrder-${index}`}>{selectedSideOrder.data.name}</li>
+            <p>Special Request: {cartItem.specialRequest}</p>
+            <p>Side Products: </p>
+            {(cartItem.selectedSideProducts && cartItem.product.sideProducts.length > 0) && <ul>
+                {cartItem.selectedSideProducts.map((selectedSideProduct, index) => {
+                    return <li key={`sideOrder-${index}`}>{selectedSideProduct.data.name}</li>
                 })}
-            </ul>
+            </ul>}
             {!props.fixed && controlBtns}
         </div>
     )

@@ -10,7 +10,7 @@ function initStore(preloadedState) {
     return createStore(
         rootReducer,
         preloadedState,
-        composeWithDevTools(applyMiddleware(thunk))
+        process.env.NODE_ENV !== 'production' && composeWithDevTools(applyMiddleware(thunk))
     )
 }
 
