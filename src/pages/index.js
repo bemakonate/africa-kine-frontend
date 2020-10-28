@@ -1,12 +1,13 @@
 import Layout from '../components/layout';
-import testProducts from '../constants/products';
 import * as asyncActions from '../store/asyncActions'
 import { connect } from 'react-redux';
+import initApolloFetch from '../constants/helpers/initApolloFetch';
+import { withApollo } from '../graphql/apollo';
+import { PRODUCTS_QUERY } from '../graphql/queries';
 
+const Home = (props) => {
+  const { restaurantProducts: products } = props.data;
 
-const index = (props) => {
-
-  const products = testProducts;
   return (
     <Layout>
       {products.map(product => (
@@ -20,7 +21,13 @@ const index = (props) => {
 
     </Layout>
   )
+  return null;
 }
+
+Home.getInitialProps = async ctx => {
+  const res = await initApolloFetch(ctx, { query: PRODUCTS_QUERY });
+  return res;
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -28,4 +35,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(index);
+export default withApollo(connect(null, mapDispatchToProps)(Home));

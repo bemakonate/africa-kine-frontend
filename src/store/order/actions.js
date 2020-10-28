@@ -24,11 +24,23 @@ export const editCartItem = ({ index, newCartItem }) => {
     }
 }
 
+export const fetchUserCartDone = () => {
+    return {
+        type: actionTypes.FETCH_USER_CART_DONE,
+    }
+}
+
 export const updateUserCart = (newCart) => {
     return {
         type: actionTypes.UPDATE_USER_CART,
         payload: {
             newCart
         }
+    }
+}
+
+export const clearCart = () => {
+    return {
+        type: actionTypes.CLEAR_CART,
     }
 }

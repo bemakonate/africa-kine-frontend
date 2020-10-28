@@ -3,3 +3,5 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const EDIT_CART_ITEM = "EDIT_CART_ITEM";
 export const GET_USER_CART = "GET_USER_CART";
 export const UPDATE_USER_CART = "UPDATE_USER_CART";
+export const FETCH_USER_CART_DONE = "FETCH_USER_CART_DONE";
+export const CLEAR_CART = "CLEAR_CART";

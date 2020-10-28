@@ -9,12 +9,12 @@ const cart = [{
             {
                 id: 101,
                 name: 'Alako',
-                extraPrice: 0,
+                addedCost: 0,
             },
             {
                 id: 102,
                 name: 'Rice',
-                extraPrice: 3.5,
+                addedCost: 3.5,
             },
         ]
     },
@@ -22,11 +22,11 @@ const cart = [{
     selectedSideOrders: [
         {
             seq: 1,
-            data: { id: 102, name: 'Rice', extraPrice: 3.5 },
+            data: { id: 102, name: 'Rice', addedCost: 3.5 },
         },
         {
             seq: 2,
-            data: { name: "None", extraPrice: 0 },
+            data: { name: "None", addedCost: 0 },
         }
     ],
     specialRequest: "Make it snappy",

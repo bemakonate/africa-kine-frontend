@@ -13,7 +13,7 @@ const formConfig = [
         rules: { required: true },
     },
     {
-        id: 'phoneNum',
+        id: 'phone',
         label: 'Phone Num',
         elmtConfig: {
             onKeyDown: enforceFormat,

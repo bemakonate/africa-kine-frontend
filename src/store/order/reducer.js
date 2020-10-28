@@ -3,6 +3,7 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
     cart: [],
+    fetchingUserCart: true,
 }
 
 const addToCart = (state, action) => updatedObj(state, {
@@ -23,8 +24,17 @@ const editCartItem = (state, action) => updatedObj(state, {
 })
 
 
+const fetchUserCartDone = (state, action) => updatedObj(state, {
+    fetchingUserCart: false,
+})
+
 const updateUserCart = (state, action) => updatedObj(state, {
     cart: action.payload.newCart,
+})
+
+
+const clearCart = (state, action) => updatedObj(state, {
+    cart: [],
 })
 
 const reducer = (state = initialState, action) => {
@@ -33,6 +43,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.REMOVE_FROM_CART: return removeFromCart(state, action);
         case actionTypes.EDIT_CART_ITEM: return editCartItem(state, action);
         case actionTypes.UPDATE_USER_CART: return updateUserCart(state, action);
+        case actionTypes.FETCH_USER_CART_DONE: return fetchUserCartDone(state, action);
+        case actionTypes.CLEAR_CART: return clearCart(state, action);
         default:
             return state
     }

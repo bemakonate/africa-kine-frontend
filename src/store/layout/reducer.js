@@ -5,7 +5,8 @@ const initialState = {
     isProductModalOpen: false,
     productModalData: {
         props: null,
-    }
+    },
+    confirmOrderPageData: null,
 }
 
 const openProductModal = (state, action) => updatedObj(state, {
@@ -19,7 +20,11 @@ const closeProductModal = (state, action) => updatedObj(state, {
 
 
 const setProductModalData = (state, action) => updatedObj(state, {
-    productModalData: updatedObj(state, { props: action.payload.props })
+    productModalData: updatedObj(state.productModalData, { props: action.payload.props })
+})
+
+const addConfirmOrderPageData = (state, action) => updatedObj(state, {
+    confirmOrderPageData: action.payload.data,
 })
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +32,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.OPEN_PRODUCT_MODAL: return openProductModal(state, action);
         case actionTypes.CLOSE_PRODUCT_MODAL: return closeProductModal(state, action);
         case actionTypes.SET_PRODUCT_MODAL_DATA: return setProductModalData(state, action);
+        case actionTypes.ADD_CONFIRM_ORDER_DATA: return addConfirmOrderPageData(state, action);
         default:
             return state
     }

@@ -1,10 +1,10 @@
 
-export const getSingleOrderTotal = ({ price, qty, selectedSideOrders }) => {
+export const getSingleOrderTotal = ({ price, qty, selectedSideProducts }) => {
     let total = price * qty;
-    if (selectedSideOrders) {
-        selectedSideOrders.map(selectedSideOrder => {
-            if (selectedSideOrder.data && selectedSideOrder.data.extraPrice) {
-                total += selectedSideOrder.data.extraPrice;
+    if (selectedSideProducts) {
+        selectedSideProducts.map(selecteSideProduct => {
+            if (selecteSideProduct.data && selecteSideProduct.data.additionalCost) {
+                total += selecteSideProduct.data.additionalCost;
             }
         })
     }
