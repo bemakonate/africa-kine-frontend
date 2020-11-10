@@ -1,7 +1,9 @@
 import ItemQty from '../itemQuantity';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SideProductOptions from './sideProductOptions';
 import { getSingleOrderTotal } from '../../../constants/helpers/custom-helpers';
+import { MENU_QUERY, PRODUCT_QUERY } from '../../../graphql/queries';
+import { useApolloClient } from '@apollo/react-hooks';
 
 import { connect } from 'react-redux';
 import * as layoutActions from '../../../store/layout/actions';
@@ -9,23 +11,54 @@ import * as orderActions from '../../../store/order/actions';
 
 const productModal = (props) => {
 
-
-    if (!props.product) {
-        return <p>product prop must be passed</p>
+    if (!props.productId) {
+        return <p>productId prop must be passed</p>
     }
 
-
-    const { name, description, price, sideProducts, sideProductsPerQuantity } = props.product;
-    const { addToCart, closeProductModal, editCartItem } = props;
+    const client = useApolloClient();
+    const [loadingProduct, setLoadingProduct] = useState(true);
+    const [loadingProductFailed, setLoadingProductFailed] = useState(false);
+    const [product, setProduct] = useState(null);
 
     const [itemQuantity, setItemQuantity] = useState(props.qty);
     const [selectedSideProducts, setSelectedProducts] = useState(null);
     const [speicalRequestVal, setSpeicalRequestVal] = useState(props.specialRequest || '');
 
+    // let product = null;
+
+    const { addToCart, closeProductModal, editCartItem } = props;
+
+
+    useEffect(() => {
+        const run = async () => {
+            const product = await getProduct(props.productId);
+            if (product) {
+                setProduct(product);
+                setLoadingProductFailed(false);
+                setLoadingProduct(false);
+            } else {
+                setLoadingProductFailed(true);
+                setLoadingProduct(false);
+            }
+        }
+        run();
+    }, [])
+
+
+
 
     const getSelectedSideProducts = (data) => setSelectedProducts(data);
     const getSpecialRequest = (e) => setSpeicalRequestVal(e.target.value);
-    const singleOrderTotal = getSingleOrderTotal({ price: price, qty: itemQuantity, selectedSideProducts: selectedSideProducts })
+
+
+    const getProduct = async (productId) => {
+        try {
+            const res = await client.query({ query: PRODUCT_QUERY, variables: { id: productId } })
+            return res.data.restaurantProduct;
+        } catch (err) {
+            return null;
+        }
+    }
 
 
     const validatedOrder = () => {
@@ -72,16 +105,38 @@ const productModal = (props) => {
         }
     }
 
-    return (
-        <div className="modal">
-            <div className="close" onClick={props.close}>X</div>
+    let modalContentJSX = null;
+    if (!loadingProduct && !loadingProductFailed) {
+        const { name, description, price, sideProducts, sideProductsPerQuantity } = product;
+        const singleOrderTotal = getSingleOrderTotal({ price: price, qty: itemQuantity, selectedSideProducts: selectedSideProducts })
+
+        const menuContentJSX = (<>
             <header>
                 <h2>{name}</h2>
                 <span>Available Now</span>
                 <div>${price}</div>
             </header>
 
+
+            <h4>Side Orders:</h4>
+            <ul>
+                {sideProducts.map(sideProduct => {
+                    const extraCost = sideProduct.additionalCost > 0 && <span>+${sideProduct.additionalCost}</span>
+                    return <li key={sideProduct.id}>{sideProduct.name} {extraCost}</li>
+                })}
+            </ul>
+
+            <h4>Description:</h4>
             <p>{description}</p>
+        </>);
+
+        const orderProductContentJSX = (<>
+
+            <header>
+                <h2>{name}</h2>
+                <span>Available Now</span>
+                <div>${price}</div>
+            </header>
 
             <div>
                 <p>Quantity: </p>
@@ -113,6 +168,20 @@ const productModal = (props) => {
             {props.editMode && <button onClick={changeProductOrder}>Save Changes</button>}
 
             <button onClick={closeProductModal}>Cancel</button>
+
+        </>);
+
+
+        modalContentJSX = props.orderingMode ? orderProductContentJSX : menuContentJSX;
+    } else {
+        modalContentJSX = <p>Failed getting product</p>
+    }
+
+    return (
+        <div className="modal">
+            <div className="close" onClick={props.close}>X</div>
+            {loadingProduct && <p>Loading...</p>}
+            {modalContentJSX}
             <style jsx>{`
         .modal{
             border:1px solid black;

@@ -16,3 +16,54 @@ query getProducts {
   }
 }
 `;
+
+export const PRODUCT_QUERY = gql`
+query getProduct($id: ID) {
+  restaurantProduct(id: $id) {
+    id
+    name
+    price
+    description
+    sideProductsPerQuantity
+    sideProducts {
+      id
+      name
+      additionalCost
+    }
+  }
+}
+`;
+
+export const MENU_QUERY = gql`
+query getMenu {
+  restaurantCategories {
+    id
+    title
+    description
+    subCategories {
+      id
+      title
+      products {
+        id
+        name
+        price
+        description
+        sideProducts {
+          id
+          name
+          additionalCost
+          description
+        }
+      }
+    }
+    products {
+      id
+      name
+      price
+      description
+    }
+  }
+}
+
+
+`;

@@ -15,7 +15,7 @@ const Home = (props) => {
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <div>${product.price}</div>
-          <button onClick={() => props.openProductModal({ props: { product } })}>Order Now</button>
+          <button onClick={() => props.openProductModal({ props: { productId: product.id, orderingMode: true } })}>Order Now</button>
         </div>
       ))}
 
