@@ -5,6 +5,7 @@ import initApolloFetch from '../constants/helpers/initApolloFetch';
 import { withApollo } from '../graphql/apollo';
 import { PRODUCTS_QUERY } from '../graphql/queries';
 
+
 const Home = (props) => {
   const { restaurantProducts: products } = props.data;
 

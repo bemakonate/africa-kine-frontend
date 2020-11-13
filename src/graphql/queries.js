@@ -48,6 +48,7 @@ query getMenu {
         name
         price
         description
+        isOpenForPickUp
         sideProducts {
           id
           name
@@ -61,6 +62,7 @@ query getMenu {
       name
       price
       description
+      isOpenForPickUp
     }
   }
 }

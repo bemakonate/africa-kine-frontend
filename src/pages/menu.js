@@ -16,17 +16,23 @@ const mapDispatchToProps = dispatch => {
 
 const MenuProducts = connect(null, mapDispatchToProps)((props) => {
     return props.products.map(product => {
+        console.log(product.isOpenForPickUp)
         return (
             <div key={product.id} className="product" onClick={() => props.openProductModal({ props: { productId: product.id } })} >
                 <p>Name: {product.name}</p>
                 <p>Description: {product.description}</p>
                 <p>Price: ${product.price}</p>
+                <p>{product.isOpenForPickUp && <span className="active-product">*Available Now</span>}</p>
                 <button>More Details</button>
                 <style jsx>{`
                     .product{
                         border:1px solid black;
                         padding:10px;
                         margin-bottom:10px;
+                    }
+
+                    .active-product{
+                        color:green;
                     }
                 `}
 
@@ -41,6 +47,7 @@ const MenuProducts = connect(null, mapDispatchToProps)((props) => {
 
 const MenuCategory = (props) => {
     const category = props.category;
+
     const [subCategoryId, setSubCategoryId] = useState(null);
     const foundSubCategory = category.subCategories.find(subCategory => subCategoryId === subCategory.id);
     let subCategoryProductsJSX = null;

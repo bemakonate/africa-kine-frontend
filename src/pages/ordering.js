@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
 import moment from 'moment';
+import axios from 'axios';
 
-const ConfirmPickUp = ({ data }) => {
-    const dateJSX = moment(data.pickUpTime).format('ll');
-    const pickUpTimeJSX = moment(data.pickUpTime).format('h:mm a');
-    const preOrderTimeJSX = moment(data.preOrderTime).format('h:mm a');
+const moveToOrderingPage = async ({ pickUpConfig }) => {
+    const res = await axios.get(`http://localhost:1337/restaurant-settings/business-hours/is-pickup-valid?_pickUpTime=${pickUpConfig.pickUpTime}`);
 
-    if (data) {
+    const { isValid } = res.data;
+
+    if (isValid) {
+        //Redirect user to ordering page
+    } else {
+        //alert user that pick up time is not valid
+        alert("Please try another pick up time, this pick up time does not exist")
+    }
+}
+const ConfirmPickUp = ({ pickUpConfig }) => {
+    const dateJSX = moment(pickUpConfig.pickUpTime).format('ll');
+    const pickUpTimeJSX = moment(pickUpConfig.pickUpTime).format('h:mm a');
+    const preOrderTimeJSX = moment(pickUpConfig.preOrderTime).format('h:mm a');
+
+    if (pickUpConfig) {
         return (
             <div>
                 <p>Date - {dateJSX}</p>
                 <p>Approx Pickup Time: {pickUpTimeJSX}</p>
                 <p>Order Must be placed by: {preOrderTimeJSX}</p>
 
-                <button>Continue</button>
+                <button onClick={() => moveToOrderingPage({ pickUpConfig })}>Continue</button>
             </div>
         );
     }
@@ -67,8 +80,10 @@ const Ordering = () => {
 
 
 
-    const setPickUpToNow = () => {
-        const pickUpNow = { preOrderTime: 1604381400000, pickUpTime: 1604382000000 };
+    const setPickUpToNow = async () => {
+        const res = await axios.get(`http://localhost:1337/restaurant-settings/business-hours/next-open-pickup`);
+        const pickUpNow = res.data;
+
         setPickUpData(pickUpNow);
         setCurrentStage(3);
     }
@@ -79,19 +94,9 @@ const Ordering = () => {
     }
 
 
-    const openLaterPickUp = () => {
-        const openPickUps = {
-            '2020-11-03': [
-                { preOrderTime: 1604380200000, pickUpTime: 1604380800000 },
-                { preOrderTime: 1604381400000, pickUpTime: 1604382000000 },
-                { preOrderTime: 1604382600000, pickUpTime: 1604383200000 },
-                { preOrderTime: 1604383800000, pickUpTime: 1604384400000 },
-                { preOrderTime: 1604385000000, pickUpTime: 1604385600000 },
-                { preOrderTime: 1604386200000, pickUpTime: 1604386800000 },
-                { preOrderTime: 1604387400000, pickUpTime: 1604388000000 },
-                { preOrderTime: 1604388600000, pickUpTime: 1604389200000 }
-            ]
-        }
+    const openLaterPickUp = async () => {
+        const res = await axios.get(`http://localhost:1337/restaurant-settings/business-hours/open-pickups`);
+        const openPickUps = res.data;
         setAllOpenPickUps(openPickUps);
         setCurrentStage(2.1);
     }
@@ -105,7 +110,7 @@ const Ordering = () => {
             selectPickUpJSX = <SelectLaterPickup allOpenPickUps={allOpenPickUps} setPickUpData={setPickUpToLater} />;
             break;
         case 3:
-            selectPickUpJSX = <ConfirmPickUp data={pickUpData} />;
+            selectPickUpJSX = <ConfirmPickUp pickUpConfig={pickUpData} />;
             break;
         default:
             selectPickUpJSX = <FirstStage setPickUpToNow={setPickUpToNow} openLaterPickUp={openLaterPickUp} />;
