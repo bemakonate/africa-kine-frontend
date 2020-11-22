@@ -1,7 +1,7 @@
 import ItemQty from '../itemQuantity';
 import React, { useState, useEffect } from 'react';
 import SideProductOptions from './sideProductOptions';
-import { getSingleOrderTotal } from '../../../constants/helpers/custom-helpers';
+import { getSingleOrderTotal } from '../../../constants/helpers/cart-helpers';
 import { MENU_QUERY, PRODUCT_QUERY } from '../../../graphql/queries';
 import { useApolloClient } from '@apollo/react-hooks';
 
@@ -53,7 +53,7 @@ const productModal = (props) => {
 
     const getProduct = async (productId) => {
         try {
-            const res = await client.query({ query: PRODUCT_QUERY, variables: { id: productId } })
+            const res = await client.query({ query: PRODUCT_QUERY, variables: { id: productId, pickUpTime: props.pickUpTime } })
             return res.data.restaurantProduct;
         } catch (err) {
             return null;
@@ -65,7 +65,7 @@ const productModal = (props) => {
         let isAllSideOrdersSelected = true;
         if (selectedSideProducts) {
             selectedSideProducts.forEach(selectedSideProduct => {
-                if (!selectedSideProduct.data) {
+                if (!selectedSideProduct) {
                     isAllSideOrdersSelected = false;
                 }
             })
@@ -77,17 +77,19 @@ const productModal = (props) => {
         }
 
         const orderData = {
-            product: props.product,
+            productId: product.id,
             qty: itemQuantity,
-            selectedSideProducts: selectedSideProducts,
+            selectedSideProducts: selectedSideProducts ? selectedSideProducts.map(sideProduct => sideProduct.id) : null,
             specialRequest: speicalRequestVal,
         }
+
 
         return orderData;
     }
 
     const addOrderToCart = () => {
         const orderData = validatedOrder();
+
         if (orderData) {
             addToCart(orderData);
             closeProductModal();
@@ -167,12 +169,10 @@ const productModal = (props) => {
             {!props.editMode && <button onClick={addOrderToCart}>Add To Cart</button>}
             {props.editMode && <button onClick={changeProductOrder}>Save Changes</button>}
 
-            <button onClick={closeProductModal}>Cancel</button>
-
         </>);
 
 
-        modalContentJSX = props.orderingMode ? orderProductContentJSX : menuContentJSX;
+        modalContentJSX = (props.orderingMode && product.isOpenForPickUp) ? orderProductContentJSX : menuContentJSX;
     } else {
         modalContentJSX = <p>Failed getting product</p>
     }
@@ -184,8 +184,15 @@ const productModal = (props) => {
             {modalContentJSX}
             <style jsx>{`
         .modal{
-            border:1px solid black;
+            border:3px solid red;
             padding:10px;
+            position:fixed;
+            width:100%;
+            top:0;
+            left:0;
+            z-index:100;
+            background:white;
+        
         }
          `} </style>
         </div>

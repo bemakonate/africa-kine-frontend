@@ -9,7 +9,11 @@ const RootElmt = (props) => {
     const { getUserCart, cart } = props;
     const { data, loading, error } = useQuery(PRODUCTS_QUERY);
 
-    const finishedLoading = !loading && data
+    const finishedLoading = !loading && data;
+
+    useEffect(() => {
+        props.validatePickUpTime();
+    }, [])
 
     useEffect(() => {
         if (finishedLoading) {
@@ -39,6 +43,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getUserCart: (allProducts) => dispatch(asyncActions.getUserCart(allProducts)),
+        validatePickUpTime: () => dispatch(asyncActions.validatePickUpTime()),
     }
 }
 

@@ -20,10 +20,7 @@ const SideProductOptions = (props) => {
             const newSideProducts = [...sideProducts];
             for (const i of range(sideProducts.length + 1, props.qty)) {
                 //create a new sideOrder
-                newSideProducts.push({
-                    seq: i,
-                    data: null,
-                })
+                newSideProducts.push(null);
             }
             setSideProducts(newSideProducts);
         }
@@ -31,8 +28,7 @@ const SideProductOptions = (props) => {
         //if props.qty is leass than sideProducts length
         else {
             //Keep the sideOrdeers state that is within the props.qty length
-            const preserveSeqs = range(1, props.qty);
-            const newSideProducts = sideProducts.filter(sideOrder => preserveSeqs.includes(sideOrder.seq));
+            const newSideProducts = sideProducts.slice(0, props.qty);
             setSideProducts(newSideProducts);
         }
 
@@ -40,12 +36,9 @@ const SideProductOptions = (props) => {
 
     const getSelectedSideProduct = ({ seq, data }) => {
         //updated side orders state here
-        const newSideProducts = [...sideProducts].map(sideProduct => {
-            if (sideProduct.seq === seq) {
-                return {
-                    ...sideProduct,
-                    data,
-                }
+        const newSideProducts = [...sideProducts].map((sideProduct, index) => {
+            if (seq === index) {
+                return data
             }
             return sideProduct
         })
@@ -55,15 +48,14 @@ const SideProductOptions = (props) => {
 
 
 
-    return sideProducts.map(sideProduct => {
-        const sideProductSeq = sideProduct.seq;
+    return sideProducts.map((sideProduct, index) => {
         return (
             <SideProductOption
-                key={sideProductSeq}
-                seq={sideProductSeq}
+                key={index}
+                seq={index + 1}
                 sideProducts={props.sideProducts}
-                selectedSideProduct={sideProduct.data}
-                getSelectedSideProduct={(data) => getSelectedSideProduct({ seq: sideProductSeq, data })}
+                selectedSideProduct={sideProduct}
+                getSelectedSideProduct={(data) => getSelectedSideProduct({ seq: index, data })}
             />
         )
     })

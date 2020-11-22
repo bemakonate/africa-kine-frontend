@@ -13,7 +13,8 @@ const Layout = (props) => {
             <nav>
                 <ul>
                     <li><Link href="/"><a>Home</a></Link></li>
-                    <li><Link href="/cart"><a>Cart</a></Link></li>
+                    <li><Link href="/menu"><a>Menu</a></Link></li>
+                    <li><Link href="/ordering"><a>Order Online</a></Link></li>
                 </ul>
             </nav>
             {isProductModalOpen ? <ProductModal {...productModalProps} close={closeProductModal} /> : null}

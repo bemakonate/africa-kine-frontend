@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 
+
 export const addToCart = (cartItem) => {
     return {
         type: actionTypes.ADD_TO_CART,
@@ -42,5 +43,22 @@ export const updateUserCart = (newCart) => {
 export const clearCart = () => {
     return {
         type: actionTypes.CLEAR_CART,
+    }
+}
+
+
+export const clearOrderingData = () => {
+    return {
+        type: actionTypes.CLEAR_ORDERING_DATA,
+    }
+}
+export const setPickUpTime = (pickUpTime) => {
+    localStorage.setItem('pickUpTime', pickUpTime);
+
+    return {
+        type: actionTypes.SET_PICKUP_TIME,
+        payload: {
+            pickUpTime,
+        }
     }
 }

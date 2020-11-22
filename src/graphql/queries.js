@@ -18,13 +18,14 @@ query getProducts {
 `;
 
 export const PRODUCT_QUERY = gql`
-query getProduct($id: ID) {
-  restaurantProduct(id: $id) {
+query getProduct($id: ID, $pickUpTime:String){
+  restaurantProduct(id: $id, pickUpTime: $pickUpTime) {
     id
     name
     price
     description
     sideProductsPerQuantity
+    isOpenForPickUp
     sideProducts {
       id
       name
@@ -35,8 +36,8 @@ query getProduct($id: ID) {
 `;
 
 export const MENU_QUERY = gql`
-query getMenu {
-  restaurantCategories {
+query getMenu($pickUpTime:String) {
+  restaurantCategories(pickUpTime:$pickUpTime) {
     id
     title
     description
@@ -66,6 +67,7 @@ query getMenu {
     }
   }
 }
+
 
 
 `;

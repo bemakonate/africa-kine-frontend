@@ -4,6 +4,7 @@ import * as actionTypes from './actionTypes';
 const initialState = {
     cart: [],
     fetchingUserCart: true,
+    pickUpTime: null,
 }
 
 const addToCart = (state, action) => updatedObj(state, {
@@ -37,6 +38,16 @@ const clearCart = (state, action) => updatedObj(state, {
     cart: [],
 })
 
+const setPickUpTime = (state, action) => updatedObj(state, {
+    pickUpTime: action.payload.pickUpTime,
+})
+
+const clearOrderingData = (state, action) => updatedObj(state, {
+    cart: [],
+    fetchingUserCart: false,
+    pickUpTime: null,
+})
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_TO_CART: return addToCart(state, action);
@@ -45,6 +56,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.UPDATE_USER_CART: return updateUserCart(state, action);
         case actionTypes.FETCH_USER_CART_DONE: return fetchUserCartDone(state, action);
         case actionTypes.CLEAR_CART: return clearCart(state, action);
+        case actionTypes.SET_PICKUP_TIME: return setPickUpTime(state, action);
+        case actionTypes.CLEAR_ORDERING_DATA: return clearOrderingData(state, action);
         default:
             return state
     }

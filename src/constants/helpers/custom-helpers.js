@@ -1,19 +1,19 @@
 
-export const getSingleOrderTotal = ({ price, qty, selectedSideProducts }) => {
-    let total = price * qty;
-    if (selectedSideProducts) {
-        selectedSideProducts.map(selecteSideProduct => {
-            if (selecteSideProduct.data && selecteSideProduct.data.additionalCost) {
-                total += selecteSideProduct.data.additionalCost;
-            }
-        })
-    }
+// export const getSingleOrderTotal = ({ price, qty, selectedSideProducts }) => {
+//     let total = price * qty;
+//     if (selectedSideProducts) {
+//         selectedSideProducts.map(selecteSideProduct => {
+//             if (selecteSideProduct && selecteSideProduct.additionalCost) {
+//                 total += selecteSideProduct.additionalCost;
+//             }
+//         })
+//     }
 
-    if (!total) {
-        return 0;
-    }
-    return total;
-}
+//     if (!total) {
+//         return 0;
+//     }
+//     return total;
+// }
 
 
 
