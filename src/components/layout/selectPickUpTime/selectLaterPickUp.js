@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import axios from 'axios';
 
-const SelectLaterPickup = ({ updatePickUp }) => {
+const SelectLaterPickup = ({ updatePickUp, ...props }) => {
 
     const [allOpenPickUps, setAllOpenPickUps] = useState(false);
     const [currentDate, setCurrentDate] = useState(null);
@@ -29,6 +29,7 @@ const SelectLaterPickup = ({ updatePickUp }) => {
     if (allPickUpDates) {
         contentJSX = (
             <div>
+                <button onClick={() => props.setCurrentStage(0)}>Go back</button>
                 <p>Date - {currentDate}</p>
                 <li>Pleae choose a pickup date: </li>
                 <ul>

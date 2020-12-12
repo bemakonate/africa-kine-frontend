@@ -30,3 +30,11 @@ export const addConfirmOrderPageData = (data) => {
     }
 
 }
+
+
+export const updateIsCartComponentOpen = (value) => {
+    return {
+        type: actionTypes.UPDATE_IS_CART_COMPONENT_OPEN,
+        payload: { value }
+    }
+}

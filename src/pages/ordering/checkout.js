@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router'
-import Layout from '../components/layout';
-import ContactForm from '../components/layout/checkout/contactForm';
-import Receipt from '../components/layout/checkout/receipt';
-import CartItem from '../components/resuable/cartItem';
-import OnlinePayment from '../components/layout/checkout/onlinePayment';
-import CardPaymentContext from '../context/cardPayment';
-import axios from '../constants/instances/backend';
-import * as layoutActions from '../store/layout/actions';
-import * as orderActions from '../store/order/actions';
-import { getDividedCart, getServerCart } from '../constants/helpers/cart-helpers'
+import Layout from '../../components/layout';
+import ContactForm from '../../components/layout/checkout/contactForm';
+import Receipt from '../../components/layout/checkout/receipt';
+import CartItem from '../../components/resuable/cartItem';
+import OnlinePayment from '../../components/layout/checkout/onlinePayment';
+import CardPaymentContext from '../../context/cardPayment';
+import axios from '../../constants/instances/backend';
+import * as layoutActions from '../../store/layout/actions';
+import * as orderActions from '../../store/order/actions';
+import { getDividedCart, getServerCart } from '../../constants/helpers/cart-helpers'
 
 
 const Checkout = (props) => {
     const router = useRouter();
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [fetchingPaymentData, setFetchingPaymentData] = useState(false);
     const [contactForm, setContactForm] = useState(null);
     const [isContactFormValid, setIsContactFormValid] = useState(false);
@@ -34,6 +34,13 @@ const Checkout = (props) => {
 
     const serverCart = getServerCart({ cart: checkoutCart });
 
+
+    //Redirect user back to cart if no items 
+    // useEffect(() => {
+    //     if (!props.cart.length) {
+    //         router.push('/cart').then(() => window.scrollTo(0, 0));
+    //     }
+    // }, [])
 
     //Load user token and receipt 
     useEffect(() => {
@@ -85,10 +92,10 @@ const Checkout = (props) => {
         if (isPaymentSuccessful && createdOrder) {
             props.addConfirmOrderPageData({
                 createdOrder,
-                frontendCart: props.cart,
+                frontendCart: checkoutCart,
             });
             props.clearCart();
-            router.push('/confirmation').then(() => window.scrollTo(0, 0));
+            router.push('/ordering/confirmation').then(() => window.scrollTo(0, 0));
         }
     }, [isPaymentSuccessful, createdOrder])
 
@@ -166,6 +173,8 @@ const Checkout = (props) => {
     if (!loading && (!token || !serverReceipt)) {
         checkoutJSX = <p>Sorry we couldn't load your checkout page</p>
     }
+
+
 
 
     return (

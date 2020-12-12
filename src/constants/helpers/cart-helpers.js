@@ -36,9 +36,11 @@ export const cartTotal = (cart) => {
 
 
 
-export const getPopulatedCart = async (cart) => {
+export const getPopulatedCart = async (cart, pickUpTime = 'null') => {
     return await Promise.all(cart.map(async (cartItem) => {
-        const { data: foundProduct } = await axios.get(`http://localhost:1337/restaurant-settings/products/${cartItem.productId}`);
+        const { data: foundProduct } = await axios.get(`http://localhost:1337/restaurant-settings/products/${cartItem.productId}`, {
+            params: { _pickUpTime: pickUpTime }
+        });
 
         const foundSelectedSideProducts = cartItem.selectedSideProducts ? cartItem.selectedSideProducts.map(sideProduct => {
             return foundProduct.sideProducts.find(foundSideProduct => foundSideProduct.id === Number(sideProduct));
@@ -52,6 +54,43 @@ export const getPopulatedCart = async (cart) => {
         }
     }))
 }
+
+export const getServerCart = ({ cart }) => {
+    let serverCart = null;
+    if (cart && cart.length > 0) {
+        serverCart = cart.map(cartItem => {
+            return {
+                productId: cartItem.product.id,
+                qty: cartItem.qty,
+                specialRequest: cartItem.specialRequest,
+                selectedSideProducts:
+                    cartItem.selectedSideProducts && cartItem.selectedSideProducts.map(selectedSideProduct => selectedSideProduct.id),
+            }
+        })
+    }
+    return serverCart;
+}
+
+
+export const getDividedCart = async ({ cart, pickUpTime }) => {
+
+
+    const newCart = await getPopulatedCart(cart, pickUpTime);
+    const availableCart = [];
+    const unavailableCart = [];
+
+    newCart.forEach((cartItem, index) => {
+        if (cartItem.product.isOpenForPickUp) {
+            availableCart.push({ ...cartItem, cartIndex: index });
+        } else {
+            unavailableCart.push({ ...cartItem, cartIndex: index });
+        }
+    })
+
+    return { availableCart, unavailableCart }
+
+}
+
 
 export const getCartSubTotal = (populatedCart) => {
     let total = 0;

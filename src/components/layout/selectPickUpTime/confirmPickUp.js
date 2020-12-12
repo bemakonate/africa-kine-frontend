@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as orderActions from '../../../store/order/actions';
-import * as asyncActions from ''
+// import * as asyncActions from ''
 
 
 
@@ -22,7 +22,12 @@ const ConfirmPickUp = ({ pickUpConfig, ...props }) => {
 
         if (isValid) {
             //Redirect user to ordering page
-            props.setPickUpTime(pickUpConfig.pickUpTime);
+            props.setPickUpTimeToApp(pickUpConfig.pickUpTime);
+            props.updateValidGateway(true);
+            props.updateIsUserOrderBeingProcessed(true);
+            props.setExpiringDate(res.data.pickUpExpiringTime);
+            props.setIsUserRescheduling(false);
+
             router.push('/ordering/menu');
 
         } else {
@@ -34,9 +39,11 @@ const ConfirmPickUp = ({ pickUpConfig, ...props }) => {
     if (pickUpConfig) {
         return (
             <div>
+                <button onClick={() => props.setCurrentStage(0)}>Go back</button>
                 <p>Date - {dateJSX}</p>
-                <p>Approx Pickup Time: {pickUpTimeJSX}</p>
                 <p>Order Must be placed by: {preOrderTimeJSX}</p>
+                <p>Approx Pickup Time: {pickUpTimeJSX}</p>
+
 
                 <button onClick={() => moveToOrderingPage({ pickUpConfig })}>Continue</button>
             </div>
@@ -47,7 +54,11 @@ const ConfirmPickUp = ({ pickUpConfig, ...props }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setPickUpTime: (pickUpTime) => dispatch(orderActions.setPickUpTime(pickUpTime)),
+        setPickUpTimeToApp: (pickUpTime) => dispatch(orderActions.setPickUpTimeToApp(pickUpTime)),
+        updateValidGateway: (bool) => dispatch(orderActions.updateValidGateway(bool)),
+        updateIsUserOrderBeingProcessed: (bool) => dispatch(orderActions.updateIsUserOrderBeingProcessed(bool)),
+        setExpiringDate: (value) => dispatch(orderActions.setExpiringDate(value)),
+        setIsUserRescheduling: (value) => dispatch(orderActions.setIsUserRescheduling(value)),
     }
 
 }

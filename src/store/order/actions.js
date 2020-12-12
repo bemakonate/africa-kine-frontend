@@ -46,13 +46,26 @@ export const clearCart = () => {
     }
 }
 
-
-export const clearOrderingData = () => {
+export const updateIsUserOrderBeingProcessed = (isUserOrderBeingProcessed) => {
+    localStorage.setItem('isUserOrderBeingProcessed', isUserOrderBeingProcessed);
     return {
-        type: actionTypes.CLEAR_ORDERING_DATA,
+        type: actionTypes.UPDATE_IS_USER_ORDER_BEING_PROCESSED,
+        payload: {
+            isUserOrderBeingProcessed,
+        }
     }
 }
-export const setPickUpTime = (pickUpTime) => {
+
+export const updateValidGateway = (isGatewayValid) => {
+    return {
+        type: actionTypes.UPDATE_VALID_GATEWAY,
+        payload: {
+            isGatewayValid: isGatewayValid
+        }
+    }
+}
+
+export const setPickUpTimeToApp = (pickUpTime) => {
     localStorage.setItem('pickUpTime', pickUpTime);
 
     return {
@@ -60,5 +73,28 @@ export const setPickUpTime = (pickUpTime) => {
         payload: {
             pickUpTime,
         }
+    }
+}
+
+export const userPickUpExpire = () => {
+    localStorage.setItem('pickUpTime', null);
+    localStorage.setItem('isUserOrderBeingProcessed', true);
+
+    return {
+        type: actionTypes.USER_PICKUP_EXPIRE,
+    }
+}
+
+export const setExpiringDate = (value) => {
+    return {
+        type: actionTypes.SET_EXPIRING_DATE,
+        payload: { value }
+    }
+}
+
+export const setIsUserRescheduling = (value) => {
+    return {
+        type: actionTypes.SET_IS_RESCHEDULING,
+        payload: { value }
     }
 }

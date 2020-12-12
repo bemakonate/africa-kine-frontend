@@ -4,16 +4,17 @@ import * as asyncActions from '../../store/asyncActions';
 import { withApollo } from '../../graphql/apollo';
 import { PRODUCTS_QUERY } from '../../graphql/queries';
 import { useQuery } from '@apollo/react-hooks';
-
+import { useRouter } from 'next/router';
 const RootElmt = (props) => {
     const { getUserCart, cart } = props;
     const { data, loading, error } = useQuery(PRODUCTS_QUERY);
+    const router = useRouter();
 
     const finishedLoading = !loading && data;
 
     useEffect(() => {
-        props.validatePickUpTime();
-    }, [])
+        props.validateUserOrder({ router });
+    }, [props.isUserOrderBeingProcessed])
 
     useEffect(() => {
         if (finishedLoading) {
@@ -38,12 +39,14 @@ const RootElmt = (props) => {
 const mapStateToProps = state => {
     return {
         cart: state.order.cart,
+        pickUpTime: state.order.pickUpTime,
+        isUserOrderBeingProcessed: state.order.isUserOrderBeingProcessed,
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         getUserCart: (allProducts) => dispatch(asyncActions.getUserCart(allProducts)),
-        validatePickUpTime: () => dispatch(asyncActions.validatePickUpTime()),
+        validateUserOrder: ({ router }) => dispatch(asyncActions.validateUserOrder({ router })),
     }
 }
 

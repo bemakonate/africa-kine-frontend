@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import data from '../constants/examples/confirmationData';
-import Receipt from '../components/layout/checkout/receipt';
-import CartItem from '../components/resuable/cartItem';
-import Layout from '../components/layout';
+import data from '../../constants/examples/confirmationData';
+import Receipt from '../../components/layout/checkout/receipt';
+import CartItem from '../../components/resuable/cartItem';
+import Layout from '../../components/layout';
 const Confirmation = (props) => {
 
     let pageJSX = <p>If you alredy have an order check your email for confirmation</p>

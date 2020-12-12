@@ -53,9 +53,10 @@ const productModal = (props) => {
 
     const getProduct = async (productId) => {
         try {
-            const res = await client.query({ query: PRODUCT_QUERY, variables: { id: productId, pickUpTime: props.pickUpTime } })
+            const res = await client.query({ query: PRODUCT_QUERY, variables: { id: productId, pickUpTime: props.pickUpTime.toString() } })
             return res.data.restaurantProduct;
         } catch (err) {
+            console.log(err);
             return null;
         }
     }
@@ -177,6 +178,7 @@ const productModal = (props) => {
         modalContentJSX = <p>Failed getting product</p>
     }
 
+
     return (
         <div className="modal">
             <div className="close" onClick={props.close}>X</div>
@@ -199,6 +201,13 @@ const productModal = (props) => {
     )
 }
 
+
+const mapStateToProps = state => {
+    return {
+        pickUpTime: state.order.pickUpTime,
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         addToCart: (cartItem) => dispatch(orderActions.addToCart(cartItem)),
@@ -207,4 +216,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(productModal)
+export default connect(mapStateToProps, mapDispatchToProps)(productModal)
