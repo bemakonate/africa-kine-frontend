@@ -54,6 +54,7 @@ const productModal = (props) => {
     const getProduct = async (productId) => {
         try {
             const res = await client.query({ query: PRODUCT_QUERY, variables: { id: productId, pickUpTime: props.pickUpTime.toString() } })
+
             return res.data.restaurantProduct;
         } catch (err) {
             console.log(err);

@@ -37,22 +37,30 @@ export const cartTotal = (cart) => {
 
 
 export const getPopulatedCart = async (cart, pickUpTime = 'null') => {
-    return await Promise.all(cart.map(async (cartItem) => {
-        const { data: foundProduct } = await axios.get(`http://localhost:1337/restaurant-settings/products/${cartItem.productId}`, {
-            params: { _pickUpTime: pickUpTime }
-        });
+    const newCart = [];
+    await Promise.all(cart.map(async (cartItem) => {
+        try {
+            const { data: foundProduct } = await axios.get(`http://localhost:1337/restaurant-settings/products/${cartItem.productId}`, {
+                params: { _pickUpTime: pickUpTime }
+            });
 
-        const foundSelectedSideProducts = cartItem.selectedSideProducts ? cartItem.selectedSideProducts.map(sideProduct => {
-            return foundProduct.sideProducts.find(foundSideProduct => foundSideProduct.id === Number(sideProduct));
-        }) : null;
 
-        return {
-            product: foundProduct,
-            qty: cartItem.qty,
-            selectedSideProducts: foundSelectedSideProducts,
-            specialRequest: cartItem.specialRequest,
+            const foundSelectedSideProducts = cartItem.selectedSideProducts ? cartItem.selectedSideProducts.map(sideProduct => {
+                return foundProduct.sideProducts.find(foundSideProduct => foundSideProduct.id === Number(sideProduct));
+            }) : null;
+
+            newCart.push({
+                product: foundProduct,
+                qty: cartItem.qty,
+                selectedSideProducts: foundSelectedSideProducts,
+                specialRequest: cartItem.specialRequest,
+            })
+            return null;
+        } catch (err) {
+            console.log(err);
         }
     }))
+    return newCart;
 }
 
 export const getServerCart = ({ cart }) => {

@@ -1,7 +1,14 @@
 import React from 'react'
 import Layout from '../../components/layout';
+import { connect } from 'react-redux';
+import { useRouter } from 'next/router'
 
-const Ordering = () => {
+const Ordering = (props) => {
+    const router = useRouter();
+
+    if (props.isGatewayValid) {
+        router.push('/ordering/menu');
+    }
     return (
         <Layout>
             <div>
@@ -12,4 +19,10 @@ const Ordering = () => {
     )
 }
 
-export default Ordering
+const mapStateToProps = state => {
+    return {
+        isGatewayValid: state.order.isGatewayValid,
+    }
+}
+
+export default connect(mapStateToProps)(Ordering)

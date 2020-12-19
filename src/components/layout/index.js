@@ -25,8 +25,7 @@ const Layout = (props) => {
                 <ul>
                     <li><Link href="/"><a>Home</a></Link></li>
                     <li><Link href="/menu"><a>Menu</a></Link></li>
-                    <li><Link href="/ordering"><a>Order Online</a></Link></li>
-                    <li><Link href="/ordering/checkout"><a>Checkout</a></Link></li>
+                    <li><Link href="/ordering"><a>Ordering</a></Link></li>
                 </ul>
             </nav>
 
