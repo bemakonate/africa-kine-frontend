@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { getPopulatedCart, getCartSubTotal, getDividedCart } from '../../../constants/helpers/cart-helpers'
+import { getPopulatedCart, getCartSubTotal, getDividedCart, getPopulatedServerCart } from '../../../constants/helpers/cart-helpers';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const cartFooter = (props) => {
+    const router = useRouter();
 
-    // const [cartSubTotal, setCartSubTotal] = useState(0);
-    const [availableCart, setAvailableCart] = useState(null);
+
+    // const [availableCart, setAvailableCart] = useState(null);
+    const [numOfItems, setNumOfItems] = useState(0);
+    const [cartSubTotal, setCartSubTotal] = useState(0);
+
 
     useEffect(() => {
         const run = async () => {
-            const { availableCart: newAvailableCart } = await getDividedCart({ cart: props.cart, pickUpTime: props.pickUpTime });
-            setAvailableCart(newAvailableCart);
+
+            const data = await getPopulatedServerCart({ cart: props.cart, pickUpTime: props.pickUpTime });
+            setNumOfItems(data.cart.length);
+            setCartSubTotal(data.receipt.subtotal);
         }
         run();
     }, [props.cart, props.pickUpTime])
 
 
-    const cartSubTotal = getCartSubTotal(availableCart);
 
     return (
         <div className="cart-footer">
-            {(availableCart && Array.isArray(availableCart)) && <span>{availableCart.length}</span>}
-            <span onClick={() => props.setShowCart(true)}>View Orders </span>
+            <span>{numOfItems}</span>
+            <span onClick={() => router.push('/ordering/cart')}>View Orders </span>
             <span>${cartSubTotal}</span>
             <style jsx>{`
             .cart-footer{

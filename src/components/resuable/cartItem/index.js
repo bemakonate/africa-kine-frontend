@@ -14,15 +14,30 @@ const CartItem = (props) => {
         qty: cartItem.qty,
         selectedSideProducts: cartItem.selectedSideProducts,
     })
+
+
+    const deleteItem = () => {
+        props.removeFromCart(index);
+        props.openFlashMessage({ content: "Deleted item from cart", isTemporary: true })
+    }
     return (
         <div className="cart-item">
             <div className="cart-item-content">
-                {!props.fixed && <span onClick={() => props.removeFromCart(index)}>x</span>}
+                {!props.fixed && <span onClick={deleteItem}>x</span>}
                 <span>{cartItem.qty}</span>
                 <div>
                     <h3 className="product-title">{cartItem.product.name}</h3>
                     {cartItem.selectedSideProducts &&
-                        cartItem.selectedSideProducts.map((selectedSideProduct) => <span>{selectedSideProduct.name}</span>)}
+                        cartItem.selectedSideProducts.map((selectedSideProduct) => {
+                            let sideProductJSX = null;
+                            if (selectedSideProduct) {
+                                sideProductJSX = <span>{selectedSideProduct.name}</span>
+                            } else {
+                                sideProductJSX = <span>Error</span>
+                            }
+                            return sideProductJSX;
+
+                        })}
 
                 </div>
 
@@ -67,11 +82,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // cancelUserOrder: (data) => dispatch(asyncActions.cancelUserOrder(data)),
-        // setIsUserRescheduling: (data) => dispatch(orderActions.setIsUserRescheduling(data)),
-        // closeProductModal: () => dispatch(layoutActions.closeProductModal()),
         removeFromCart: (index) => dispatch(orderActions.removeFromCart(index)),
         openProductModal: (data) => dispatch(asyncActions.openProductModal(data)),
+        openFlashMessage: (data) => dispatch(layoutActions.openFlashMessage(data)),
 
     }
 }

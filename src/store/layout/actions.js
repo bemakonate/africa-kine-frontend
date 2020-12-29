@@ -31,10 +31,28 @@ export const addConfirmOrderPageData = (data) => {
 
 }
 
-
-export const updateIsCartComponentOpen = (value) => {
+export const openFlashMessage = (data) => {
     return {
-        type: actionTypes.UPDATE_IS_CART_COMPONENT_OPEN,
-        payload: { value }
+        type: actionTypes.OPEN_FLASH_MESSAGE,
+        payload: { data }
+    }
+}
+
+export const closeFlashMessage = (data) => {
+    return {
+        type: actionTypes.CLOSE_FLASH_MESSAGE,
+    }
+}
+
+export const openPickUpModal = (data) => {
+    return {
+        type: actionTypes.OPEN_PICK_UP_MODAL,
+        payload: { data }
+    }
+}
+
+export const closePickUpModal = () => {
+    return {
+        type: actionTypes.CLOSE_PICK_UP_MODAL,
     }
 }

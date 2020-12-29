@@ -9,7 +9,6 @@ const initialState = {
     isUserOrderBeingProcessed: false,
     pickUpTime: null,
     pickUpExpiringTime: null,
-    isUserRescheduling: false,
 
 }
 
@@ -45,7 +44,7 @@ const clearCart = (state, action) => updatedObj(state, {
 })
 
 const setPickUpTime = (state, action) => updatedObj(state, {
-    pickUpTime: action.payload.pickUpTime,
+    pickUpTime: !isNaN(action.payload.pickUpTime) ? Number(action.payload.pickUpTime) : action.payload.pickUpTime,
 })
 
 const updateValidGateway = (state, action) => updatedObj(state, {
@@ -62,12 +61,9 @@ const userPickUpExpire = (state, action) => updatedObj(state, {
     isUserOrderBeingProcessed: true,
     pickUpTime: null,
     isGatewayValid: false,
-    isUserRescheduling: false,
 })
 
 const setUserExpiringDate = (state, action) => updatedObj(state, { pickUpExpiringTime: action.payload.value });
-
-const setIsUserRescheduling = (state, action) => updatedObj(state, { isUserRescheduling: action.payload.value });
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -82,7 +78,6 @@ const reducer = (state = initialState, action) => {
         case actionTypes.UPDATE_IS_USER_ORDER_BEING_PROCESSED: return updateIsUserOrderBeingProcessed(state, action);
         case actionTypes.USER_PICKUP_EXPIRE: return userPickUpExpire(state, action);
         case actionTypes.SET_EXPIRING_DATE: return setUserExpiringDate(state, action);
-        case actionTypes.SET_IS_RESCHEDULING: return setIsUserRescheduling(state, action);
         default:
             return state
     }

@@ -13,7 +13,9 @@ const RootElmt = (props) => {
     const finishedLoading = !loading && data;
 
     useEffect(() => {
-        props.validateUserOrder({ router });
+        console.log('[rootElmt] props.confirmPageData', props.confirmPageData)
+        props.validateUserOrder({ router, confirmPageData: props.confirmPageData });
+
     }, [props.isUserOrderBeingProcessed])
 
     useEffect(() => {
@@ -41,12 +43,14 @@ const mapStateToProps = state => {
         cart: state.order.cart,
         pickUpTime: state.order.pickUpTime,
         isUserOrderBeingProcessed: state.order.isUserOrderBeingProcessed,
+        confirmPageData: state.layout.confirmOrderPageData,
     }
 }
+
 const mapDispatchToProps = dispatch => {
     return {
         getUserCart: (allProducts) => dispatch(asyncActions.getUserCart(allProducts)),
-        validateUserOrder: ({ router }) => dispatch(asyncActions.validateUserOrder({ router })),
+        validateUserOrder: (data) => dispatch(asyncActions.validateUserOrder(data)),
     }
 }
 

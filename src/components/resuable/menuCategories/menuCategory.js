@@ -31,7 +31,7 @@ const MenuCategory = (props) => {
         <>
             <p>---{category.description}----</p>
             <ul>
-                <li onClick={() => setSubCategoryId('all')}>All Category Products</li>
+                <li onClick={() => setSubCategoryId('all')}>Default</li>
                 {category.subCategories.map((subCategory) => (
                     <li onClick={() => setSubCategoryId(subCategory.id)}>{subCategory.title}</li>
                 ))}

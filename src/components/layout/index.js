@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductModal from '../resuable/productModal';
 import { connect } from 'react-redux';
 import * as layoutActions from '../../store/layout/actions';
@@ -7,8 +7,7 @@ import * as orderActions from '../../store/order/actions';
 import Link from 'next/link';
 import PickUpModal from './selectPickUpTime';
 import { useRouter } from 'next/router';
-import CartComponent from './cart/index';
-import CartFooter from './cart/cart-footer';
+import FlashMessage from '../resuable/flashMessage';
 
 
 const Layout = (props) => {
@@ -17,10 +16,13 @@ const Layout = (props) => {
     const { isProductModalOpen, productModalProps, closeProductModal, isGatewayValid } = props;
 
     const pageRoute = router.route;
-    const orderingRoutes = ['/ordering', '/ordering/menu']
-    const showPickUpModal = (!isGatewayValid || props.isUserRescheduling) && orderingRoutes.includes(pageRoute);
+    const orderingRoutes = ['/ordering', '/ordering/menu', '/ordering/cart']
+    const showPickUpModal = props.pickUpModal.open && orderingRoutes.includes(pageRoute);
+
+
     return (
         <>
+            {(props.flashMessage && props.flashMessage.open) && <FlashMessage />}
             <nav>
                 <ul>
                     <li><Link href="/"><a>Home</a></Link></li>
@@ -31,8 +33,7 @@ const Layout = (props) => {
 
             {isProductModalOpen ? <ProductModal {...productModalProps} close={closeProductModal} /> : null}
             {showPickUpModal ? <PickUpModal /> : null}
-            {props.isCartComponentOpen && <CartComponent closeCartModal={() => props.updateIsCartComponentOpen(false)} />}
-            {(!props.isCartComponentOpen && pageRoute === '/ordering/menu') && <CartFooter setShowCart={props.updateIsCartComponentOpen} />}
+
 
             {props.children}
 
@@ -46,14 +47,14 @@ const mapStateToProps = state => {
         productModalProps: state.layout.productModalData.props,
         isGatewayValid: state.order.isGatewayValid,
         isUserRescheduling: state.order.isUserRescheduling,
-        isCartComponentOpen: state.layout.isCartComponentOpen,
+        flashMessage: state.layout.flashMessage,
+        pickUpModal: state.layout.pickUpModal
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         closeProductModal: () => dispatch(layoutActions.closeProductModal()),
-        updateIsCartComponentOpen: (data) => dispatch(layoutActions.updateIsCartComponentOpen(data)),
     }
 }
 

@@ -34,7 +34,8 @@ const cancelUserOrder = ({ router }) => {
     }
 }
 
-const validateUserOrder = ({ router }) => {
+const validateUserOrder = ({ router, confirmPageData }) => {
+    console.log('[asyncActions.js] confirmPageData', confirmPageData);
     return async (dispatch, getState) => {
         const pickUpTime = localStorage.getItem('pickUpTime') || 0;
         const isUserOrderBeingProcessed = JSON.parse(localStorage.getItem('isUserOrderBeingProcessed'));
@@ -50,7 +51,7 @@ const validateUserOrder = ({ router }) => {
             dispatch(orderActions.updateValidGateway(false));
             dispatch(orderActions.clearCart());
             dispatch(orderActions.setPickUpTimeToApp(null));
-            router.push('/ordering');
+            // !confirmPageData && router.push('/ordering');
             return null;
         }
 

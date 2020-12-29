@@ -92,9 +92,3 @@ export const setExpiringDate = (value) => {
     }
 }
 
-export const setIsUserRescheduling = (value) => {
-    return {
-        type: actionTypes.SET_IS_RESCHEDULING,
-        payload: { value }
-    }
-}

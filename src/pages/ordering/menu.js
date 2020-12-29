@@ -5,6 +5,7 @@ import * as orderActions from '../../store/order/actions';
 import * as asyncActions from '../../store/asyncActions';
 import { withApollo } from '../../graphql/apollo';
 import { MENU_QUERY } from '../../graphql/queries';
+import CartFooter from '../../components/layout/cart/cart-footer';
 import { connect } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -14,18 +15,26 @@ const MenuPage = (props) => {
     const pickUpTime = props.pickUpTime ? props.pickUpTime.toString() : 'null'
     const { loading, error, data } = useQuery(MENU_QUERY, { variables: { pickUpTime } });
 
+    console.log(data);
     let contentJSX = null;
     if (loading) {
         contentJSX = <p>Loading...</p>
     }
     else if (!loading && data) {
         const { restaurantCategories: categories } = data;
-        contentJSX = <MenuCategories categories={categories} orderingMode />
+        contentJSX = (
+            <React.Fragment>
+                <MenuCategories categories={categories} orderingMode />
+                <CartFooter />
+            </React.Fragment>
+
+        )
     }
 
     return (
         <Layout>
             {contentJSX}
+
         </Layout>
 
     )

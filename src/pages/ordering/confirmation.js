@@ -46,6 +46,10 @@ const Confirmation = (props) => {
                             <p className="order-detail__title">Order Date</p>
                             <p className="order-detail__desc">{createdOrder.orderDate}</p>
                         </div>
+                        <div className="order-detail">
+                            <p className="order-detail__title">Pick Up Date</p>
+                            <p className="order-detail__desc">{createdOrder.pickUpDate}</p>
+                        </div>
                     </div>
                 </section>
 

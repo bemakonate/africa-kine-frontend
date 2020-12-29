@@ -14,7 +14,7 @@ const CardPayment = () => {
     const [success, setSuccess] = useState(false);
 
     const paymentContext = useContext(PaymentContext);
-    const { contactForm, serverCart, token, serverReceipt, isContactFormValid } = paymentContext;
+    const { contactForm, serverCart, token, serverReceipt, isContactFormValid, pickUpTime } = paymentContext;
     const { getIsPaymentBeingProcessed, getCreatedOrder, getIsStripeLoaded, getIsPaymentSuccessful } = paymentContext;
 
 
@@ -36,6 +36,16 @@ const CardPayment = () => {
         e.preventDefault();
         setCardBeingProcessed(true);
         let result;
+        //****first check to make sure that the pick up time is valid
+        const { data } = await axios.post('http://localhost:1337/restaurant-settings/orders/validate-cart', {
+            cart: serverCart, pickUpTime
+        });
+
+        if (!data.valid) {
+            setCardBeingProcessed(false);
+            alert("Your card has not been chargd. However there is an error with your cart");
+            return null;
+        }
         try {
             result = await stripe.confirmCardPayment(token, {
                 payment_method: { card: elements.getElement(CardElement) }
@@ -59,6 +69,7 @@ const CardPayment = () => {
             paymentIntent: result.paymentIntent,
             cart: serverCart,
             contact: contactForm,
+            pickUpTime: pickUpTime,
         }
 
         try {

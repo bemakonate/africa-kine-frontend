@@ -10,7 +10,8 @@ import CardPaymentContext from '../../context/cardPayment';
 import axios from '../../constants/instances/backend';
 import * as layoutActions from '../../store/layout/actions';
 import * as orderActions from '../../store/order/actions';
-import { getDividedCart, getServerCart } from '../../constants/helpers/cart-helpers'
+import { getDividedCart, getServerCart } from '../../constants/helpers/cart-helpers';
+import moment from 'moment';
 
 
 const Checkout = (props) => {
@@ -36,32 +37,28 @@ const Checkout = (props) => {
 
 
     //Redirect user back to cart if no items 
-    // useEffect(() => {
-    //     if (!props.cart.length) {
-    //         router.push('/cart').then(() => window.scrollTo(0, 0));
-    //     }
-    // }, [])
-
-    //Load user token and receipt 
     useEffect(() => {
-
-        const run = async () => {
-            const dividedCart = await getDividedCart({ cart: props.cart, pickUpTime: props.pickUpTime });
-            setCheckoutCart(dividedCart.availableCart);
+        if (!props.cart.length && !isPaymentSuccessful) {
+            router.push('/ordering/cart').then(() => window.scrollTo(0, 0));
         }
+    }, [])
 
-        run();
-    }, [props.cart])
 
 
     useEffect(() => {
         const loadToken = async (cart) => {
-            if (cart) {
-                const response = await axios.post('/restaurant-settings/orders/payment', { cart });
+            if (cart && !isPaymentSuccessful) {
+                const response = await axios.post('/restaurant-settings/orders/payment', { cart, pickUpTime: props.pickUpTime });
                 const data = response.data;
+
+                //If the cart is not valid return to ordering page
+                if (!data.valid) {
+                    return router.push('/ordering/cart').then(() => window.scrollTo(0, 0));
+                }
 
                 setToken(data.paymentIntent.client_secret);
                 setServerReceipt(data.summary);
+                setCheckoutCart(data.cart);
             } else {
                 setToken(null);
                 setServerReceipt(null);
@@ -71,13 +68,13 @@ const Checkout = (props) => {
 
         const run = async () => {
             setLoading(true);
-            await loadToken(serverCart);
+            await loadToken(props.cart);
             setLoading(false);
         }
 
         run();
 
-    }, [checkoutCart])
+    }, [props.cart])
 
 
     //Update to check if the server is processing the card information
@@ -89,14 +86,19 @@ const Checkout = (props) => {
 
     //If order is created redirect to '/confirmation'
     useEffect(() => {
-        if (isPaymentSuccessful && createdOrder) {
-            props.addConfirmOrderPageData({
-                createdOrder,
-                frontendCart: checkoutCart,
-            });
-            props.clearCart();
-            router.push('/ordering/confirmation').then(() => window.scrollTo(0, 0));
+        const run = async () => {
+            if (isPaymentSuccessful && createdOrder) {
+                await props.addConfirmOrderPageData({
+                    createdOrder,
+                    frontendCart: checkoutCart,
+                });
+                // props.clearCart();
+                router.push('/ordering/confirmation').then(() => window.scrollTo(0, 0));
+                props.updateIsUserOrderBeingProcessed(false);
+
+            }
         }
+        run();
     }, [isPaymentSuccessful, createdOrder])
 
 
@@ -122,6 +124,7 @@ const Checkout = (props) => {
                 serverCart,
                 serverReceipt,
                 token,
+                pickUpTime: props.pickUpTime,
 
                 getIsStripeLoaded,
                 getIsPaymentSuccessful,
@@ -152,6 +155,7 @@ const Checkout = (props) => {
 
                 <div className="orderDetails">
                     <h2>Order Details</h2>
+                    <p>Pick Up Time: {moment(Number(props.pickUpTime)).format('lll')}</p>
                     {checkoutCart && checkoutCart.map((cartItem, index) => {
                         return <CartItem
                             fixed
@@ -196,6 +200,7 @@ const mapDispatchToProps = dispatch => {
     return {
         addConfirmOrderPageData: (data) => dispatch(layoutActions.addConfirmOrderPageData(data)),
         clearCart: () => dispatch(orderActions.clearCart()),
+        updateIsUserOrderBeingProcessed: (data) => dispatch(orderActions.updateIsUserOrderBeingProcessed(data)),
     }
 }
 

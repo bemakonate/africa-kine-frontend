@@ -5,8 +5,10 @@ import SelectLaterPickup from './selectLaterPickUp';
 import { connect } from 'react-redux';
 import * as asyncActions from '../../../store/asyncActions';
 import * as orderActions from '../../../store/order/actions';
+import * as layoutActions from '../../../store/layout/actions';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
+import Backdrop from '../../resuable/backdrop';
 
 const SelectPickUpTime = (props) => {
     const [currentStage, setCurrentStage] = useState(1);
@@ -24,6 +26,11 @@ const SelectPickUpTime = (props) => {
         setCurrentStage(2.1);
     }
 
+    const handleCancelOrder = () => {
+        props.cancelUserOrder({ router })
+        props.closePickUpModal();
+    }
+
     let selectPickUpJSX = null;
     switch (currentStage) {
         case 2.1:
@@ -36,17 +43,17 @@ const SelectPickUpTime = (props) => {
             selectPickUpJSX = <FirstStage updatePickUp={updatePickUp} openLaterPickUp={openLaterPickUp} />;
     }
     return (
-        <div className="container">
+        <Backdrop open handleClose={props.closePickUpModal}>
+            <div className="container">
 
-            {props.isUserRescheduling && <button onClick={() => props.setIsUserRescheduling(false)}>X</button>}
-            {(props.isUserOrderBeingProcessed && !props.isGatewayValid) &&
-                <p>Sorry, the pick up time you've choosen is no longer availale please choose a new one</p>}
+                <button onClick={props.closePickUpModal}>X</button>
+                {(props.isUserOrderBeingProcessed && !props.isGatewayValid) &&
+                    <p>Sorry, the pick up time you've choosen is no longer availale please choose a new one</p>}
 
 
-
-            {selectPickUpJSX}
-            {props.isUserOrderBeingProcessed && <button onClick={() => props.cancelUserOrder({ router })}>Cancel Order</button>}
-            <style jsx>{`
+                {selectPickUpJSX}
+                {props.isUserOrderBeingProcessed && <button onClick={handleCancelOrder}>Cancel Order</button>}
+                <style jsx>{`
                 .container{
                     border:3px solid black;
                     padding:10px;
@@ -58,7 +65,9 @@ const SelectPickUpTime = (props) => {
                     margin-left:-200px;
                 }
             `}</style>
-        </div>
+            </div>
+        </Backdrop>
+
     )
 }
 
@@ -75,7 +84,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         cancelUserOrder: (data) => dispatch(asyncActions.cancelUserOrder(data)),
-        setIsUserRescheduling: (data) => dispatch(orderActions.setIsUserRescheduling(data))
+        closePickUpModal: () => dispatch(layoutActions.closePickUpModal()),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SelectPickUpTime);

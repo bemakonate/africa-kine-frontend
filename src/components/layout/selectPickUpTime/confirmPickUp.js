@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as orderActions from '../../../store/order/actions';
+import * as layoutActions from '../../../store/layout/actions';
 // import * as asyncActions from ''
 
 
@@ -26,7 +27,7 @@ const ConfirmPickUp = ({ pickUpConfig, ...props }) => {
             props.updateValidGateway(true);
             props.updateIsUserOrderBeingProcessed(true);
             props.setExpiringDate(res.data.pickUpExpiringTime);
-            props.setIsUserRescheduling(false);
+            props.closePickUpModal();
 
             router.push('/ordering/menu');
 
@@ -58,7 +59,7 @@ const mapDispatchToProps = dispatch => {
         updateValidGateway: (bool) => dispatch(orderActions.updateValidGateway(bool)),
         updateIsUserOrderBeingProcessed: (bool) => dispatch(orderActions.updateIsUserOrderBeingProcessed(bool)),
         setExpiringDate: (value) => dispatch(orderActions.setExpiringDate(value)),
-        setIsUserRescheduling: (value) => dispatch(orderActions.setIsUserRescheduling(value)),
+        closePickUpModal: () => dispatch(layoutActions.closePickUpModal()),
     }
 
 }

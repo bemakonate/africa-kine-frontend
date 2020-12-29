@@ -16,9 +16,16 @@ const mapDispatchToProps = dispatch => {
 
 const MenuProducts = connect(mapStateToProps, mapDispatchToProps)((props) => {
     const pickUpTime = props.pickUpTime ? props.pickUpTime.toString() : null;
+
     return props.products.map(product => {
         return (
-            <div key={product.id} className="product" onClick={() => props.openProductModal({ props: { productId: product.id, orderingMode: props.orderingMode, pickUpTime: pickUpTime } })} >
+            <div key={product.id} className="product" onClick={() => props.openProductModal({
+                props: {
+                    productId: product.id,
+                    orderingMode: props.orderingMode,
+                    pickUpTime: pickUpTime
+                }
+            })} >
                 <p>Name: {product.name}</p>
                 <p>Description: {product.description}</p>
                 <p>Price: ${product.price}</p>

@@ -8,7 +8,7 @@ import { useApolloClient } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 import * as layoutActions from '../../../store/layout/actions';
 import * as orderActions from '../../../store/order/actions';
-
+import Backdrop from '../backdrop';
 const productModal = (props) => {
 
     if (!props.productId) {
@@ -32,6 +32,7 @@ const productModal = (props) => {
     useEffect(() => {
         const run = async () => {
             const product = await getProduct(props.productId);
+
             if (product) {
                 setProduct(product);
                 setLoadingProductFailed(false);
@@ -53,7 +54,12 @@ const productModal = (props) => {
 
     const getProduct = async (productId) => {
         try {
-            const res = await client.query({ query: PRODUCT_QUERY, variables: { id: productId, pickUpTime: props.pickUpTime.toString() } })
+            const res = await client.query({
+                query: PRODUCT_QUERY, variables: {
+                    id: productId,
+                    pickUpTime: props.pickUpTime ? props.pickUpTime.toString() : 'null'
+                }
+            })
 
             return res.data.restaurantProduct;
         } catch (err) {
@@ -74,7 +80,7 @@ const productModal = (props) => {
         }
 
         if (!isAllSideOrdersSelected) {
-            alert("Must select all side orders given");
+            props.openFlashMessage({ content: "Please choose each side order", isTemporary: true });
             return null;
         }
 
@@ -95,7 +101,7 @@ const productModal = (props) => {
         if (orderData) {
             addToCart(orderData);
             closeProductModal();
-            alert("Item was added to cart")
+            props.openFlashMessage({ content: "Item was added to cart", isTemporary: true })
         }
 
     }
@@ -105,7 +111,7 @@ const productModal = (props) => {
         if (orderData) {
             editCartItem({ index: props.cartIndex, newCartItem: orderData });
             closeProductModal();
-            alert("Saved item to cart");
+            props.openFlashMessage({ content: "Saved changes to cart", isTemporary: true })
         }
     }
 
@@ -181,11 +187,12 @@ const productModal = (props) => {
 
 
     return (
-        <div className="modal">
-            <div className="close" onClick={props.close}>X</div>
-            {loadingProduct && <p>Loading...</p>}
-            {modalContentJSX}
-            <style jsx>{`
+        <Backdrop open handleClose={props.close}>
+            <div className="modal">
+                <div className="close" onClick={props.close}>X</div>
+                {loadingProduct && <p>Loading...</p>}
+                {modalContentJSX}
+                <style jsx>{`
         .modal{
             border:3px solid red;
             padding:10px;
@@ -198,7 +205,8 @@ const productModal = (props) => {
         
         }
          `} </style>
-        </div>
+            </div>
+        </Backdrop>
     )
 }
 
@@ -214,6 +222,7 @@ const mapDispatchToProps = dispatch => {
         addToCart: (cartItem) => dispatch(orderActions.addToCart(cartItem)),
         editCartItem: ({ index, newCartItem }) => dispatch(orderActions.editCartItem({ index, newCartItem })),
         closeProductModal: () => dispatch(layoutActions.closeProductModal()),
+        openFlashMessage: (data) => dispatch(layoutActions.openFlashMessage(data)),
     }
 }
 
