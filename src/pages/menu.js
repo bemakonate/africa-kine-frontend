@@ -11,42 +11,13 @@ import { connect } from 'react-redux';
 const MenuPage = (props) => {
     const { restaurantCategories: categories } = props.data;
 
-    const categoriesJSX = categories.map(category => {
-        const subCategoriesJSX = category.subCategories.map(subCategory => {
-            const productsJSX = subCategory.products.map(product => (
-                <div className="product" onClick={() => props.openProductModal({ props: { productId: product.id } })}>
-                    <h4 className="product-title">{product.name}</h4>
-                    <p className="product-price">${product.price}</p>
-                    <p className="product-description">{product.description}</p>
-
-                </div>
-            ))
-
-            return (
-                <div>
-                    <h3>{subCategory.title}</h3>
-                    <div className="products"> {productsJSX} </div>
-                </div>
-
-            )
-        })
-
-        return (
-            <div>
-                <h1>{category.title}</h1>
-                <div className="categories">{subCategoriesJSX}</div>
-            </div>
-        )
-    })
-
-
-
 
     return (
         <Layout>
-            <MenuPageStyles>
-                {categoriesJSX}
-            </MenuPageStyles>
+            {/* {categoriesJSX} */}
+            <div className="container">
+                <MenuCategories categories={categories} />
+            </div>
         </Layout>
 
     )

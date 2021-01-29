@@ -6,11 +6,6 @@ const initialState = {
     productModalData: {
         props: null,
     },
-    confirmOrderPageData: null,
-    pickUpModal: {
-        open: false,
-        rescheduling: false,
-    },
     flashMessage: {
         open: false,
         content: null,
@@ -52,17 +47,6 @@ const closeFlashMessage = (state, action) => updatedObj(state, {
     }
 })
 
-
-const openPickUpModal = (state, action) => updatedObj(state, {
-    pickUpModal: updatedObj(state.pickUpModal, { ...action.payload.data, open: true })
-})
-
-const closePickUpModal = (state, action) => updatedObj(state, {
-    pickUpModal: {
-        open: false,
-        rescheduling: false,
-    }
-})
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.OPEN_PRODUCT_MODAL: return openProductModal(state, action);
@@ -71,8 +55,6 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADD_CONFIRM_ORDER_DATA: return addConfirmOrderPageData(state, action);
         case actionTypes.OPEN_FLASH_MESSAGE: return openFlashMessage(state, action);
         case actionTypes.CLOSE_FLASH_MESSAGE: return closeFlashMessage(state, action);
-        case actionTypes.OPEN_PICK_UP_MODAL: return openPickUpModal(state, action);
-        case actionTypes.CLOSE_PICK_UP_MODAL: return closePickUpModal(state, action);
         default:
 
             return state

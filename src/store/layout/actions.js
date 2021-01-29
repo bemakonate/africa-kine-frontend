@@ -43,16 +43,3 @@ export const closeFlashMessage = (data) => {
         type: actionTypes.CLOSE_FLASH_MESSAGE,
     }
 }
-
-export const openPickUpModal = (data) => {
-    return {
-        type: actionTypes.OPEN_PICK_UP_MODAL,
-        payload: { data }
-    }
-}
-
-export const closePickUpModal = () => {
-    return {
-        type: actionTypes.CLOSE_PICK_UP_MODAL,
-    }
-}

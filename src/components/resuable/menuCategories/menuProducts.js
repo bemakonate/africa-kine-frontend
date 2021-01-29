@@ -1,12 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import * as asyncActions from '../../../store/asyncActions'
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
-const mapStateToProps = state => {
-    return {
-        pickUpTime: state.order.pickUpTime,
+const shortenText = (str, max) => {
+    if (str.length > max) {
+        return `${str.substring(0, max)}...`;
     }
+    return str;
+
 }
+
+const MenuProducts = (props) => {
+    return (
+        <MenuProductsStyles>
+            <div className="products">
+                {props.products.map(product => (
+                    <div
+                        className="product"
+                        key={product.id}
+                        onClick={() => props.openProductModal({ props: { productId: product.id } })}>
+
+                        <h3 className="product-title">{product.name}</h3>
+                        <p className="product-price"> ${product.price}</p>
+                        <p className="product-description">{shortenText(product.description, 100)}</p>
+                    </div>
+                ))}
+            </div>
+        </MenuProductsStyles>
+    )
+};
+
+
+const MenuProductsStyles = styled.div`
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap:10px;
+}
+
+.product{
+    display:grid;
+    grid-template-columns: 1fr 100px;
+    grid-template-rows: auto 1fr;
+    grid-row-gap:10px;
+    border:1px solid black;
+    border-radius:2px;
+    padding:10px;
+    min-height:90px;
+}
+
+
+.product-description{
+    grid-column: 1/-1;
+    margin:0;
+}
+.product-title{
+    margin:0;
+}
+
+.product-price{
+    margin:0;
+    text-align:right;
+}
+`;
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -14,38 +71,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-const MenuProducts = connect(mapStateToProps, mapDispatchToProps)((props) => {
-    const pickUpTime = props.pickUpTime ? props.pickUpTime.toString() : null;
-
-    return props.products.map(product => {
-        return (
-            <div key={product.id} className="product" onClick={() => props.openProductModal({
-                props: {
-                    productId: product.id,
-                    orderingMode: props.orderingMode,
-                    pickUpTime: pickUpTime
-                }
-            })} >
-                <p>Name: {product.name}</p>
-                <p>Description: {product.description}</p>
-                <p>Price: ${product.price}</p>
-                <p>{(product.isOpenForPickUp && props.orderingMode) && <span className="active-product">*Available For Pick Up</span>}</p>
-                <style jsx>{`
-                    .product{
-                        border:1px solid black;
-                        padding:10px;
-                        margin-bottom:10px;
-                    }
-
-                    .active-product{
-                        color:green;
-                    }
-                `}
-
-                </style>
-            </div>
-        )
-    })
-});
-
-export default MenuProducts;
+export default connect(null, mapDispatchToProps)(MenuProducts);

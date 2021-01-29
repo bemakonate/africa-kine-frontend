@@ -1,36 +1,26 @@
-import ItemQty from '../itemQuantity';
 import React, { useState, useEffect } from 'react';
-import SideProductOptions from './sideProductOptions';
-import { getSingleOrderTotal } from '../../../constants/helpers/cart-helpers';
-import { MENU_QUERY, PRODUCT_QUERY } from '../../../graphql/queries';
-import { useApolloClient } from '@apollo/react-hooks';
-
 import { connect } from 'react-redux';
 import * as layoutActions from '../../../store/layout/actions';
-import * as orderActions from '../../../store/order/actions';
 import Backdrop from '../backdrop';
+import styled from 'styled-components';
+import axios from 'axios';
+
+
 const productModal = (props) => {
 
     if (!props.productId) {
         return <p>productId prop must be passed</p>
     }
 
-    const client = useApolloClient();
+
     const [loadingProduct, setLoadingProduct] = useState(true);
     const [loadingProductFailed, setLoadingProductFailed] = useState(false);
     const [product, setProduct] = useState(null);
 
-    const [itemQuantity, setItemQuantity] = useState(props.qty);
-    const [selectedSideProducts, setSelectedProducts] = useState(null);
-    const [speicalRequestVal, setSpeicalRequestVal] = useState(props.specialRequest || '');
-
-    // let product = null;
-
-    const { addToCart, closeProductModal, editCartItem } = props;
-
 
     useEffect(() => {
         const run = async () => {
+            setLoadingProduct(true);
             const product = await getProduct(props.productId);
 
             if (product) {
@@ -48,20 +38,10 @@ const productModal = (props) => {
 
 
 
-    const getSelectedSideProducts = (data) => setSelectedProducts(data);
-    const getSpecialRequest = (e) => setSpeicalRequestVal(e.target.value);
-
-
     const getProduct = async (productId) => {
         try {
-            const res = await client.query({
-                query: PRODUCT_QUERY, variables: {
-                    id: productId,
-                    pickUpTime: props.pickUpTime ? props.pickUpTime.toString() : 'null'
-                }
-            })
-
-            return res.data.restaurantProduct;
+            const res = await axios.get(`http://localhost:1337/restaurant-settings/products/${productId}`);
+            return res.data;
         } catch (err) {
             console.log(err);
             return null;
@@ -69,118 +49,50 @@ const productModal = (props) => {
     }
 
 
-    const validatedOrder = () => {
-        let isAllSideOrdersSelected = true;
-        if (selectedSideProducts) {
-            selectedSideProducts.forEach(selectedSideProduct => {
-                if (!selectedSideProduct) {
-                    isAllSideOrdersSelected = false;
-                }
-            })
-        }
 
-        if (!isAllSideOrdersSelected) {
-            props.openFlashMessage({ content: "Please choose each side order", isTemporary: true });
-            return null;
-        }
-
-        const orderData = {
-            productId: product.id,
-            qty: itemQuantity,
-            selectedSideProducts: selectedSideProducts ? selectedSideProducts.map(sideProduct => sideProduct.id) : null,
-            specialRequest: speicalRequestVal,
-        }
-
-
-        return orderData;
-    }
-
-    const addOrderToCart = () => {
-        const orderData = validatedOrder();
-
-        if (orderData) {
-            addToCart(orderData);
-            closeProductModal();
-            props.openFlashMessage({ content: "Item was added to cart", isTemporary: true })
-        }
-
-    }
-
-    const changeProductOrder = () => {
-        const orderData = validatedOrder();
-        if (orderData) {
-            editCartItem({ index: props.cartIndex, newCartItem: orderData });
-            closeProductModal();
-            props.openFlashMessage({ content: "Saved changes to cart", isTemporary: true })
-        }
-    }
 
     let modalContentJSX = null;
     if (!loadingProduct && !loadingProductFailed) {
-        const { name, description, price, sideProducts, sideProductsPerQuantity } = product;
-        const singleOrderTotal = getSingleOrderTotal({ price: price, qty: itemQuantity, selectedSideProducts: selectedSideProducts })
+        const { name, description, price, sideProducts, sideProductsPerQuantity, categories } = product;
 
         const menuContentJSX = (<>
-            <header>
-                <h2>{name}</h2>
-                <span>Available Now</span>
-                <div>${price}</div>
+            <header className="header">
+                <div className="header-content">
+                    <h2 className="header-title">{name}</h2>
+                    <span>${price}</span>
+                </div>
             </header>
 
+            <main className="main">
+                <div>
+                    <p>{description}</p>
+                </div>
 
-            <h4>Side Orders:</h4>
-            <ul>
-                {sideProducts.map(sideProduct => {
-                    const extraCost = sideProduct.additionalCost > 0 && <span>+${sideProduct.additionalCost}</span>
-                    return <li key={sideProduct.id}>{sideProduct.name} {extraCost}</li>
-                })}
-            </ul>
+                <div>
+                    <h4 className="sideOrders-title">Side Orders</h4>
+                    <ul className="sideOrders">
+                        {sideProducts.map(sideProduct => {
+                            const extraCost = sideProduct.additionalCost > 0 && <span>+${sideProduct.additionalCost}</span>
+                            return <li className="sideOrderItem" key={sideProduct.id}>{sideProduct.name} {extraCost}</li>
+                        })}
+                    </ul>
+                </div>
 
-            <h4>Description:</h4>
-            <p>{description}</p>
-        </>);
-
-        const orderProductContentJSX = (<>
-
-            <header>
-                <h2>{name}</h2>
-                <span>Available Now</span>
-                <div>${price}</div>
-            </header>
-
-            <div>
-                <p>Quantity: </p>
-                <ItemQty defaultNum={props.qty} getQuantity={setItemQuantity} />
-            </div>
-
-            {sideProductsPerQuantity && sideProducts.length > 0 ? <div className="side-order-container">
-                <p>You can have {sideProductsPerQuantity} side order(s) per quantity</p>
-                <SideProductOptions
-                    qty={itemQuantity * sideProductsPerQuantity}
-                    sideProducts={sideProducts}
-                    getSelectedSideProducts={getSelectedSideProducts}
-                    selectedSideProducts={props.selectedSideProducts}
-                />
-            </div> : <p>No Side Orders Available</p>}
-
-            <div className="special-request">
-                <p>Special Request:</p>
-                <textarea name="" onChange={getSpecialRequest} defaultValue={speicalRequestVal}></textarea>
-            </div>
+                <div>
+                    <h4 className="categoriesList-title">Categories</h4>
+                    <ul className="categoriesList">
+                        {categories.map((category, index) => {
+                            return <li className="categoryList-item" key={index}>{category.title}</li>
+                        })}
+                    </ul>
+                </div>
 
 
-            <div className="modal-order-subtotal">
-                <p>Order Subtotal:</p>
-                <p>${singleOrderTotal}</p>
-            </div>
-
-            {!props.editMode && <button onClick={addOrderToCart}>Add To Cart</button>}
-            {props.editMode && <button onClick={changeProductOrder}>Save Changes</button>}
-
+            </main>
         </>);
 
 
-        modalContentJSX = (props.orderingMode && product.isOpenForPickUp) ? orderProductContentJSX : menuContentJSX;
+        modalContentJSX = menuContentJSX;
     } else {
         modalContentJSX = <p>Failed getting product</p>
     }
@@ -188,42 +100,103 @@ const productModal = (props) => {
 
     return (
         <Backdrop open handleClose={props.close}>
-            <div className="modal">
-                <div className="close" onClick={props.close}>X</div>
+            <ProductModalStyles>
+                <span className="close-modal" onClick={props.close}>X</span>
                 {loadingProduct && <p>Loading...</p>}
                 {modalContentJSX}
-                <style jsx>{`
-        .modal{
-            border:3px solid red;
-            padding:10px;
-            position:fixed;
-            width:100%;
-            top:0;
-            left:0;
-            z-index:100;
-            background:white;
-        
-        }
-         `} </style>
-            </div>
+            </ProductModalStyles>
         </Backdrop>
     )
 }
 
 
-const mapStateToProps = state => {
-    return {
-        pickUpTime: state.order.pickUpTime,
+const ProductModalStyles = styled.div`
+    /* padding:10px; */
+    position:fixed;
+    width:90%;
+    margin-left:-45%;
+    left:50%;
+    top:10vh;
+    z-index:100;
+    background:white;
+    border-radius:2px;
+    overflow:hidden;
+
+    .header{
+        background:gold;
+        position:relative;
+        min-height: 150px;
+        text-align: center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
     }
-}
+
+    .header-title{
+        margin:0;
+        margin-bottom:10px;
+    }
+
+    .close-modal{
+        position:absolute;
+        z-index:10;
+        font-size:20px;
+        top:10px;
+        left:10px;
+    }
+
+    .main{
+        padding:10px;
+    }
+
+    .sideOrders-title{
+        margin:0 0 10px;
+    }
+
+    .sideOrders{
+        padding-left:0;
+        list-style:none;
+        margin:0;
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+    .sideOrderItem{
+        background:gray;
+        color:white;
+        padding: 3px 10px;
+        border-radius:20px;
+        margin-right:5px;
+        margin-bottom:5px;
+        display:inline-block;
+    }
+
+    .categoriesList{
+        padding-left:0;
+        list-style:none;
+        margin:0;
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+    .categoriesList-title{
+        margin:0;
+        margin-bottom:10px;
+    }
+    .categoryList-item{
+        padding:5px;
+        border-radius:2px;
+        background:green;
+        color:white;
+    }
+
+`;
+
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart: (cartItem) => dispatch(orderActions.addToCart(cartItem)),
-        editCartItem: ({ index, newCartItem }) => dispatch(orderActions.editCartItem({ index, newCartItem })),
         closeProductModal: () => dispatch(layoutActions.closeProductModal()),
-        openFlashMessage: (data) => dispatch(layoutActions.openFlashMessage(data)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(productModal)
+export default connect(null, mapDispatchToProps)(productModal)
