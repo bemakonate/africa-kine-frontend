@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MenuProducts from './menuProducts';
-import styled from 'styled-components';
+import classes from "../../../styles/modules/menuCategory.module.scss";
+import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
 
 const MenuCategory = (props) => {
     const category = props.category;
@@ -26,88 +27,48 @@ const MenuCategory = (props) => {
 
     const categoryContentJSX = (
         <>
-            <ul className="subCategoryBtns">
+            <ul className={classes.subCategoryBtns}>
                 <li
                     onClick={() => setSubCategoryId('all')}
-                    className={`subCategoryBtn ${subCategoryId === 'all' ? 'subCategoryBtn--active' : null}`}
+                    className={`${classes.subCategoryBtn} ${subCategoryId === 'all' ? `${classes.subCategoryBtnActive}` : null}`}
                 >Default</li>
                 {category.subCategories.map((subCategory) => (
                     <li
-                        className={`subCategoryBtn ${subCategoryId === subCategory.id ? 'subCategoryBtn--active' : null}`}
+                        className={`${classes.subCategoryBtn} ${subCategoryId === subCategory.id ? `${classes.subCategoryBtnActive}` : null}`}
                         onClick={() => setSubCategoryId(subCategory.id)}>
                         {subCategory.title}
                     </li>
                 ))}
             </ul>
-            <div className="products-container">
+            <div className={classes.productContainer}>
                 {subCategoryProductsJSX}
             </div>
         </>
     )
+
     return (
-        <MenuCategoryStyles>
-            <div className="category">
-                <header className="category-header">
-                    <div>
-                        <h2>{category.title}</h2>
-                        <span>{category.tagline}</span>
-                    </div>
-                    <button className="category-collapse" onClick={() => setDisplayContent(!displayContent)}>+</button>
-                </header>
+        <div className={classes.category}>
+            <header className={classes.categoryHeader}>
+                <div>
+                    <h2 className={classes.categoryTitle}>{category.title}</h2>
+                    <span>{category.tagline}</span>
+                </div>
+                {displayContent ?
+                    <IoIosArrowDropdownCircle className={classes.categoryCollapse} onClick={() => setDisplayContent(!displayContent)} /> :
+                    <IoIosArrowDropupCircle className={classes.categoryCollapse} onClick={() => setDisplayContent(!displayContent)} />
+                }
+
+            </header>
 
 
-                {displayContent && categoryContentJSX}
 
-            </div>
-        </MenuCategoryStyles>
+
+            {displayContent && categoryContentJSX}
+            {!displayContent && <p className={classes.hiddenContentLabel}>Drop down to view more the items</p>}
+        </div>
     )
 
 }
-
-const MenuCategoryStyles = styled.article`
-    .category{
-        margin-bottom:50px;
-    }
-    
-    .category-header{
-        /* display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: end; */
-        display:flex;
-        align-items:flex-end;
-    }
-
-    .category-collapse{
-        margin-left:30px;
-    }
-    .subCategoryBtns{
-        list-style: none;
-        padding-left: 0;
-        display:flex;
-        flex-wrap:wrap;
-    }
-
-    .subCategoryBtn{
-        padding: 5px 20px;
-        margin-right:5px;
-        margin-bottom: 8px;
-        background:gray;
-        border-radius: 20px;
-        font-size: 14px;
-        color:white;
-      
-    }
-
-    .subCategoryBtn--active{
-        background: blue;
-        color:white;
-    }
-
-    .products-container{
-        width:95%;
-        margin:0 auto;
-    }
-`;
 
 
 export default MenuCategory;

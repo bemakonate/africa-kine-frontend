@@ -1,186 +1,165 @@
 import Layout from '../components/layout';
 import MenuProducts from '../components/resuable/menuCategories/menuProducts';
-import styled from 'styled-components';
+import { formatPhoneNum } from '../constants/helpers';
+import { Container, Button } from '../styles/base';
+import axios from 'axios';
+import Link from '../components/resuable/link';
+import moment from 'moment';
+import classes from "../styles/modules/workingHoursContainer.module.scss";
 
 
-const data = [
-  {
-    "id": 1,
-    "name": "Beacon, Egg, and Cheese",
-    "price": 3,
-    "sideProductsPerQuantity": 2,
-    "description": "How it used to be",
-  },
-  {
-    "id": 2,
-    "name": "Beacon, Egg, and Cheese",
-    "price": 3,
-    "sideProductsPerQuantity": 2,
-    "description": "How it used to be",
-  }
-]
 
-const Home = (props) => {
-
+const Home = ({ homePage, businessHours, businessInfo }) => {
+  const restuarantImgURL = "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fG5ldyUyMHlvcmt8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60";
   return (
     <Layout>
-      <HomePageStyles>
-        <header className="jumbotron">
-          <div className="jumbo-container">
-            <h1>African Kine</h1>
-            <div>
-              <a className="jumbo__contact-btn" href="#">Contact</a>
-              <a className="jumbo__order-btn" href="#">Order Online</a>
+      <div className="page-home">
+        <div className="jumbotron">
+          <div className="global__container">
+            <h1>{businessInfo.companyName}</h1>
+            <div className="jumbotron__btns">
+              <Link href="/contact"><button className="jumbotron__btn">Contact Us</button></Link>
+              <Link href="/menu"><button className="jumbotron__btn">Menu</button></Link>
+              <Link href="/ordering"><button className="jumbotron__btn">Order</button></Link>
             </div>
           </div>
-        </header>
+        </div>
 
-        <section className="intro">
-          <div className="container">
+        <section className="section__intro">
+          <div className="global__container">
             <h2>Welcome</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae, laboriosam. Optio iure quaerat architecto sit non nulla quia neque? Laudantium esse pariatur reiciendis nisi? Eius explicabo quasi beatae dignissimos assumenda laudantium quo blanditiis, porro, maiores eos non laborum cum, sed veritatis quaerat sequi distinctio? Qui dicta quasi asperiores pariatur et, suscipit non iure accusantium nesciunt amet a dolor</p>
+            <p>{homePage.introductionText}</p>
           </div>
         </section>
 
-        <section className="menu">
-          <div className="container">
-            <h2 className="menu-title">Popular Products</h2>
-            <div className="popular-products">
-              <MenuProducts products={data} />
+        <section className="section__popular-menu">
+          <div className="global__container">
+            <h2 className="popular-menu__title">Popular Menu</h2>
+            <div className="popular-menu__container">
+              <MenuProducts products={homePage.popularProducts.products} />
             </div>
-            <div className="menu-link-container">
-              <a className="menu-link" href="#">View Full Menu</a>
+            <Link href="/menu" className="popular-menu__link">View Full Menu</Link>
+          </div>
+        </section>
+
+        <div className="contact-order-group global__section-padding">
+          <section className="section__contact">
+            <h2>Contact Us</h2>
+            <span>Give us a call ?</span>
+            <Link href="/contact" className="contact-link__btn">Contact Us</Link>
+          </section>
+
+          <section className="section__order">
+            <h2>Order Online</h2>
+            <span>Use our flexible ordering platforms</span>
+            <Link href="/ordering" className="order-link__btn">Ordering Online</Link>
+          </section>
+        </div>
+
+        <section className="section__business-info">
+          <div className="global__container">
+            <h2 className="business-info__title">Business Info</h2>
+            <div className="main__business-info">
+              <div className="restaurant-image__container">
+                <div>
+                  <img src={restuarantImgURL} alt="Resturant Image" />
+                </div>
+              </div>
+
+              <div className="business-info-group">
+                <div className="business-info__details">
+                  <div className="business-info__row">
+                    <h4 className="business-info__label">Address</h4>
+                    <p className="business-info__detail">{businessInfo.location}</p>
+                  </div>
+
+                  <div className="business-info__row">
+                    <h4 className="business-info__label">Phone</h4>
+                    <p className="business-info__detail">{formatPhoneNum(businessInfo.phone)}</p>
+                  </div>
+                  <div className="business-info__row">
+                    <h4 className="business-info__label">Email</h4>
+                    <p className="business-info__detail">{businessInfo.email}</p>
+                  </div>
+                </div>
+
+
+                <div className="business-info__hours">
+                  <h3 className="business-info__hours-title">Hours</h3>
+                  <WorkingHours businessHours={businessHours} />
+                </div>
+              </div>
             </div>
 
           </div>
         </section>
 
-        <section className="contact-link">
-          <h2>Contact Us?</h2>
-          <span>Give us a call?</span>
-          <a href="#">Contact</a>
-        </section>
-
-        <section className="order-link">
-          <h2>Order Online</h2>
-          <span>Use our flexible ordering platforms</span>
-          <a href="#">Order Online</a>
-        </section>
-
-        <section>
-          <div className="container">
-            <h2>Business Info</h2>
-            <div>-----------Insert Resturant Image--------</div>
-            <div>
-              <h4>Address</h4>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, fugit.</p>
-            </div>
-
-            <div>
-              <h2>Hours</h2>
-              <ul className="week-hours">
-                <li className="day-hours">
-                  <span>Mon:</span>
-                  <ul className="day-hours_list">
-                    <li className="day-hours-list_item">8:00am - 10am</li>
-                    <li className="day-hours-list_item">8:00am - 10am</li>
-                  </ul>
-                </li>
-                <li className="day-hours">
-                  <span>Tues:</span>
-                  <ul className="day-hours_list">
-                    <li className="day-hours-list_item">closed</li>
-
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </HomePageStyles>
-    </Layout>
+      </div>
+    </Layout >
   )
 }
 
+// ========================================================================
+// ========================================================================
+// WORKING HOURS
+// ========================================================================
+// ========================================================================
 
-const HomePageStyles = styled.div`
-  .week-hours{
-    padding-left:0;
-    list-style:none;
-  }
+const WorkingHours = ({ businessHours }) => {
 
-  .day-hours_list{
-    padding-left:0;
-    list-style:none;
-  }
+  //Business Hours JSX
+  const openHours = JSON.parse(businessHours.open);
+  const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
+  const businessHoursJSX = [];
 
-  .day-hours{
-    margin-bottom:10px;
-  }
+  for (const prop in openHours) {
+    const dayHours = openHours[prop];
+    let dayHoursJSX = <li className="day-hours-list_item">closed</li>;
 
-  .day-hours{
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-column-gap:10px;
-  }
+    if (dayHours) {
+      const dayHoursArr = [];
+      for (let i = 0; i < dayHours.length; i += 2) {
+        dayHoursArr.push(
+          <li className="day-hours-list_item" key={i}>
+            {moment(dayHours[i], "HH:mm").format('hh:mm a')} - {moment(dayHours[i + 1], "HH:mm").format('hh:mm a')}
+          </li>
+        );
+      }
+      dayHoursJSX = dayHoursArr;
+    }
 
-  .jumbotron{
-    height:50vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-  }
 
-  .jumbo__contact-btn,
-  .jumbo__order-btn{
-    text-align: center;
-    text-decoration: none;
-    padding: 5px 20px;
-    border-radius: 2px;
-    font-size: 20px;
-    color: white;
-    background: gray;
+    businessHoursJSX.push((
+      <li className={classes.weekHoursDayRow} key={prop}>
+        <span className={classes.daySlotsLabel}>{days[prop]}</span>
+        <ul className={classes.daySlotsRows}> {dayHoursJSX}</ul>
+      </li>
+    ))
 
   }
 
+  return (
+    <div className={classes.workingHoursContainer}>
+      <ul className={classes.weekHours}>
+        {businessHoursJSX}
+      </ul>
+    </div>
 
-  .jumbo__contact-btn{
-    margin-right:10px;
-  }
+  )
+}
 
-  .intro{
-    text-align:center;
-  }
+Home.getInitialProps = async (ctx) => {
 
-  .menu-title{
-    text-align:center;
-  }
+  const res = await Promise.all([
+    axios.get('http://localhost:1337/home-page'),
+    axios.get('http://localhost:1337/business-info'),
+    axios.get('http://localhost:1337/restaurant-settings/business'),
+  ]);
 
-  .menu-link{
-    text-decoration: none;
-    text-align:center;
-    padding: 5px 20px;
-    border-radius: 2px;
-    font-size: 20px;
-    color:white;
-    background:green;
-    display:inline-block;
-    margin-top:30px;
-  }
+  const homePage = res[0].data;
+  const businessInfo = res[1].data;
+  const businessHours = res[2].data.business.hours;
 
-  .menu-link-container{
-    display:flex;
-    justify-content:center;
-  }
-
-  .contact-link,
-  .order-link{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-`;
-
-
+  return { homePage, businessInfo, businessHours };
+}
 export default Home;

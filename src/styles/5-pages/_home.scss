@@ -1,0 +1,142 @@
+.page-home{
+    .section__intro,
+    .section__popular-menu{
+      @include sectionPadding;
+    }
+
+   .jumbotron{
+        height:50vh;
+        display:flex;
+        align-items:center;
+        background:gray;
+    }
+
+    .jumbotron__btns{
+        display:grid;
+        grid-row-gap:10px;
+    }
+
+    .jumbotron__btn{
+        @include btn($size:'md');
+    }
+    
+
+    .popular-menu__title{
+      margin-bottom:40px;
+    }
+    
+    .popular-menu__link{
+      margin-top:30px;
+      display:inline-block;
+      @include btn($size:'lg');
+    }
+  
+    //Both contact and order section similar styles
+    .section__contact,
+    .section__order{
+      padding:80px 40px;
+      @include flex($dir: column, $align:flex-start);
+    }
+
+    .contact-link__btn,
+    .order-link__btn{
+      @include btn($size:'md');
+      margin-top:30px;
+    }
+
+
+    //Individual contact section styles
+    .section__contact{
+      background:rgb(29, 29, 29);
+      color:white;
+    }
+
+    .contact-link__btn{
+      color:black;
+      background:white;
+    }
+
+    //Business Information
+    .business-info__title{
+      margin-bottom:50px;
+    }
+
+    .business-info__hours-title{
+      margin-bottom:8px;
+    }
+    
+    .restaurant-image__container{
+      @include scalableImg($height:60%,$brdr-radius: 3px);
+    }
+  
+
+    .business-info__row{
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      grid-gap: 5%;
+      margin:15px 0;
+    }
+
+    .business-info__details{
+      margin:40px 0;
+    }
+    .business-info__label,
+    .business-info__detail{
+      margin:0;
+    }
+
+  @include mq('med'){
+
+    .jumbotron{
+      height:55vh;
+    }
+    .jumbotron__btns{
+      display:inline-grid;
+      grid-auto-flow: column;
+      grid-column-gap:10px;
+    }
+
+    .contact-order-group{
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .main__business-info{
+      display: grid;
+      grid-template-columns: 1fr 30vw;
+      align-items: flex-start;
+      grid-gap: 5%;
+    }
+
+    .restaurant-image__container{
+      order:2;
+    }
+
+    .business-info__details{
+      margin: 0;
+    }
+
+    .section__contact,
+    .section__order{
+      padding:15vh 10vh;
+    }
+  
+  }
+
+  @include mq('large'){
+
+    .jumbotron{
+      height:65vh;
+    }
+    .contact-order-group{
+      grid-template-columns:2fr 3fr;
+    }
+
+    .section__contact,
+    .section__order{
+      padding:15vh;
+    }
+  }
+
+ 
+}

@@ -1,0 +1,92 @@
+.page-contact{
+
+    .page-contact__header{
+        margin-bottom:50px;
+    }
+
+    .page-contact__title{
+        margin-bottom:8px;
+    }
+
+    .page-contact__tagline{
+        @include flex($align:center);
+        margin:0;
+    }
+
+    .page-contact__tagline-icon{
+        font-size:25px;
+        margin-left:10px;
+        color:rgb(79, 79, 79);
+        
+    }
+
+
+    .call-btn{
+        @include flex($disp: inline-flex, $align:center);
+        @include btn($size:'md');
+        margin-right:15px;
+    }
+
+    .email-btn{
+        @include flex($disp: inline-flex, $align:center);
+        @include btn($size:'md');
+        
+    }
+
+    .action-btn__icon{
+        margin-left:10px;
+    }
+
+
+    .contact-details{
+        margin:30px 0;
+    }
+    .contact-details__row{
+        display:grid;
+        grid-template-columns:auto 1fr;
+        grid-column-gap:15px;
+        margin-bottom:15px;
+
+    }
+
+    .contact-details__label{
+        font-weight:700;
+        margin:0;
+    }
+
+    .contact-details__detail{
+        margin:0;
+    }
+
+    .contact-text{
+        margin-top:60px;
+    }
+
+    @include mq('med'){
+
+        .page-contact__header{
+            margin-bottom:70px;
+        }
+        .contact__main-content{
+            display:grid;
+            grid-template-columns: 1fr 2fr;
+        }
+
+        .contact-details{
+            margin:0 0 40px 0;
+        }
+
+        .action-btns{
+            @include flex($align:flex-start,$dir:column);
+        }
+
+        .call-btn{
+            margin-right:0;
+            margin-bottom:30px;
+        }
+
+        .contact-text{
+            margin-top:30px;
+        }
+    }
+}

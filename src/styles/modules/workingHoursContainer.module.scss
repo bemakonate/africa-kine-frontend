@@ -1,0 +1,23 @@
+
+.weekHours{
+    padding-left:0;
+    list-style:none;
+}
+
+.weekHoursDayRow{
+  margin-bottom:10px;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-column-gap:5%;
+}
+
+.daySlotsLabel{
+  font-weight:700;
+}
+
+.daySlotsRows{
+  padding-left:0;
+  list-style:none;
+}
+
+

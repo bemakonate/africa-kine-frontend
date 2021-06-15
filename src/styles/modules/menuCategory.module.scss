@@ -1,0 +1,64 @@
+@import "../defaultImports.module.scss";
+
+.category{
+    margin-bottom:50px;
+}
+
+.categoryTitle{
+    margin-bottom:8px;
+}
+
+.categoryHeader{
+    display:flex;
+    align-items:flex-end;
+    margin-bottom:40px;
+    justify-content: space-between;
+}
+
+.categoryCollapse{
+    margin-left:30px;
+    font-size:30px;
+    color:rgb(61, 61, 61);
+ 
+}
+.subCategoryBtns{
+    list-style: none;
+    padding-left: 0;
+    display:flex;
+    flex-wrap:wrap;
+}
+
+.subCategoryBtn{
+    padding: 5px 20px;
+    margin-right:8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    border-radius:6px;
+    @include btn($size:'med',$textColor: black, $bgColor:#c7c7c7);
+  
+}
+
+.subCategoryBtnActive{
+    background:black;
+    color:#f8f8f8;
+}
+
+.productsContainer{
+    width:95%;
+    margin:0 auto;
+}
+
+.hiddenContentLabel{
+    font-style:italic;
+    font-weight:500;
+}
+
+@include mq('med'){
+    .categoryHeader{
+        justify-content:flex-start;
+    }
+
+    .categoryCollapse{
+        margin-left:60px;
+    }
+}

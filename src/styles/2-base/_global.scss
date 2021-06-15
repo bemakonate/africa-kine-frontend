@@ -1,0 +1,91 @@
+.clearfix {
+    &::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+
+
+
+.global__section-padding{
+    padding: pix-to-rem(40px) 0;
+    @include mq('med'){
+        padding: pix-to-rem(50px) 0;
+    }
+    @include mq('large'){
+        padding: pix-to-rem(70px) 0;
+    }
+}
+
+.full-cover {
+    @include square(100%);
+}
+
+
+.basic-input {
+    border: none;
+    outline: none;
+}
+
+.remove-default-list-style {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.global__text-container {
+    padding: 0 1rem;
+}
+
+.global__container {
+    padding: 0 1rem;
+
+    @include mq('med') {
+        width: 90%;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    @include mq('large') {
+        max-width: 82.5%;
+    }
+}
+
+
+
+
+@mixin sectionPadding {
+    @extend .global__section-padding;
+}
+
+// <div class="scalable-img">
+//     <div class="img-box">
+//         <img src="">
+//     </div>
+// </div>
+
+
+@mixin scalableImg($height:100%,$brdr-radius: 0px){
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+
+    &:after {
+        content: "";
+        display: block;
+        padding-bottom: $height;
+    }
+
+    & > div {
+        position: absolute;
+        height:100%;
+        border-radius:$brdr-radius;
+        overflow:hidden;
+    }
+
+    & > div > img {
+        @include square(100%);
+    }
+}
+

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import * as layoutActions from '../../../store/layout/actions';
+import React from 'react';
+import * as layoutActions from '../../store/layout/actions';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import classes from '../../styles/modules/backdrop.module.scss';
 
 const FlashMessage = (props) => {
     const data = props.flashMessage;
@@ -12,7 +12,7 @@ const FlashMessage = (props) => {
     }
     return (
         <Wrapper>
-            <div className="flash-message">
+            <div className={classes.FlashMessage}>
                 {!data.isTemporary && <span onClick={() => props.closeFlashMessage()}>XX</span>}
                 {data.content}
             </div>
@@ -22,19 +22,7 @@ const FlashMessage = (props) => {
 }
 
 
-const Wrapper = styled.div`
-.flash-message{
-    position:fixed;
-    top:10px;
-    left:25%;
-    z-index:150;
-    width:50%;
-    padding:10px;
-    background:white;
-    border:1px solid black;
-    border-radius:5px;
-}
-`;
+
 const mapStateToProps = state => {
     return {
         flashMessage: state.layout.flashMessage

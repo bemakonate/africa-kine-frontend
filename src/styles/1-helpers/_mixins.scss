@@ -1,0 +1,170 @@
+//Media Queries
+@mixin mq($break, $custom: false) {
+
+    //Using our custom breakpoint
+    @if $custom {
+        @media(min-width:$break) {
+            @content;
+        }
+    }
+
+    //If we are using breakpoint values
+    @else {
+        $value: map-get($breakpoints, $break);
+        $sm: map-get($breakpoints, 'sm');
+
+        @if $value <= $sm {
+            @media(max-width:$value) {
+                @content;
+            }
+        }
+
+        @else if $value>$sm {
+            @media(min-width:$value) {
+                @content;
+            }
+        }
+
+    }
+
+}
+
+//Positions
+@mixin position($position:static,
+    $top: null,
+    $right: null,
+    $left: null,
+    $bottom: null,
+    $zIndex: null,
+    $p:null) {
+
+
+
+    position: $p;
+    z-index: $zIndex;
+    top: $top;
+    bottom: $bottom;
+    right: $right;
+    left: $left;
+
+    @if $p {
+        $position: $p;
+    }
+}
+@mixin flex($just:null,
+    $align:null,
+    $dir:null,
+    $wrap:null,
+    $center:null,
+    $disp:flex) {
+    display: $disp;
+    justify-content: $just;
+    align-items: $align;
+    flex-direction: $dir;
+    flex-wrap: $wrap;
+
+    @if $center== true {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+//Grid
+@mixin grid($flow:row,
+    $grid-cols:null,
+    $gap:null,
+    $grid-rows:null) {
+    display: grid;
+    grid-auto-flow: $flow;
+    grid-template-columns: $grid-cols;
+    grid-template-rows: $grid-rows;
+    grid-gap: $gap;
+}
+
+
+//Buttons
+@mixin btn($bgColor: #292929, $textColor: white, $size: 'sm'){
+    color:$textColor;
+    background-color: $bgColor;
+    outline:none;
+    border:0;
+    font-weight:400;
+    text-decoration:none;
+    cursor:pointer;
+
+    @if $size == 'sm' {
+        padding: .25rem .5rem;
+        font-size: .875rem;
+        border-radius: .2rem;
+    }
+    @else if $size == 'md'{
+        padding: .325rem .75rem;
+        font-size: 1rem;
+        border-radius: .25rem;
+        @include mq('med'){
+            padding: .5rem 1rem;
+            font-size: 1.25rem;
+            border-radius: .3rem;
+        }
+    }
+    @else if $size == 'lg'{
+        padding: .5rem 1rem;
+        font-size: 1.25rem;
+        border-radius: .3rem;
+       
+    }
+
+    &:hover {
+        background-color:lighten($bgColor, 5%);
+    }
+    
+}
+
+//========================================================================
+// SMALL HELPERS
+//========================================================================
+
+//Height and width
+@mixin square($dim, $brdr-radius: 0) {
+    height: $dim;
+    width: $dim;
+    border-radius: $brdr-radius;
+}
+
+@mixin rounded($dim, $rad : 50%) {
+    @include square($dim);
+    border-radius: $rad;
+}
+
+
+
+@mixin brdr-radius($radius) {
+    border-radius: $radius;
+    --webkit-border-radius: $radius;
+    --moz-border-radius: $radius;
+}
+
+@mixin colors($bg:inherit, $color:black) {
+    background: $bg;
+    color: $color;
+}
+
+@mixin fonts($size:inherit, $family: null, $weight:inherit) {
+    @if $family {
+        font-family: $family;
+    }
+
+    font-size: $size;
+    font-weight: $weight;
+}
+
+
+@mixin parentImgContainer($width:100%,$height:inherit){
+    width:$width;
+    height:$height;
+    overflow:hidden;
+    & > img{
+        width:100%;
+        height:100;
+    }
+}

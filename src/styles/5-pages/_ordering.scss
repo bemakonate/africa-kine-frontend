@@ -1,0 +1,24 @@
+.ordering-page{
+    .page-header{
+        margin-bottom:50px;
+    }
+
+    .page-title{
+        margin-bottom:13px;
+    }
+
+    .page-tagline{
+        margin:0;
+    }
+
+    .platform-links{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 10px;
+    }
+    .platform-link{
+        display: block;
+        text-align:center;
+        @include btn($size:'lg');
+    }
+}
