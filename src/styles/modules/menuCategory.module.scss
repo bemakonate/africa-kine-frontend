@@ -1,6 +1,7 @@
 @import "../defaultImports.module.scss";
 
 .category{
+    padding-top:50px;
     margin-bottom:50px;
 }
 
@@ -11,7 +12,6 @@
 .categoryHeader{
     display:flex;
     align-items:flex-end;
-    margin-bottom:40px;
     justify-content: space-between;
 }
 
@@ -54,6 +54,10 @@
 }
 
 @include mq('med'){
+
+    .category{
+        padding-top:90px;
+    }
     .categoryHeader{
         justify-content:flex-start;
     }

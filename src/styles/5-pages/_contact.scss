@@ -63,6 +63,7 @@
     }
 
     @include mq('med'){
+        padding-top:50px;
 
         .page-contact__header{
             margin-bottom:70px;

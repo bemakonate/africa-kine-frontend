@@ -118,7 +118,7 @@
 
     .section__contact,
     .section__order{
-      padding:15vh 10vh;
+      padding:15vh 0 15vh 10vw;
     }
   
   }
@@ -132,10 +132,7 @@
       grid-template-columns:2fr 3fr;
     }
 
-    .section__contact,
-    .section__order{
-      padding:15vh;
-    }
+  
   }
 
  

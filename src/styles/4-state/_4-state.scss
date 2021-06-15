@@ -4,6 +4,15 @@
     display: none;
 }
 
+.js__minimize-height{
+    height:0;
+    overflow:hidden;
+}
+
+.js__translate-position{
+    transform: translateY(-100vh);
+}
+
 .js-og-position {
     transform: translate(0);
 }

@@ -47,7 +47,7 @@ const MenuCategory = (props) => {
     )
 
     return (
-        <div className={classes.category}>
+        <div className={classes.category} id={`category-${category.id}`}>
             <header className={classes.categoryHeader}>
                 <div>
                     <h2 className={classes.categoryTitle}>{category.title}</h2>

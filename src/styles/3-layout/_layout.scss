@@ -1,6 +1,7 @@
 .layout {
     @include flex($dir:column);
     min-height: 100vh;
+    padding-top:$navbar-height;
     position: relative;
 }
 

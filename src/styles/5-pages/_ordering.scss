@@ -21,4 +21,8 @@
         text-align:center;
         @include btn($size:'lg');
     }
+
+    @include mq('med'){
+        padding-top:60px;
+    }
 }

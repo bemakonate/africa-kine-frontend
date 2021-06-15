@@ -2,8 +2,7 @@ import React from 'react'
 import ProductModal from '../resuable/productModal';
 import { connect } from 'react-redux';
 import * as layoutActions from '../../store/layout/actions';
-import Link from 'next/link';
-import Navbar from './navbar';
+import Navigation from './navigation';
 import FlashMessage from '../resuable/flashMessage';
 
 
@@ -12,7 +11,7 @@ const Layout = (props) => {
 
     return (
         <div className="layout">
-            <Navbar />
+            <Navigation />
             {(props.flashMessage && props.flashMessage.open) && <FlashMessage />}
             {isProductModalOpen ? <ProductModal {...productModalProps} close={closeProductModal} /> : null}
             {props.children}

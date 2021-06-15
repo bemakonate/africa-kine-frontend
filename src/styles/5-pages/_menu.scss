@@ -2,11 +2,44 @@
     padding:0 1rem;
 }
 
+.menu-nav{
+    background:rgb(189, 189, 189);
+    @include position($p:fixed,$left:0,$top:0);
+    width:100%;
+    overflow:scroll;
+}
+
+.menu-nav__item{
+    display:inline-block;
+    padding:10px 30px;
+    &:hover{
+        color:white;
+    }
+}
+
+.menu-nav__content-container{
+    @include flex();
+}
+
 @include mq('med'){
+
+    .menu-page-title{
+        margin:0;
+    }
     .menu-container{
         padding:0;
+        padding-top:80px;
         margin:0 auto;
         width:90%;
+    }
+
+    .menu-nav{
+        top:$navbar-height;
+    }
+
+    .menu-nav__item{
+        display:inline-block;
+        padding:10px 40px;
     }
 }
 
