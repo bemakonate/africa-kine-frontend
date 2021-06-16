@@ -1,7 +1,7 @@
 .layout {
     @include flex($dir:column);
     min-height: 100vh;
-    padding-top:$navbar-height;
+
     position: relative;
 }
 
@@ -11,4 +11,10 @@
 
 .layout-padding {
     padding-top: 70px;
+}
+
+@include mq('med'){
+    .layout{
+        padding-top:$navbar-height;
+    }
 }

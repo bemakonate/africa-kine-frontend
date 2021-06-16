@@ -1,5 +1,6 @@
 .menu-container{
-    padding:0 1rem;
+    padding:50px 1rem 0;
+
 }
 
 .menu-nav{
@@ -22,6 +23,10 @@
 }
 
 @include mq('med'){
+
+    .menu-container{
+        padding:0;
+    }
 
     .menu-page-title{
         margin:0;

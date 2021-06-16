@@ -1,0 +1,13 @@
+
+.Row{
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    grid-gap: 5%;
+    margin:15px 0;
+}
+
+.Details,
+.Detail,
+.Label{
+    margin:0;
+}

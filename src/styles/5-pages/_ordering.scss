@@ -1,4 +1,6 @@
 .ordering-page{
+    padding-top:60px;
+    
     .page-header{
         margin-bottom:50px;
     }
@@ -22,7 +24,5 @@
         @include btn($size:'lg');
     }
 
-    @include mq('med'){
-        padding-top:60px;
-    }
+    
 }

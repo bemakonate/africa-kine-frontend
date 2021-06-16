@@ -7,16 +7,16 @@ const data = [
         link: '/'
     },
     {
-        label: 'Contact',
-        link: '/contact',
-    },
-    {
         label: 'Menu',
         link: '/menu'
     },
     {
         label: 'Order',
         link: '/ordering'
+    },
+    {
+        label: 'Contact',
+        link: '/contact',
     }
 ]
 const navLinks = (props) => {

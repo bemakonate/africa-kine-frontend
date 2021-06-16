@@ -1,11 +1,8 @@
 import Layout from '../components/layout';
 import MenuProducts from '../components/resuable/menuCategories/menuProducts';
-import { formatPhoneNum } from '../constants/helpers';
-import { Container, Button } from '../styles/base';
 import axios from 'axios';
 import Link from '../components/resuable/link';
-import moment from 'moment';
-import classes from "../styles/modules/workingHoursContainer.module.scss";
+import BusinessDetails from '../components/resuable/businessDetails';
 
 
 
@@ -18,9 +15,9 @@ const Home = ({ homePage, businessHours, businessInfo }) => {
           <div className="global__container">
             <h1>{businessInfo.companyName}</h1>
             <div className="jumbotron__btns">
-              <Link href="/contact"><button className="jumbotron__btn">Contact Us</button></Link>
               <Link href="/menu"><button className="jumbotron__btn">Menu</button></Link>
               <Link href="/ordering"><button className="jumbotron__btn">Order</button></Link>
+              <Link href="/contact"><button className="jumbotron__btn">Contact Us</button></Link>
             </div>
           </div>
         </div>
@@ -65,31 +62,12 @@ const Home = ({ homePage, businessHours, businessInfo }) => {
                   <img src={restuarantImgURL} alt="Resturant Image" />
                 </div>
               </div>
-
-              <div className="business-info-group">
-                <div className="business-info__details">
-                  <div className="business-info__row">
-                    <h4 className="business-info__label">Address</h4>
-                    <p className="business-info__detail">{businessInfo.location}</p>
-                  </div>
-
-                  <div className="business-info__row">
-                    <h4 className="business-info__label">Phone</h4>
-                    <p className="business-info__detail">{formatPhoneNum(businessInfo.phone)}</p>
-                  </div>
-                  <div className="business-info__row">
-                    <h4 className="business-info__label">Email</h4>
-                    <p className="business-info__detail">{businessInfo.email}</p>
-                  </div>
-                </div>
-
-
-                <div className="business-info__hours">
-                  <h3 className="business-info__hours-title">Hours</h3>
-                  <WorkingHours businessHours={businessHours} />
-                </div>
-              </div>
+              <BusinessDetails infoClass="business-info__details" />
             </div>
+
+
+
+
 
           </div>
         </section>
@@ -99,54 +77,6 @@ const Home = ({ homePage, businessHours, businessInfo }) => {
   )
 }
 
-// ========================================================================
-// ========================================================================
-// WORKING HOURS
-// ========================================================================
-// ========================================================================
-
-const WorkingHours = ({ businessHours }) => {
-
-  //Business Hours JSX
-  const openHours = JSON.parse(businessHours.open);
-  const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
-  const businessHoursJSX = [];
-
-  for (const prop in openHours) {
-    const dayHours = openHours[prop];
-    let dayHoursJSX = <li className="day-hours-list_item">closed</li>;
-
-    if (dayHours) {
-      const dayHoursArr = [];
-      for (let i = 0; i < dayHours.length; i += 2) {
-        dayHoursArr.push(
-          <li className="day-hours-list_item" key={i}>
-            {moment(dayHours[i], "HH:mm").format('hh:mm a')} - {moment(dayHours[i + 1], "HH:mm").format('hh:mm a')}
-          </li>
-        );
-      }
-      dayHoursJSX = dayHoursArr;
-    }
-
-
-    businessHoursJSX.push((
-      <li className={classes.weekHoursDayRow} key={prop}>
-        <span className={classes.daySlotsLabel}>{days[prop]}</span>
-        <ul className={classes.daySlotsRows}> {dayHoursJSX}</ul>
-      </li>
-    ))
-
-  }
-
-  return (
-    <div className={classes.workingHoursContainer}>
-      <ul className={classes.weekHours}>
-        {businessHoursJSX}
-      </ul>
-    </div>
-
-  )
-}
 
 Home.getInitialProps = async (ctx) => {
 

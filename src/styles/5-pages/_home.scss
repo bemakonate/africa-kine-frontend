@@ -70,20 +70,10 @@
     }
   
 
-    .business-info__row{
-      display: grid;
-      grid-template-columns: 60px 1fr;
-      grid-gap: 5%;
-      margin:15px 0;
+    .business-info__details{
+      margin: 40px 0;
     }
 
-    .business-info__details{
-      margin:40px 0;
-    }
-    .business-info__label,
-    .business-info__detail{
-      margin:0;
-    }
 
   @include mq('med'){
 
@@ -111,6 +101,7 @@
     .restaurant-image__container{
       order:2;
     }
+
 
     .business-info__details{
       margin: 0;

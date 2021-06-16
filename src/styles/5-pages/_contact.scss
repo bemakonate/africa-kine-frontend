@@ -1,5 +1,6 @@
 .page-contact{
-
+    
+    padding-top:50px;
     .page-contact__header{
         margin-bottom:50px;
     }
@@ -63,7 +64,7 @@
     }
 
     @include mq('med'){
-        padding-top:50px;
+        
 
         .page-contact__header{
             margin-bottom:70px;

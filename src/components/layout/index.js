@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as layoutActions from '../../store/layout/actions';
 import Navigation from './navigation';
 import FlashMessage from '../resuable/flashMessage';
+import Footer from './footer';
 
 
 const Layout = (props) => {
@@ -15,6 +16,7 @@ const Layout = (props) => {
             {(props.flashMessage && props.flashMessage.open) && <FlashMessage />}
             {isProductModalOpen ? <ProductModal {...productModalProps} close={closeProductModal} /> : null}
             {props.children}
+            <Footer />
         </div>
     )
 }

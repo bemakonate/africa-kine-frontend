@@ -1,0 +1,70 @@
+.footer{
+    background:rgb(226, 226, 226);
+    color:black;
+    padding:20px 0;
+    margin-top:40px;
+
+    .social-icon{
+        font-size:40px;
+        margin-right:5px;
+    }
+
+    .section__info,
+    .section__social-media{
+        margin-top:40px;
+    }
+    
+    .copyright-line{
+        margin-top:30px;
+        @include flex($align:center);
+    }
+
+    .copyright-icon{
+        margin-right:10px;
+        font-size:20px;
+    }
+
+    @include mq('med'){
+        margin-top:80px;
+        
+        .footer-content{
+            display:grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-column-gap:5vw;
+        }
+
+        .company-name{
+            grid-column:1/-1
+        }
+
+        .section__info{
+            grid-column:1/4
+        }
+
+        .section__social-media{
+            grid-column: 4/-1;
+        }
+
+        .section__info,
+        .section__social-media{
+            margin-top:0px;
+        }
+    }
+
+    @include mq('large'){
+        .footer-content{
+            display:grid;
+            grid-template-columns: 1fr 3fr 1fr
+        }
+
+        .company-name{
+            font-size:30px;
+        }
+        .company-name,
+        .section__info,
+        .section__social-media{
+            grid-column:auto;
+        }
+    }
+    
+}
