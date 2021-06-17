@@ -6,17 +6,19 @@ import * as asyncActions from '../store/asyncActions'
 import { withApollo } from '../graphql/apollo';
 import { MENU_QUERY } from '../graphql/queries';
 import { connect } from 'react-redux';
+import SEO from '../components/resuable/SEO';
 
 const MenuPage = (props) => {
     const { restaurantCategories: categories } = props.data;
 
     return (
         <Layout>
+            <SEO title="Menu" />
             <nav className="menu-nav">
                 <div className="global__container">
                     <div className="menu-nav__content-container">
                         {categories.map(category => (
-                            <a className="menu-nav__item" href={`#category-${category.id}`}>{category.title}</a>
+                            <a key={category.id} className="menu-nav__item" href={`#category-${category.id}`}>{category.title}</a>
                         ))}
                     </div>
                 </div>

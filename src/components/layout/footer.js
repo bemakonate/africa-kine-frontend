@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import BusinessInfo from '../resuable/businessDetails/businessInfo';
-import axios from 'axios';
+import axios from '../../constants/instances/backend';
 import { RiFacebookBoxLine, RiInstagramLine } from 'react-icons/ri';
 import { CgCopyright } from 'react-icons/cg';
 
@@ -10,7 +10,7 @@ const footer = () => {
 
     useEffect(() => {
         const run = async () => {
-            const res = await axios.get('http://localhost:1337/business-info');
+            const res = await axios.get(`/business-info`);
             setBusinessInfo(res.data);
         }
         run();

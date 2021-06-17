@@ -1,15 +1,17 @@
 import Layout from '../components/layout';
 import MenuProducts from '../components/resuable/menuCategories/menuProducts';
-import axios from 'axios';
+import axios from '../constants/instances/backend';
 import Link from '../components/resuable/link';
 import BusinessDetails from '../components/resuable/businessDetails';
+import SEO from '../components/resuable/SEO';
 
 
 
-const Home = ({ homePage, businessHours, businessInfo }) => {
+const Home = ({ homePage, businessInfo }) => {
   const restuarantImgURL = "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fG5ldyUyMHlvcmt8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60";
   return (
     <Layout>
+      <SEO title="Home" />
       <div className="page-home">
         <div className="jumbotron">
           <div className="global__container">
@@ -81,9 +83,9 @@ const Home = ({ homePage, businessHours, businessInfo }) => {
 Home.getInitialProps = async (ctx) => {
 
   const res = await Promise.all([
-    axios.get('http://localhost:1337/home-page'),
-    axios.get('http://localhost:1337/business-info'),
-    axios.get('http://localhost:1337/restaurant-settings/business'),
+    axios.get('/home-page'),
+    axios.get('/business-info'),
+    axios.get('/restaurant-settings/business'),
   ]);
 
   const homePage = res[0].data;

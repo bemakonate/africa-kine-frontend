@@ -6,6 +6,7 @@ const initialState = {
     productModalData: {
         props: null,
     },
+    businessData: null,
     flashMessage: {
         open: false,
         content: null,
@@ -47,6 +48,10 @@ const closeFlashMessage = (state, action) => updatedObj(state, {
     }
 })
 
+const setBusinessData = (state, action) => updatedObj(state, {
+    businessData: action.payload.data
+
+})
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.OPEN_PRODUCT_MODAL: return openProductModal(state, action);
@@ -55,6 +60,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADD_CONFIRM_ORDER_DATA: return addConfirmOrderPageData(state, action);
         case actionTypes.OPEN_FLASH_MESSAGE: return openFlashMessage(state, action);
         case actionTypes.CLOSE_FLASH_MESSAGE: return closeFlashMessage(state, action);
+        case actionTypes.SET_BUSSINESS_DATA: return setBusinessData(state, action);
         default:
 
             return state

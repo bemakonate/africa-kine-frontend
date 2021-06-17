@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as layoutActions from '../../store/layout/actions';
 import Backdrop from './backdrop';
-import axios from 'axios';
+import axios from '../../constants/instances/backend';
 import Spinner from './spinner';
 import classes from '../../styles/modules/productModal.module.scss'
 import { IoCloseCircle } from 'react-icons/io5';
@@ -42,7 +42,7 @@ const productModal = (props) => {
 
     const getProduct = async (productId) => {
         try {
-            const res = await axios.get(`http://localhost:1337/restaurant-settings/products/${productId}`);
+            const res = await axios.get(`/restaurant-settings/products/${productId}`);
             return res.data;
         } catch (err) {
             console.log(err);
@@ -77,7 +77,8 @@ const productModal = (props) => {
                         <h4 className={classes.SideOrdersTitle}>Side Orders</h4>
                         <ul className={classes.SideOrders}>
                             {sideProducts.map(sideProduct => {
-                                const extraCost = sideProduct.additionalCost > 0 && <span>+${sideProduct.additionalCost}</span>
+                                const extraCost = sideProduct.additionalCost > 0 &&
+                                    <span className={classes.ProductExtraCost}>+${sideProduct.additionalCost.toFixed(2)}</span>
                                 return <li className={classes.SideOrderItem} key={sideProduct.id}>{sideProduct.name} {extraCost}</li>
                             })}
                         </ul>

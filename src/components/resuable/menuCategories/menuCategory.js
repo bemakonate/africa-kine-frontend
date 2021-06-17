@@ -32,8 +32,9 @@ const MenuCategory = (props) => {
                     onClick={() => setSubCategoryId('all')}
                     className={`${classes.subCategoryBtn} ${subCategoryId === 'all' ? `${classes.subCategoryBtnActive}` : null}`}
                 >Default</li>
-                {category.subCategories.map((subCategory) => (
+                {category.subCategories.map((subCategory, index) => (
                     <li
+                        key={index}
                         className={`${classes.subCategoryBtn} ${subCategoryId === subCategory.id ? `${classes.subCategoryBtnActive}` : null}`}
                         onClick={() => setSubCategoryId(subCategory.id)}>
                         {subCategory.title}

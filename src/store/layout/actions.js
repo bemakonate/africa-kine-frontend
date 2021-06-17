@@ -43,3 +43,13 @@ export const closeFlashMessage = (data) => {
         type: actionTypes.CLOSE_FLASH_MESSAGE,
     }
 }
+
+export const setBusinessData = (data) => {
+    return {
+        type: actionTypes.SET_BUSSINESS_DATA,
+        payload: {
+            data
+        }
+    }
+
+}

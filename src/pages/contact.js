@@ -1,8 +1,9 @@
 import React from 'react';
 import Layout from '../components/layout';
-import axios from 'axios';
+import axios from '../constants/instances/backend';
 import { AiFillPhone, AiOutlineSmile } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md'
+import SEO from '../components/resuable/SEO';
 
 
 function formatBasicPhoneNumber(phoneNumberString) {
@@ -21,6 +22,7 @@ const Contact = (props) => {
 
     return (
         <Layout>
+            <SEO title="Contact" />
             <div className="page-contact">
                 <div className="global__container">
                     <header className="page-contact__header">
@@ -63,8 +65,8 @@ const Contact = (props) => {
 Contact.getInitialProps = async (ctx) => {
 
     const res = await Promise.all([
-        axios.get('http://localhost:1337/contact-page'),
-        axios.get('http://localhost:1337/business-info'),
+        axios.get(`/contact-page`),
+        axios.get(`/business-info`),
     ]);
 
     const contactPage = res[0].data;
