@@ -35,7 +35,7 @@ const Home = ({ homePage, businessInfo }) => {
           <div className="global__container">
             <h2 className="popular-menu__title">Popular Menu</h2>
             <div className="popular-menu__container">
-              <MenuProducts products={homePage.popularProducts.products} />
+              {homePage.popularProducts && <MenuProducts products={homePage.popularProducts} />}
             </div>
             <Link href="/menu" className="popular-menu__link">View Full Menu</Link>
           </div>
@@ -90,8 +90,8 @@ Home.getInitialProps = async (ctx) => {
 
   const homePage = res[0].data;
   const businessInfo = res[1].data;
-  const businessHours = res[2].data.business.hours;
+  const businessData = res[2].data;
 
-  return { homePage, businessInfo, businessHours };
+  return { homePage, businessInfo, businessData };
 }
 export default Home;

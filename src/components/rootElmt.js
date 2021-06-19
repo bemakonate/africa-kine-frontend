@@ -13,9 +13,8 @@ const rootElmt = ({ children, setBusinessData }) => {
             ]);
 
             const businessInfo = res[0].data;
-            const businessHours = res[1].data.business.hours;
+            const businessHours = (res[1].data && res[1].data.business && res[1].data.business.hours) ? res[1].data.business.hours : null;
             setBusinessData({ ...businessInfo, hours: businessHours })
-
         }
         run();
     }, [])

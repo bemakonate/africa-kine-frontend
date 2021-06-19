@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, compose } from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk';
@@ -10,7 +10,7 @@ function initStore(preloadedState) {
     return createStore(
         rootReducer,
         preloadedState,
-        process.env.NODE_ENV !== 'production' && composeWithDevTools(applyMiddleware(thunk))
+        composeWithDevTools(applyMiddleware(thunk))
     )
 }
 
@@ -39,4 +39,4 @@ export const initializeStore = (preloadedState) => {
 export function useStore(initialState) {
     const store = useMemo(() => initializeStore(initialState), [initialState])
     return store
-} 
+}

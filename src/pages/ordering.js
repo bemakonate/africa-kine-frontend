@@ -3,7 +3,7 @@ import Layout from '../components/layout';
 import axios from '../constants/instances/backend';
 import SEO from '../components/resuable/SEO';
 
-const Ordering = (props) => {
+const Ordering = ({ orderingPage }) => {
     return (
         <Layout>
             <SEO title="Ordering" />
@@ -16,7 +16,7 @@ const Ordering = (props) => {
 
                     <div className="platform-links">
 
-                        {props.orderingPage.orderingPlatforms.map((orderingPlatform, index) => {
+                        {orderingPage.orderingPlatforms.length > 0 && orderingPage.orderingPlatforms.map((orderingPlatform, index) => {
                             return (
                                 <a key={`platform-${index}`} className="platform-link" href={orderingPlatform.link} target="_blank">
                                     {orderingPlatform.name}
@@ -36,7 +36,6 @@ const Ordering = (props) => {
 Ordering.getInitialProps = async (ctx) => {
 
     const res = await axios.get('/ordering-page');
-
     const orderingPage = res.data;
     return { orderingPage };
 }

@@ -17,7 +17,7 @@ const MenuPage = (props) => {
             <nav className="menu-nav">
                 <div className="global__container">
                     <div className="menu-nav__content-container">
-                        {categories.map(category => (
+                        {categories && categories.map(category => (
                             <a key={category.id} className="menu-nav__item" href={`#category-${category.id}`}>{category.title}</a>
                         ))}
                     </div>

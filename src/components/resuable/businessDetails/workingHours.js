@@ -4,6 +4,10 @@ import classes from "../../../styles/modules/workingHoursContainer.module.scss";
 
 const WorkingHours = ({ businessHours }) => {
 
+    if (!businessHours) {
+        return null;
+    }
+
     //Business Hours JSX
     const openHours = JSON.parse(businessHours.open);
     const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
