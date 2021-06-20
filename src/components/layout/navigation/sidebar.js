@@ -3,8 +3,9 @@ import NavLinks from './navLinks';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { HiMenuAlt3 } from 'react-icons/hi';
 import Link from '../../resuable/link';
+import { connect } from 'react-redux';
 
-const sideBar = () => {
+const sideBar = (props) => {
     const [isSideBarVisible, setIsSideBarVisible] = useState(false);
 
     const showSideBar = () => setIsSideBarVisible(true);
@@ -17,7 +18,7 @@ const sideBar = () => {
             <div>
                 <div className={`sideBar ${sideBarContainerStyle}`}>
                     <IoIosCloseCircle onClick={hideSideBar} className="sideBar__close" />
-                    <Link href="/" className="sideBar-title" onClick={hideSideBar}>Company Name</Link>
+                    <Link href="/" className="sideBar-title" onClick={hideSideBar}>{props.businessData.companyName}</Link>
                     <NavLinks navLinksClass="sideBar__navLinks" navLinkClass="sideBar__navLink" click={hideSideBar} />
                 </div>
 
@@ -27,4 +28,10 @@ const sideBar = () => {
     )
 }
 
-export default sideBar;
+const mapStateToProps = state => {
+    return {
+        businessData: state.layout.businessData,
+    }
+}
+
+export default connect(mapStateToProps)(sideBar);

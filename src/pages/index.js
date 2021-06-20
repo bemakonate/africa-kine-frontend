@@ -1,14 +1,15 @@
+import Image from 'next/image'
 import Layout from '../components/layout';
 import MenuProducts from '../components/resuable/menuCategories/menuProducts';
 import axios from '../constants/instances/backend';
 import Link from '../components/resuable/link';
 import BusinessDetails from '../components/resuable/businessDetails';
 import SEO from '../components/resuable/SEO';
+// import RestaurantImage from '../../public/restaurant-image.jpeg';
 
 
 
 const Home = ({ homePage, businessInfo }) => {
-  const restuarantImgURL = "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fG5ldyUyMHlvcmt8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60";
   return (
     <Layout>
       <SEO title="Home" />
@@ -43,13 +44,13 @@ const Home = ({ homePage, businessInfo }) => {
 
         <div className="contact-order-group global__section-padding">
           <section className="section__contact">
-            <h2>Contact Us</h2>
+            <h2 className="section__contact-title">Contact Us</h2>
             <span>Give us a call ?</span>
             <Link href="/contact" className="contact-link__btn">Contact Us</Link>
           </section>
 
           <section className="section__order">
-            <h2>Order Online</h2>
+            <h2 className="section__contact-title">Order Online</h2>
             <span>Use our flexible ordering platforms</span>
             <Link href="/ordering" className="order-link__btn">Ordering Online</Link>
           </section>
@@ -60,11 +61,13 @@ const Home = ({ homePage, businessInfo }) => {
             <h2 className="business-info__title">Business Info</h2>
             <div className="main__business-info">
               <div className="restaurant-image__container">
-                <div>
-                  <img src={restuarantImgURL} alt="Resturant Image" />
-                </div>
+                <Image src="/restaurant-image.jpeg" alt="Resturant Image" layout="fill" />
               </div>
-              <BusinessDetails infoClass="business-info__details" />
+              <BusinessDetails
+                infoClass="business-info__details"
+                infoLabelClass="business-info__label"
+                hoursDayLabelClass="business-hours__label"
+              />
             </div>
 
 

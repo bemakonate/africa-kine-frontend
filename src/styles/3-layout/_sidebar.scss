@@ -17,7 +17,7 @@
     @include position($p:fixed,$right:0,$top:0, $zIndex:10);
     border-bottom-left-radius: 6px;
     background:rgb(#000000, .8);
-    color:white;
+    color:$color-theme-tertiary;
     font-size:30px;
 
 }
@@ -40,6 +40,7 @@
     font-weight:700;
     display:block;
     padding:10px 0;
+    color:$color-theme-tertiary;
 }
 
 .sideBar__navLinks{
@@ -52,7 +53,7 @@
     margin:0;
 
     &:hover{
-        color:rgb(0, 166, 255);
+        color:$color-theme-tertiary;
     }
 }
 

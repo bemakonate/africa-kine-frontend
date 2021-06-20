@@ -8,7 +8,8 @@
         height:50vh;
         display:flex;
         align-items:center;
-        background:gray;
+        background:$jumbotron-bg;
+        color:$jumbotron-color;
     }
 
     .jumbotron__btns{
@@ -17,7 +18,7 @@
     }
 
     .jumbotron__btn{
-        @include btn($size:'md');
+        @include btn($size:'md',$bgColor:$color-theme-secondary);
     }
     
 
@@ -47,15 +48,34 @@
 
     //Individual contact section styles
     .section__contact{
-      background:rgb(29, 29, 29);
+      background:$color-theme-primary;
       color:white;
     }
 
+    .section__contact-title{
+      color:white;
+    }
+
+   
     .contact-link__btn{
-      color:black;
+      color:$color-theme-primary;
       background:white;
     }
 
+    .section__order{
+      background:$color-theme-secondary;
+      color:white;
+    }
+    .section__order-title{
+      color: white;
+    }
+
+    .order-link__btn{
+      background:white;
+      color:$color-theme-secondary;
+    }
+
+  
     //Business Information
     .business-info__title{
       margin-bottom:50px;
@@ -72,6 +92,15 @@
 
     .business-info__details{
       margin: 40px 0;
+    }
+
+    .business-info__label{
+      color:$color-theme-tertiary;
+    }
+
+    .business-hours__label{
+      color:$color-theme-tertiary;
+      font-weight:500;
     }
 
 
@@ -104,7 +133,7 @@
 
 
     .business-info__details{
-      margin: 0;
+      margin:0 0 50px 0;
     }
 
     .section__contact,

@@ -5,6 +5,7 @@
 
 .menu-nav{
     background:rgb(189, 189, 189);
+    color:black;
     @include position($p:fixed,$left:0,$top:0);
     width:100%;
     overflow:scroll;

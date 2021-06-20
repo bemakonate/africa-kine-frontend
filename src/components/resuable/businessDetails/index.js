@@ -12,13 +12,16 @@ const BusinessDetails = ({ businessData, ...props }) => {
 
             <div className="business-info-group">
                 <div className={props.infoClass}>
-                    <BusinessInfo businessInfo={businessData} />
+                    <BusinessInfo
+                        businessInfo={businessData}
+                        labelClass={props.infoLabelClass}
+                        detailClass={props.infoDetailClass} />
                 </div>
 
 
                 <div className="business-info__hours">
                     <h3 className="business-info__hours-title">Hours</h3>
-                    <WorkingHours businessHours={businessData.hours} />
+                    <WorkingHours businessHours={businessData.hours} dayLabelClass={props.hoursDayLabelClass} />
                 </div>
             </div>
 

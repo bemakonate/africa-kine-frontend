@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import classes from "../../../styles/modules/workingHoursContainer.module.scss";
 
-const WorkingHours = ({ businessHours }) => {
+const WorkingHours = ({ businessHours, dayLabelClass }) => {
 
     if (!businessHours) {
         return null;
@@ -12,6 +12,8 @@ const WorkingHours = ({ businessHours }) => {
     const openHours = JSON.parse(businessHours.open);
     const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
     const businessHoursJSX = [];
+
+    const dayLabelClasses = [classes.daySlotsLabel, dayLabelClass].join(' ');
 
     for (const prop in openHours) {
         const dayHours = openHours[prop];
@@ -32,7 +34,7 @@ const WorkingHours = ({ businessHours }) => {
 
         businessHoursJSX.push((
             <li className={classes.weekHoursDayRow} key={prop}>
-                <span className={classes.daySlotsLabel}>{days[prop]}</span>
+                <span className={dayLabelClass}>{days[prop]}</span>
                 <ul className={classes.daySlotsRows}> {dayHoursJSX}</ul>
             </li>
         ))

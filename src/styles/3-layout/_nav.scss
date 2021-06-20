@@ -20,7 +20,7 @@
         font-size:20px;
         margin-right:30px;
         font-weight:600;
-        color:rgb(32, 94, 148);
+        color:$color-theme-tertiary;
     }
     
     .nav__links{
@@ -35,7 +35,7 @@
         height:100%;
         font-weight:400;
         &:hover{
-            color:rgb(32, 94, 148);
+            color:$color-theme-tertiary;
         }
     }
 }

@@ -23,13 +23,19 @@ $font-xl: 3.157rem;
 $font-xxl: 4.209rem;
 
 $white: white;
-$body-bg: white;
 $link-color: black;
-$base-color:black;
-$color-theme-primary:rgb(216, 124, 114);
-$color-theme-secondary:#2e2e2e;
-$color-theme-tertiary:$white;
-$color-theme-third:$white;
 
-$productCard-md-break: 700px;
-$contextBox-lg-break: 1000px;
+// $productCard-md-break: 700px;
+// $contextBox-lg-break: 1000px;
+
+
+$body-bg: #4F4F4F;
+$base-color: $white;
+$color-theme-primary: #73B563;
+$color-theme-secondary: #F26C6C;
+$color-theme-tertiary: #C6CA7C;
+
+$jumbotron-bg:#404040;
+$jumbotron-color:$white;
+$product-card-bg: #404040;
+$product-modal-bg:#404040;

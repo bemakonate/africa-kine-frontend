@@ -25,17 +25,17 @@ const footer = () => {
                     <div className="footer-content">
                         <h2 className="company-name">{businessInfo.companyName}</h2>
                         <div className="section__info">
-                            <h3>Info</h3>
-                            {businessInfo !== null && <BusinessInfo businessInfo={businessInfo} />}
+                            <h3 className="section__info-title">Info</h3>
+                            {businessInfo !== null && <BusinessInfo businessInfo={businessInfo} labelClass="business-info__label" />}
                         </div>
 
                         <div className="section__social-media">
-                            <h3>Social Media</h3>
+                            <h3 className="section__social-media-title">Social Media</h3>
                             <a href={businessInfo.facebookURL} target="__blank"><RiFacebookBoxLine className="social-icon" /></a>
                             <a href={businessInfo.instagramURL} target="__blank"><RiInstagramLine className="social-icon" /></a>
                         </div>
                     </div>
-                    <span className="copyright-line"> <CgCopyright className="copyright-icon" /> Copyright 2021 Company Name - All Rights Reserved </span>
+                    <span className="copyright-line"> <CgCopyright className="copyright-icon" /> Copyright 2021 {businessInfo.companyName} - All Rights Reserved </span>
 
                 </div>
             </footer>

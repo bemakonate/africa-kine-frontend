@@ -53,7 +53,6 @@ query getMenu {
           id
           name
           additionalCost
-          description
         }
       }
     }

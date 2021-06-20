@@ -18,7 +18,7 @@
 .categoryCollapse{
     margin-left:30px;
     font-size:30px;
-    color:rgb(61, 61, 61);
+    color:white;
  
 }
 .subCategoryBtns{
@@ -34,13 +34,13 @@
     margin-bottom: 8px;
     font-size: 14px;
     border-radius:6px;
-    @include btn($size:'med',$textColor: black, $bgColor:#c7c7c7);
+    @include btn($size:'med',$textColor: white, $bgColor:$color-theme-primary);
   
 }
 
 .subCategoryBtnActive{
-    background:black;
-    color:#f8f8f8;
+    @include btn($size:'med',$textColor: white, $bgColor:$color-theme-secondary);
+
 }
 
 .productsContainer{
