@@ -3,6 +3,7 @@ import BusinessInfo from '../resuable/businessDetails/businessInfo';
 import axios from '../../constants/instances/backend';
 import { RiFacebookBoxLine, RiInstagramLine } from 'react-icons/ri';
 import { CgCopyright } from 'react-icons/cg';
+import { FaYelp } from 'react-icons/fa';
 
 const footer = () => {
 
@@ -33,6 +34,7 @@ const footer = () => {
                             <h3 className="section__social-media-title">Social Media</h3>
                             <a href={businessInfo.facebookURL} target="__blank"><RiFacebookBoxLine className="social-icon" /></a>
                             <a href={businessInfo.instagramURL} target="__blank"><RiInstagramLine className="social-icon" /></a>
+                            <a href={businessInfo.yelpURL} target="__blank"><FaYelp className="social-icon" /></a>
                         </div>
                     </div>
                     <span className="copyright-line"> <CgCopyright className="copyright-icon" /> Copyright 2021 {businessInfo.companyName} - All Rights Reserved </span>
