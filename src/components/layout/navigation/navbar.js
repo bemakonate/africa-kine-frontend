@@ -4,9 +4,10 @@ import Link from '../../resuable/link';
 import { connect } from 'react-redux';
 
 const navbar = (props) => {
+    const companyName = props.businessData ? props.businessData.companyName : 'Company Name';
     return (
         <nav className="navbar">
-            <Link href="/" className="nav__title">{props.businessData.companyName}</Link>
+            <Link href="/" className="nav__title">{companyName}</Link>
             <NavLinks navLinksClass="nav__links" navLinkClass="nav__link" />
         </nav>
     )

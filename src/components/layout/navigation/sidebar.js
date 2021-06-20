@@ -10,6 +10,7 @@ const sideBar = (props) => {
 
     const showSideBar = () => setIsSideBarVisible(true);
     const hideSideBar = () => setIsSideBarVisible(false);
+    const companyName = props.businessData ? props.businessData.companyName : 'Company Name';
     const sideBarContainerStyle = isSideBarVisible && "sideBar__drop";
     return (
         <div>
@@ -18,7 +19,7 @@ const sideBar = (props) => {
             <div>
                 <div className={`sideBar ${sideBarContainerStyle}`}>
                     <IoIosCloseCircle onClick={hideSideBar} className="sideBar__close" />
-                    <Link href="/" className="sideBar-title" onClick={hideSideBar}>{props.businessData.companyName}</Link>
+                    <Link href="/" className="sideBar-title" onClick={hideSideBar}>{companyName}</Link>
                     <NavLinks navLinksClass="sideBar__navLinks" navLinkClass="sideBar__navLink" click={hideSideBar} />
                 </div>
 
