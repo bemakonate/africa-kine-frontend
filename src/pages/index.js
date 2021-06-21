@@ -7,12 +7,14 @@ import SEO from '../components/resuable/SEO';
 
 
 
-const Home = ({ homePage, businessInfo }) => {
+const Home = ({ homePage, businessInfo, err }) => {
 
   const restaurantImageURL = "https://cdn.vox-cdn.com/thumbor/dOajW3T9Jj9D6vUdNCxsiJAbTMA=/0x0:2048x1360/1200x0/filters:focal(0x0:2048x1360):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/15970304/ThreeGreat107KineExterior.jpg"
-  return (
-    <Layout>
-      <SEO title="Home" />
+
+  let HomePageJSX = null;
+
+  if (businessInfo && homePage) {
+    HomePageJSX = (
       <div className="page-home">
         <div className="jumbotron">
           <div className="global__container">
@@ -71,32 +73,32 @@ const Home = ({ homePage, businessInfo }) => {
                 hoursDayLabelClass="business-hours__label"
               />
             </div>
-
-
-
-
-
           </div>
         </section>
-
       </div>
+
+    )
+  }
+
+
+  return (
+    <Layout>
+      <SEO title="Home" />
+      {HomePageJSX}
     </Layout >
   )
 }
 
 
 Home.getInitialProps = async (ctx) => {
-
   const res = await Promise.all([
     axios.get('/home-page'),
-    axios.get('/business-info'),
-    axios.get('/restaurant-settings/business'),
+    axios.get('/business-info')
   ]);
 
   const homePage = res[0].data;
   const businessInfo = res[1].data;
-  const businessData = res[2].data;
 
-  return { homePage, businessInfo, businessData };
+  return { homePage, businessInfo };
 }
 export default Home;

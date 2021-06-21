@@ -4,25 +4,16 @@ import axios from '../constants/instances/backend';
 import { AiFillPhone, AiOutlineSmile } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md'
 import SEO from '../components/resuable/SEO';
-
-
-function formatBasicPhoneNumber(phoneNumberString) {
-    var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-        return match[1] + '-' + match[2] + '-' + match[3];
-    }
-    return null;
-}
+import { formatPhoneNum } from '../constants/helpers/index';
 
 const Contact = (props) => {
 
     const emailAddress = `mailto:${props.contactPage.contactEmail}?subject=Mail from Our Site`;
-    const phoneAddress = `tel:${formatBasicPhoneNumber(props.businessInfo.phone)}`
+    const phoneAddress = `tel:${formatPhoneNum(props.businessInfo.phone)}`;
+    let ContactPageJSX = null;
 
-    return (
-        <Layout>
-            <SEO title="Contact" />
+    if (props.contactPage && props.businessInfo) {
+        ContactPageJSX = (
             <div className="page-contact">
                 <div className="global__container">
                     <header className="page-contact__header">
@@ -44,7 +35,7 @@ const Contact = (props) => {
                             <div className="contact-details">
                                 <div className="contact-details__row">
                                     <p className="contact-details__label">Phone</p>
-                                    <p className="contact-details__detail">{formatBasicPhoneNumber(props.businessInfo.phone)}</p>
+                                    <p className="contact-details__detail">{formatPhoneNum(props.businessInfo.phone)}</p>
                                 </div>
                                 <div className="contact-details__row">
                                     <p className="contact-details__label">Email</p>
@@ -58,6 +49,13 @@ const Contact = (props) => {
 
 
             </div>
+        )
+    }
+
+    return (
+        <Layout>
+            <SEO title="Contact" />
+            {ContactPageJSX}
         </Layout>
     )
 }

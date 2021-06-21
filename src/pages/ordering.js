@@ -4,9 +4,9 @@ import axios from '../constants/instances/backend';
 import SEO from '../components/resuable/SEO';
 
 const Ordering = ({ orderingPage }) => {
-    return (
-        <Layout>
-            <SEO title="Ordering" />
+    let OrderingPageJSX = null;
+    if (orderingPage) {
+        OrderingPageJSX = (
             <div className="ordering-page">
                 <div className="global__container">
                     <header className="page-header">
@@ -26,6 +26,12 @@ const Ordering = ({ orderingPage }) => {
                     </div>
                 </div>
             </div>
+        )
+    }
+    return (
+        <Layout>
+            <SEO title="Ordering" />
+            {OrderingPageJSX}
         </Layout>
 
     )
