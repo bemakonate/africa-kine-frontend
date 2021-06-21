@@ -96,6 +96,14 @@
             width:60vw;
             margin-left:-30vw;
         }
+
+        .ProductPrice{
+            font-size:pix-to-rem(25px);
+        }
+
+        .Header{
+            padding-bottom:30px;
+        }
     }
 
     @include mq('med'){

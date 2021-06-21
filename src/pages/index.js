@@ -39,7 +39,7 @@ const Home = ({ homePage, businessInfo, error }) => {
           </div>
         </section>
 
-        <section className="section__popular-menu">
+        {homePage.popularProducts.length > 0 && <section className="section__popular-menu">
           <div className="global__container">
             <h2 className="popular-menu__title">Popular Menu</h2>
             <div className="popular-menu__container">
@@ -47,7 +47,7 @@ const Home = ({ homePage, businessInfo, error }) => {
             </div>
             <Link href="/menu" className="popular-menu__link">View Full Menu</Link>
           </div>
-        </section>
+        </section>}
 
         <div className="contact-order-group global__section-padding">
           <section className="section__contact">

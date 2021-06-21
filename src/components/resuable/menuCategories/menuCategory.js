@@ -26,14 +26,14 @@ const MenuCategory = (props) => {
 
 
     const categoryContentJSX = (
-        <>
+        <React.Fragment>
             <ul className={classes.subCategoryBtns}>
                 <li
                     onClick={() => setSubCategoryId('all')}
                     className={`${classes.subCategoryBtn} ${subCategoryId === 'all' ? `${classes.subCategoryBtnActive}` : null}`}
                 >Default</li>
                 {category.subCategories.map((subCategory, index) => (
-                    <li
+                    (subCategory.title && subCategory.products.length > 0) && <li
                         key={index}
                         className={`${classes.subCategoryBtn} ${subCategoryId === subCategory.id ? `${classes.subCategoryBtnActive}` : null}`}
                         onClick={() => setSubCategoryId(subCategory.id)}>
@@ -44,7 +44,7 @@ const MenuCategory = (props) => {
             <div className={classes.productContainer}>
                 {subCategoryProductsJSX}
             </div>
-        </>
+        </React.Fragment>
     )
 
     return (
@@ -60,10 +60,6 @@ const MenuCategory = (props) => {
                 }
 
             </header>
-
-
-
-
             {displayContent && categoryContentJSX}
             {!displayContent && <p className={classes.hiddenContentLabel}>Drop down to view more the items</p>}
         </div>

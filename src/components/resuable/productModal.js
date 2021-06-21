@@ -76,11 +76,11 @@ const productModal = (props) => {
                     <div>
                         <h4 className={classes.SideOrdersTitle}>Side Orders</h4>
                         <ul className={classes.SideOrders}>
-                            {sideProducts.map(sideProduct => {
+                            {sideProducts.length > 0 ? sideProducts.map(sideProduct => {
                                 const extraCost = sideProduct.additionalCost > 0 &&
                                     <span className={classes.ProductExtraCost}>+${sideProduct.additionalCost.toFixed(2)}</span>
                                 return <li className={classes.SideOrderItem} key={sideProduct.id}>{sideProduct.name} {extraCost}</li>
-                            })}
+                            }) : <span>No side products</span>}
                         </ul>
                     </div>
 
@@ -100,7 +100,8 @@ const productModal = (props) => {
 
 
         modalContentJSX = menuContentJSX;
-    } else {
+    }
+    else if (loadingProductFailed) {
         modalContentJSX = <p>Failed getting product</p>
     }
 

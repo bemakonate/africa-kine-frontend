@@ -30,8 +30,9 @@ const SEO = ({ title, description }) => {
     }
     return (
         <Head>
-            {seoJSX}
+            <link rel="shortcut icon" href="/favicon.ico" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
+            {seoJSX}
         </Head>
 
     )

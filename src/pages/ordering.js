@@ -19,13 +19,11 @@ const Ordering = ({ orderingPage, error }) => {
                     </header>
 
                     <div className="platform-links">
-
                         {orderingPage.orderingPlatforms.length > 0 && orderingPage.orderingPlatforms.map((orderingPlatform, index) => {
-                            return (
+                            return orderingPlatform.name &&
                                 <a key={`platform-${index}`} className="platform-link" href={orderingPlatform.link} target="_blank">
                                     {orderingPlatform.name}
                                 </a>
-                            )
                         })}
                     </div>
                 </div>
