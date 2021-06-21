@@ -4,14 +4,19 @@ import axios from '../constants/instances/backend';
 import Link from '../components/resuable/link';
 import BusinessDetails from '../components/resuable/businessDetails';
 import SEO from '../components/resuable/SEO';
+import ErrorPage from '../pages/_error';
 
 
 
-const Home = ({ homePage, businessInfo, err }) => {
+const Home = ({ homePage, businessInfo, error }) => {
 
   const restaurantImageURL = "https://cdn.vox-cdn.com/thumbor/dOajW3T9Jj9D6vUdNCxsiJAbTMA=/0x0:2048x1360/1200x0/filters:focal(0x0:2048x1360):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/15970304/ThreeGreat107KineExterior.jpg"
 
   let HomePageJSX = null;
+
+  if (error) {
+    return <ErrorPage />
+  }
 
   if (businessInfo && homePage) {
     HomePageJSX = (
@@ -91,14 +96,20 @@ const Home = ({ homePage, businessInfo, err }) => {
 
 
 Home.getInitialProps = async (ctx) => {
-  const res = await Promise.all([
-    axios.get('/home-page'),
-    axios.get('/business-info')
-  ]);
+  try {
+    const res = await Promise.all([
+      axios.get('/home-page'),
+      axios.get('/business-info')
+    ]);
 
-  const homePage = res[0].data;
-  const businessInfo = res[1].data;
+    const homePage = res[0].data;
+    const businessInfo = res[1].data;
 
-  return { homePage, businessInfo };
+    return { homePage, businessInfo };
+
+  } catch (error) {
+    return { error };
+  }
+
 }
 export default Home;

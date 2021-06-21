@@ -2,9 +2,13 @@ import React from 'react'
 import Layout from '../components/layout';
 import axios from '../constants/instances/backend';
 import SEO from '../components/resuable/SEO';
+import ErrorPage from '../pages/_error';
 
-const Ordering = ({ orderingPage }) => {
+const Ordering = ({ orderingPage, error }) => {
     let OrderingPageJSX = null;
+    if (error) {
+        return <ErrorPage />
+    }
     if (orderingPage) {
         OrderingPageJSX = (
             <div className="ordering-page">
@@ -40,10 +44,14 @@ const Ordering = ({ orderingPage }) => {
 
 
 Ordering.getInitialProps = async (ctx) => {
+    try {
+        const res = await axios.get('/ordering-page');
+        const orderingPage = res.data;
+        return { orderingPage };
+    } catch (error) {
+        return { error };
+    }
 
-    const res = await axios.get('/ordering-page');
-    const orderingPage = res.data;
-    return { orderingPage };
 }
 
 export default Ordering

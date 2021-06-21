@@ -7,10 +7,14 @@ import { withApollo } from '../graphql/apollo';
 import { MENU_QUERY } from '../graphql/queries';
 import { connect } from 'react-redux';
 import SEO from '../components/resuable/SEO';
+import ErrorPage from '../pages/_error';
 
 const MenuPage = (props) => {
     let MenuPageJSX = null;
 
+    if (props.error) {
+        return <ErrorPage />
+    }
     if (props.data && props.data.restaurantCategories) {
         const { restaurantCategories: categories } = props.data;
         MenuPageJSX = (

@@ -7,14 +7,20 @@ const rootElmt = ({ children, setBusinessData }) => {
 
     useEffect(() => {
         const run = async () => {
-            const res = await Promise.all([
-                axios.get('/business-info'),
-                axios.get('/restaurant-settings/business'),
-            ]);
+            try {
+                const res = await Promise.all([
+                    axios.get('/business-info'),
+                    axios.get('/restaurant-settings/business'),
+                ]);
 
-            const businessInfo = res[0].data;
-            const businessHours = (res[1].data && res[1].data.business && res[1].data.business.hours) ? res[1].data.business.hours : null;
-            setBusinessData({ ...businessInfo, hours: businessHours })
+                const businessInfo = res[0].data;
+                const businessHours = (res[1].data && res[1].data.business && res[1].data.business.hours) ? res[1].data.business.hours : null;
+                setBusinessData({ ...businessInfo, hours: businessHours })
+
+            } catch (err) {
+                setBusinessData(null)
+            }
+
         }
         run();
     }, [])

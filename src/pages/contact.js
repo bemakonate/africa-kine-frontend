@@ -5,49 +5,51 @@ import { AiFillPhone, AiOutlineSmile } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md'
 import SEO from '../components/resuable/SEO';
 import { formatPhoneNum } from '../constants/helpers/index';
+import ErrorPage from '../pages/_error';
+
 
 const Contact = (props) => {
-
-    const emailAddress = `mailto:${props.contactPage.contactEmail}?subject=Mail from Our Site`;
-    const phoneAddress = `tel:${formatPhoneNum(props.businessInfo.phone)}`;
     let ContactPageJSX = null;
 
+    if (props.error) {
+        return <ErrorPage />
+    }
     if (props.contactPage && props.businessInfo) {
+
+        const emailAddress = `mailto:${props.contactPage.contactEmail}?subject=Mail from Our Site`;
+        const phoneAddress = `tel:${formatPhoneNum(props.businessInfo.phone)}`;
+
         ContactPageJSX = (
-            <div className="page-contact">
-                <div className="global__container">
-                    <header className="page-contact__header">
-                        <h1 className="page-contact__title">Contact</h1>
-                        <p className="page-contact__tagline">Reach out and we will do our best to respond <AiOutlineSmile className="page-contact__tagline-icon" /></p>
-                    </header>
+            <div className="global__container">
+                <header className="page-contact__header">
+                    <h1 className="page-contact__title">Contact</h1>
+                    <p className="page-contact__tagline">Reach out and we will do our best to respond <AiOutlineSmile className="page-contact__tagline-icon" /></p>
+                </header>
 
-                    <main className="contact__main-content">
-                        <div className="action-btns">
-                            <a href={phoneAddress} className="call-btn">
-                                Call <AiFillPhone className="action-btn__icon" />
-                            </a>
-                            <a href={emailAddress} target="_blank" className="email-btn">
-                                Email Us <MdEmail className="action-btn__icon" />
-                            </a>
-                        </div>
+                <main className="contact__main-content">
+                    <div className="action-btns">
+                        <a href={phoneAddress} className="call-btn">
+                            Call <AiFillPhone className="action-btn__icon" />
+                        </a>
+                        <a href={emailAddress} target="_blank" className="email-btn">
+                            Email Us <MdEmail className="action-btn__icon" />
+                        </a>
+                    </div>
 
-                        <div>
-                            <div className="contact-details">
-                                <div className="contact-details__row">
-                                    <p className="contact-details__label">Phone</p>
-                                    <p className="contact-details__detail">{formatPhoneNum(props.businessInfo.phone)}</p>
-                                </div>
-                                <div className="contact-details__row">
-                                    <p className="contact-details__label">Email</p>
-                                    <p className="contact-details__detail">{props.contactPage.contactEmail}</p>
-                                </div>
+                    <div>
+                        <div className="contact-details">
+                            <div className="contact-details__row">
+                                <p className="contact-details__label">Phone</p>
+                                <p className="contact-details__detail">{formatPhoneNum(props.businessInfo.phone)}</p>
                             </div>
-                            <p className="contact-text">{props.contactPage.contactText}</p>
+                            <div className="contact-details__row">
+                                <p className="contact-details__label">Email</p>
+                                <p className="contact-details__detail">{props.contactPage.contactEmail}</p>
+                            </div>
                         </div>
-                    </main>
-                </div>
-
-
+                        <p className="contact-text">{props.contactPage.contactText}</p>
+                    </div>
+                </main>
             </div>
         )
     }
@@ -55,21 +57,28 @@ const Contact = (props) => {
     return (
         <Layout>
             <SEO title="Contact" />
-            {ContactPageJSX}
+            <div className="page-contact">
+                {ContactPageJSX}
+            </div>
         </Layout>
     )
 }
 
 Contact.getInitialProps = async (ctx) => {
+    try {
 
-    const res = await Promise.all([
-        axios.get(`/contact-page`),
-        axios.get(`/business-info`),
-    ]);
+        const res = await Promise.all([
+            axios.get(`/contact-page`),
+            axios.get(`/business-info`),
+        ]);
 
-    const contactPage = res[0].data;
-    const businessInfo = res[1].data;
-    return { contactPage, businessInfo };
+        const contactPage = res[0].data;
+        const businessInfo = res[1].data;
+        return { contactPage, businessInfo };
+    } catch (error) {
+        return { error };
+    }
+
 }
 
 export default Contact;
