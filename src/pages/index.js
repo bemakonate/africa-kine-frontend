@@ -1,15 +1,15 @@
-import Image from 'next/image'
 import Layout from '../components/layout';
 import MenuProducts from '../components/resuable/menuCategories/menuProducts';
 import axios from '../constants/instances/backend';
 import Link from '../components/resuable/link';
 import BusinessDetails from '../components/resuable/businessDetails';
 import SEO from '../components/resuable/SEO';
-// import RestaurantImage from '../../public/restaurant-image.jpeg';
 
 
 
 const Home = ({ homePage, businessInfo }) => {
+
+  const restaurantImageURL = "https://cdn.vox-cdn.com/thumbor/dOajW3T9Jj9D6vUdNCxsiJAbTMA=/0x0:2048x1360/1200x0/filters:focal(0x0:2048x1360):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/15970304/ThreeGreat107KineExterior.jpg"
   return (
     <Layout>
       <SEO title="Home" />
@@ -61,7 +61,9 @@ const Home = ({ homePage, businessInfo }) => {
             <h2 className="business-info__title">Business Info</h2>
             <div className="main__business-info">
               <div className="restaurant-image__container">
-                <Image src="/restaurant-image.jpeg" alt="Resturant Image" layout="fill" />
+                <div>
+                  <img className="restaurant-image" src={restaurantImageURL} alt="Restaurant Image" />
+                </div>
               </div>
               <BusinessDetails
                 infoClass="business-info__details"
