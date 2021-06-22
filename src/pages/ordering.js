@@ -41,13 +41,13 @@ const Ordering = ({ orderingPage, error }) => {
 
 
 
-Ordering.getInitialProps = async (ctx) => {
+export const getStaticProps = async (ctx) => {
     try {
         const res = await axios.get('/ordering-page');
         const orderingPage = res.data;
-        return { orderingPage };
+        return { props: { orderingPage } };
     } catch (error) {
-        return { error };
+        return { props: { error } };
     }
 
 }

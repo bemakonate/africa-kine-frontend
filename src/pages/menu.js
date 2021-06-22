@@ -1,22 +1,19 @@
 import React from 'react';
 import Layout from '../components/layout';
-import initApolloFetch from '../constants/helpers/initApolloFetch';
 import MenuCategories from '../components/resuable/menuCategories';
-import * as asyncActions from '../store/asyncActions'
-import { withApollo } from '../graphql/apollo';
-import { MENU_QUERY } from '../graphql/queries';
-import { connect } from 'react-redux';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
+import axios from '../constants/instances/backend';
 
-const MenuPage = (props) => {
+const MenuPage = ({ restaurantCategories, error }) => {
     let MenuPageJSX = null;
 
-    if (props.error) {
+
+    if (error) {
         return <ErrorPage />
     }
-    if (props.data && props.data.restaurantCategories) {
-        const { restaurantCategories: categories } = props.data;
+    if (restaurantCategories) {
+        const categories = restaurantCategories;
         MenuPageJSX = (
             <React.Fragment>
                 <nav className="menu-nav">
@@ -48,16 +45,19 @@ const MenuPage = (props) => {
 }
 
 
-MenuPage.getInitialProps = async ctx => {
-    const res = await initApolloFetch(ctx, { query: MENU_QUERY });
-    return res;
+export const getStaticProps = async (ctx) => {
+    try {
+        const res = await axios.get('/restaurant-settings/categories');
+        const restaurantCategories = res.data;
+        return { props: { restaurantCategories } };
+    } catch (error) {
+        return { props: { error } };
+    }
+
+
+
+
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        openProductModal: (data) => dispatch(asyncActions.openProductModal(data)),
-    }
-}
 
-
-export default withApollo(connect(null, mapDispatchToProps)(MenuPage));
+export default MenuPage;

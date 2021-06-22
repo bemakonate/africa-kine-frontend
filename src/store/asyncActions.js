@@ -1,5 +1,4 @@
 import * as layoutActions from './layout/actions';
-import axios from 'axios';
 
 const openProductModal = (data) => {
     return async (dispatch) => {

@@ -64,7 +64,7 @@ const Contact = (props) => {
     )
 }
 
-Contact.getInitialProps = async (ctx) => {
+export const getStaticProps = async (ctx) => {
     try {
 
         const res = await Promise.all([
@@ -74,9 +74,9 @@ Contact.getInitialProps = async (ctx) => {
 
         const contactPage = res[0].data;
         const businessInfo = res[1].data;
-        return { contactPage, businessInfo };
+        return { props: { contactPage, businessInfo } };
     } catch (error) {
-        return { error };
+        return { props: { error } };
     }
 
 }

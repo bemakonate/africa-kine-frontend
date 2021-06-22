@@ -95,7 +95,7 @@ const Home = ({ homePage, businessInfo, error }) => {
 }
 
 
-Home.getInitialProps = async (ctx) => {
+export const getStaticProps = async (ctx) => {
   try {
     const res = await Promise.all([
       axios.get('/home-page'),
@@ -105,10 +105,10 @@ Home.getInitialProps = async (ctx) => {
     const homePage = res[0].data;
     const businessInfo = res[1].data;
 
-    return { homePage, businessInfo };
+    return { props: { homePage, businessInfo } };
 
   } catch (error) {
-    return { error };
+    return { props: { error } };
   }
 
 }
