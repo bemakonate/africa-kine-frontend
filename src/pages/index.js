@@ -6,49 +6,18 @@ import Link from '../components/resuable/link';
 import BusinessDetails from '../components/resuable/businessDetails';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
-import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 
 
 
-const Home = (props) => {
+const Home = ({ businessInfo, homePage, error }) => {
 
-  const [businessInfo, setBusinessInfo] = useState(null);
-  const [homePage, setHomePage] = useState(null);
-  const [loadingError, setLoadingError] = useState(false);
 
-  let HomePageJSX = <LoadingBackdrop />;
-
+  let HomePageJSX = null;
   const restaurantImageURL = "https://cdn.vox-cdn.com/thumbor/dOajW3T9Jj9D6vUdNCxsiJAbTMA=/0x0:2048x1360/1200x0/filters:focal(0x0:2048x1360):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/15970304/ThreeGreat107KineExterior.jpg"
 
 
 
-  useEffect(() => {
-    const run = async () => {
-      try {
-        const res = await Promise.all([
-          axios.get('/home-page'),
-          axios.get('/business-info')
-        ]);
-
-        const homePage = res[0].data;
-        const businessInfo = res[1].data;
-
-        setHomePage(homePage);
-        setBusinessInfo(businessInfo);
-        setLoadingError(false);
-
-      } catch (error) {
-        setLoadingError(true);
-      }
-    }
-
-    run();
-
-  }, [])
-
-
-
-  if (loadingError) {
+  if (error) {
     return <ErrorPage />
   }
 
@@ -129,20 +98,20 @@ const Home = (props) => {
 }
 
 
-// export const getStaticProps = async (ctx) => {
-//   try {
-//     const res = await Promise.all([
-//       axios.get('/home-page'),
-//       axios.get('/business-info')
-//     ]);
+export const getStaticProps = async (ctx) => {
+  try {
+    const res = await Promise.all([
+      axios.get('/home-page'),
+      axios.get('/business-info')
+    ]);
 
-//     const homePage = res[0].data;
-//     const businessInfo = res[1].data;
+    const homePage = res[0].data;
+    const businessInfo = res[1].data;
 
-//     return { props: { homePage, businessInfo } };
+    return { props: { homePage, businessInfo } };
 
-//   } catch (error) {
-//     return { props: { error } };
-//   }
-// }
+  } catch (error) {
+    return { props: { error } };
+  }
+}
 export default Home;
