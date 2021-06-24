@@ -1,14 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../components/layout';
 import axios from '../constants/instances/backend';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
+import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 
-const Ordering = ({ orderingPage, error }) => {
-    let OrderingPageJSX = null;
-    if (error) {
+const Ordering = (props) => {
+    let OrderingPageJSX = <LoadingBackdrop />;
+
+    const [orderingPage, setOrderingPage] = useState(null);
+    const [loadingError, setLoadingError] = useState(false);
+
+    useEffect(() => {
+        const run = async () => {
+            try {
+                const res = await axios.get('/ordering-page');
+                const orderingPage = res.data;
+
+                setOrderingPage(orderingPage);
+                setLoadingError(false);
+            } catch (error) {
+                setLoadingError(true);
+            }
+        }
+        run();
+    }, [])
+
+    if (loadingError) {
         return <ErrorPage />
     }
+
     if (orderingPage) {
         OrderingPageJSX = (
             <div className="ordering-page">
@@ -41,15 +62,15 @@ const Ordering = ({ orderingPage, error }) => {
 
 
 
-export const getStaticProps = async (ctx) => {
-    try {
-        const res = await axios.get('/ordering-page');
-        const orderingPage = res.data;
-        return { props: { orderingPage } };
-    } catch (error) {
-        return { props: { error } };
-    }
+// export const getStaticProps = async (ctx) => {
+//     try {
+//         const res = await axios.get('/ordering-page');
+//         const orderingPage = res.data;
+//         return { props: { orderingPage } };
+//     } catch (error) {
+//         return { props: { error } };
+//     }
 
-}
+// }
 
 export default Ordering

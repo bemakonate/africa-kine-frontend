@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/layout';
 import axios from '../constants/instances/backend';
 import { AiFillPhone, AiOutlineSmile } from 'react-icons/ai';
@@ -6,18 +6,45 @@ import { MdEmail } from 'react-icons/md'
 import SEO from '../components/resuable/SEO';
 import { formatPhoneNum } from '../constants/helpers/index';
 import ErrorPage from '../pages/_error';
+import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 
 
 const Contact = (props) => {
-    let ContactPageJSX = null;
+    let ContactPageJSX = <LoadingBackdrop />;
 
-    if (props.error) {
+    const [contactPage, setContactPage] = useState(null);
+    const [businessInfo, setBusinessInfo] = useState(null);
+    const [loadingError, setLoadingError] = useState(false);
+
+    useEffect(() => {
+        const run = async () => {
+            try {
+                const res = await Promise.all([
+                    axios.get(`/contact-page`),
+                    axios.get(`/business-info`),
+                ]);
+
+                const contactPage = res[0].data;
+                const businessInfo = res[1].data;
+
+
+                setContactPage(contactPage);
+                setBusinessInfo(businessInfo);
+            } catch (error) {
+                setLoadingError(true);
+            }
+        }
+        run();
+    }, [])
+
+    if (loadingError) {
         return <ErrorPage />
     }
-    if (props.contactPage && props.businessInfo) {
 
-        const emailAddress = `mailto:${props.contactPage.contactEmail}?subject=Mail from Our Site`;
-        const phoneAddress = `tel:${formatPhoneNum(props.businessInfo.phone)}`;
+    if (contactPage && businessInfo) {
+
+        const emailAddress = `mailto:${contactPage.contactEmail}?subject=Mail from Our Site`;
+        const phoneNum = formatPhoneNum(businessInfo.phone);
 
         ContactPageJSX = (
             <div className="global__container">
@@ -28,7 +55,7 @@ const Contact = (props) => {
 
                 <main className="contact__main-content">
                     <div className="action-btns">
-                        <a href={phoneAddress} className="call-btn">
+                        <a href={`tel:${phoneNum}`} className="call-btn">
                             Call <AiFillPhone className="action-btn__icon" />
                         </a>
                         <a href={emailAddress} target="_blank" className="email-btn">
@@ -40,14 +67,14 @@ const Contact = (props) => {
                         <div className="contact-details">
                             <div className="contact-details__row">
                                 <p className="contact-details__label">Phone</p>
-                                <p className="contact-details__detail">{formatPhoneNum(props.businessInfo.phone)}</p>
+                                <p className="contact-details__detail">{phoneNum}</p>
                             </div>
                             <div className="contact-details__row">
                                 <p className="contact-details__label">Email</p>
-                                <p className="contact-details__detail">{props.contactPage.contactEmail}</p>
+                                <p className="contact-details__detail">{contactPage.contactEmail}</p>
                             </div>
                         </div>
-                        <p className="contact-text">{props.contactPage.contactText}</p>
+                        <p className="contact-text">{contactPage.contactText}</p>
                     </div>
                 </main>
             </div>
@@ -64,21 +91,21 @@ const Contact = (props) => {
     )
 }
 
-export const getStaticProps = async (ctx) => {
-    try {
+// export const getStaticProps = async (ctx) => {
+//     try {
 
-        const res = await Promise.all([
-            axios.get(`/contact-page`),
-            axios.get(`/business-info`),
-        ]);
+//         const res = await Promise.all([
+//             axios.get(`/contact-page`),
+//             axios.get(`/business-info`),
+//         ]);
 
-        const contactPage = res[0].data;
-        const businessInfo = res[1].data;
-        return { props: { contactPage, businessInfo } };
-    } catch (error) {
-        return { props: { error } };
-    }
+//         const contactPage = res[0].data;
+//         const businessInfo = res[1].data;
+//         return { props: { contactPage, businessInfo } };
+//     } catch (error) {
+//         return { props: { error } };
+//     }
 
-}
+// }
 
 export default Contact;

@@ -6,10 +6,28 @@ import ErrorPage from '../pages/_error';
 import axios from '../constants/instances/backend';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 
-const MenuPage = ({ error, restaurantCategories }) => {
-    let MenuPageJSX = null;
+const MenuPage = (props) => {
+    let MenuPageJSX = <LoadingBackdrop />;
 
-    if (error) {
+    const [restaurantCategories, setRestaurantCategories] = useState(null);
+    const [loadingError, setLoadingError] = useState(false);
+
+    useEffect(() => {
+        const run = async () => {
+            try {
+                const res = await axios.get('/restaurant-settings/categories');
+                const data = res.data;
+                setRestaurantCategories(data);
+                setLoadingError(false);
+            } catch (error) {
+                setLoadingError(true);
+            }
+        }
+        run();
+    }, [])
+
+
+    if (loadingError) {
         return <ErrorPage />
     }
 
@@ -46,16 +64,16 @@ const MenuPage = ({ error, restaurantCategories }) => {
 }
 
 
-export const getStaticProps = async (ctx) => {
-    try {
-        const res = await axios.get('/restaurant-settings/categories');
-        const restaurantCategories = res.data;
-        return { props: { restaurantCategories } };
-    } catch (error) {
-        return { props: { error } };
-    }
+// export const getStaticProps = async (ctx) => {
+//     try {
+//         const res = await axios.get('/restaurant-settings/categories');
+//         const restaurantCategories = res.data;
+//         return { props: { restaurantCategories } };
+//     } catch (error) {
+//         return { props: { error } };
+//     }
 
-};
+// };
 
 
 export default MenuPage;
