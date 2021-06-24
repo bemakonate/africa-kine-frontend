@@ -15,9 +15,8 @@ const SimpleBackdrop = (props) => {
     return (
         <div>
             <div className={classes.backdrop} onClick={props.handleClose}></div>
-            <div className={classes.backdropContent} onClick={props.handleClose}>
-                {props.children}
-            </div>
+
+            {props.children}
 
         </div>
 

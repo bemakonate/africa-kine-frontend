@@ -2,7 +2,7 @@
     background:rgb(226, 226, 226);
     color:black;
     padding:20px 0;
-    margin-top:40px;
+    margin-top:auto;
 
     .company-name,
     .section__info-title,
@@ -33,7 +33,7 @@
     }
 
     @include mq('med'){
-        margin-top:80px;
+        
         
         .footer-content{
             display:grid;

@@ -12,11 +12,16 @@ const Layout = (props) => {
 
     return (
         <div className="layout">
-            <Navigation />
-            {(props.flashMessage && props.flashMessage.open) && <FlashMessage />}
-            {isProductModalOpen ? <ProductModal {...productModalProps} close={closeProductModal} /> : null}
-            {props.children}
-            <Footer />
+            <div className="site-content">
+                <Navigation />
+                {(props.flashMessage && props.flashMessage.open) && <FlashMessage />}
+                {isProductModalOpen ? <ProductModal {...productModalProps} close={closeProductModal} /> : null}
+                {props.children}
+                <div className="footer-margin"></div>
+
+                <Footer />
+            </div>
+
         </div>
     )
 }
