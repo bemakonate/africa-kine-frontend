@@ -68,7 +68,7 @@ const Home = (props) => {
 
         <section className="section__intro">
           <div className="global__container">
-            <h2>Welcome</h2>
+            <h2>Welcome!!</h2>
             <p>{homePage.introductionText}</p>
           </div>
         </section>

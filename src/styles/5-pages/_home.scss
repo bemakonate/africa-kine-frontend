@@ -21,11 +21,16 @@
         @include btn($size:'md',$bgColor:$color-theme-secondary);
     }
     
+    .section__intro{
+      background: #f7f7f7;
+      color: black;
+    }
 
     .popular-menu__title{
       margin-bottom:40px;
     }
     
+
     .popular-menu__link{
       margin-top:30px;
       display:inline-block;
