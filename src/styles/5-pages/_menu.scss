@@ -14,8 +14,13 @@
 .menu-nav__item{
     display:inline-block;
     padding:10px 30px;
+    font-weight:400;
     &:hover{
         color:white;
+    }
+
+    &:last-of-type{
+        padding-right:100px;
     }
 }
 

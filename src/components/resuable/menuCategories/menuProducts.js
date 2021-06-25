@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as asyncActions from '../../../store/asyncActions'
 import { connect } from 'react-redux';
 import classes from '../../../styles/modules/menuProducts.module.scss';
-
-const shortenText = (str, max) => {
-    if (str.length > max) {
-        return `${str.substring(0, max)}...`;
-    }
-    return str;
-
-}
+import { shortenText } from '../../../constants/helpers';
 
 const MenuProducts = (props) => {
     return (
@@ -21,7 +14,7 @@ const MenuProducts = (props) => {
                     onClick={() => props.openProductModal({ props: { productId: product.id } })}>
 
                     <p className={classes.productTitle}>{product.name}</p>
-                    <p className={classes.productPrice}> ${product.price}</p>
+                    {product.price > 0 && <p className={classes.productPrice}> ${product.price}</p>}
                     <p className={classes.productDescription}>{shortenText(product.description, 100)}</p>
                 </div>
             ))}

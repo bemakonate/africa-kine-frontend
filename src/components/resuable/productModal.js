@@ -64,25 +64,25 @@ const productModal = (props) => {
                 <header className={classes.Header}>
                     <div>
                         <h2 className={classes.HeaderTitle}>{name}</h2>
-                        <span className={classes.ProductPrice}>${price}</span>
+                        {price > 0 && <span className={classes.ProductPrice}>${price}</span>}
                     </div>
                 </header>
 
                 <main className={classes.Main}>
-                    <div>
-                        <p className={classes.ProductDescription}>{description}</p>
-                    </div>
 
-                    <div>
+                    {description && <p className={classes.ProductDescription}>{description}</p>}
+
+
+                    {sideProducts.length > 0 && <div>
                         <h4 className={classes.SideOrdersTitle}>Side Orders</h4>
                         <ul className={classes.SideOrders}>
-                            {sideProducts.length > 0 ? sideProducts.map(sideProduct => {
+                            {sideProducts.map(sideProduct => {
                                 const extraCost = sideProduct.additionalCost > 0 &&
                                     <span className={classes.ProductExtraCost}>+${sideProduct.additionalCost.toFixed(2)}</span>
                                 return <li className={classes.SideOrderItem} key={sideProduct.id}>{sideProduct.name} {extraCost}</li>
-                            }) : <span>No side products</span>}
+                            })}
                         </ul>
-                    </div>
+                    </div>}
 
                     <div>
                         <h4 className={classes.CategoriesListTitle}>Categories</h4>
