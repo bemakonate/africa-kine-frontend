@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import Layout from '../components/layout';
+import axios from '../constants/instances/backend';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
-import useSWR from 'swr';
 
 const Ordering = (props) => {
-    const { data: orderingPage, error: orderingPageError } = useSWR('/ordering-page');
     let OrderingPageJSX = <LoadingBackdrop />;
 
-    if (orderingPageError) return <ErrorPage />
+    const [orderingPage, setOrderingPage] = useState(null);
+    const [loadingError, setLoadingError] = useState(false);
 
+    useEffect(() => {
+        const run = async () => {
+            try {
+                const res = await axios.get('/ordering-page');
+                const orderingPage = res.data;
+
+                setOrderingPage(orderingPage);
+                setLoadingError(false);
+            } catch (error) {
+                setLoadingError(true);
+            }
+        }
+        run();
+    }, [])
+
+    if (loadingError) {
+        return <ErrorPage />
+    }
 
     if (orderingPage) {
         OrderingPageJSX = (

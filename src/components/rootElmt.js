@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import * as layoutActions from '../store/layout/actions';
 import axios from '../constants/instances/backend';
 
-
-
 const rootElmt = ({ children, setBusinessData }) => {
 
     useEffect(() => {
