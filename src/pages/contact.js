@@ -1,45 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Layout from '../components/layout';
-import axios from '../constants/instances/backend';
 import { AiFillPhone, AiOutlineSmile } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md'
 import SEO from '../components/resuable/SEO';
 import { formatPhoneNum } from '../constants/helpers/index';
 import ErrorPage from '../pages/_error';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
+import useSWR from 'swr';
 
 
 const Contact = (props) => {
+    const { data: contactPage, error: contactPageError } = useSWR('/contact-page');
+    const { data: businessInfo, error: businessInfoError } = useSWR('/business-info');
     let ContactPageJSX = <LoadingBackdrop />;
 
-    const [contactPage, setContactPage] = useState(null);
-    const [businessInfo, setBusinessInfo] = useState(null);
-    const [loadingError, setLoadingError] = useState(false);
 
-    useEffect(() => {
-        const run = async () => {
-            try {
-                const res = await Promise.all([
-                    axios.get(`/contact-page`),
-                    axios.get(`/business-info`),
-                ]);
-
-                const contactPage = res[0].data;
-                const businessInfo = res[1].data;
-
-
-                setContactPage(contactPage);
-                setBusinessInfo(businessInfo);
-            } catch (error) {
-                setLoadingError(true);
-            }
-        }
-        run();
-    }, [])
-
-    if (loadingError) {
-        return <ErrorPage />
-    }
+    if (contactPageError && businessInfoError) return <ErrorPage />;
 
     if (contactPage && businessInfo) {
 
@@ -90,22 +66,5 @@ const Contact = (props) => {
         </Layout>
     )
 }
-
-// export const getStaticProps = async (ctx) => {
-//     try {
-
-//         const res = await Promise.all([
-//             axios.get(`/contact-page`),
-//             axios.get(`/business-info`),
-//         ]);
-
-//         const contactPage = res[0].data;
-//         const businessInfo = res[1].data;
-//         return { props: { contactPage, businessInfo } };
-//     } catch (error) {
-//         return { props: { error } };
-//     }
-
-// }
 
 export default Contact;
