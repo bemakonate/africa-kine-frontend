@@ -7,6 +7,7 @@ import BusinessDetails from '../components/resuable/businessDetails';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
+import Image from 'next/image';
 
 
 
@@ -17,8 +18,6 @@ const Home = (props) => {
   const [loadingError, setLoadingError] = useState(false);
 
   let HomePageJSX = <LoadingBackdrop />;
-
-  const restaurantImageURL = "https://cdn.vox-cdn.com/thumbor/dOajW3T9Jj9D6vUdNCxsiJAbTMA=/0x0:2048x1360/1200x0/filters:focal(0x0:2048x1360):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/15970304/ThreeGreat107KineExterior.jpg"
 
 
 
@@ -48,23 +47,33 @@ const Home = (props) => {
 
 
 
+
   if (loadingError) {
     return <ErrorPage />
   }
 
   if (businessInfo && homePage) {
+
     HomePageJSX = (
       <div className="page-home">
-        <div className="jumbotron">
-          <div className="global__container">
-            <h1>{businessInfo.companyName}</h1>
+        <header className="jumbotron">
+          {homePage.jumbotronBackground && <div className="jumbotron-bg">
+            <Image className="jumbotron-bg-img mobile-img" src={homePage.jumbotronBackground.formats.small.url} alt="jumbotron background" layout="fill" />
+            <Image className="jumbotron-bg-img desktop-img" src={homePage.jumbotronBackground.formats.large.url} alt="jumbotron background" layout="fill" />
+            <div className="jumbotron-bg-img-overlay"></div>
+          </div>}
+
+
+          <div className="jumbotron-content global__container">
+            <h1 className="jumbotron-title">{businessInfo.companyName}</h1>
             <div className="jumbotron__btns">
               <Link href="/menu"><button className="jumbotron__btn">Menu</button></Link>
               <Link href="/ordering"><button className="jumbotron__btn">Order</button></Link>
               <Link href="/contact"><button className="jumbotron__btn">Contact Us</button></Link>
             </div>
           </div>
-        </div>
+
+        </header>
 
         <section className="section__intro">
           <div className="global__container">
@@ -102,9 +111,11 @@ const Home = (props) => {
             <h2 className="business-info__title">Business Info</h2>
             <div className="main__business-info">
               <div className="restaurant-image__container">
-                <div>
-                  <img className="restaurant-image" src={restaurantImageURL} alt="Restaurant Image" />
-                </div>
+                {homePage.restaurantImage && <Image
+                  className="restaurant-image"
+                  src={homePage.restaurantImage.formats.medium.url}
+                  alt="Restaurant Image"
+                  layout="fill" />}
               </div>
               <BusinessDetails
                 infoClass="business-info__details"
@@ -128,21 +139,4 @@ const Home = (props) => {
   )
 }
 
-
-// export const getStaticProps = async (ctx) => {
-//   try {
-//     const res = await Promise.all([
-//       axios.get('/home-page'),
-//       axios.get('/business-info')
-//     ]);
-
-//     const homePage = res[0].data;
-//     const businessInfo = res[1].data;
-
-//     return { props: { homePage, businessInfo } };
-
-//   } catch (error) {
-//     return { props: { error } };
-//   }
-// }
 export default Home;

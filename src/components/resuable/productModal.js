@@ -6,6 +6,15 @@ import axios from '../../constants/instances/backend';
 import Spinner from './spinner';
 import classes from '../../styles/modules/productModal.module.scss'
 import { IoCloseCircle } from 'react-icons/io5';
+import { BiDollar } from 'react-icons/bi';
+import Image from 'next/image';
+
+const DollarSign = (props) =>
+    <span style={{ display: 'flex', alignItems: 'center' }}>
+        <BiDollar style={{ fontSize: '.9em', marginRight: '-.2em' }} />
+        {props.value}
+    </span>
+    ;
 
 
 const productModal = (props) => {
@@ -55,20 +64,35 @@ const productModal = (props) => {
 
     let modalContentJSX = null;
     if (!loadingProduct && !loadingProductFailed) {
-        const { name, description, price, sideProducts, categories } = product;
+        const { name, description, price, sideProducts, categories, image } = product;
+
+
 
         const menuContentJSX = (
             <React.Fragment>
                 <IoCloseCircle className={classes.CloseModal} onClick={props.close} />
 
                 <header className={classes.Header}>
-                    <div>
+                    {(image && image.formats.small) && (
+                        <React.Fragment>
+                            <Image
+                                className={classes.HeaderProductImg}
+                                src={image.formats.small.url}
+                                alt="product image"
+                                layout="fill" />
+                            <div className={classes.HeaderProductImgOverlay}></div>
+                        </React.Fragment>
+                    )
+
+                    }
+                    <div className={classes.HeaderContentBox}>
                         <h2 className={classes.HeaderTitle}>{name}</h2>
-                        {price > 0 && <span className={classes.ProductPrice}>${price}</span>}
+                        {price > 0 && <span className={classes.ProductPrice}><DollarSign value={price} /></span>}
                     </div>
                 </header>
 
                 <main className={classes.Main}>
+
 
                     {description && <p className={classes.ProductDescription}>{description}</p>}
 
