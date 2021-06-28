@@ -9,6 +9,60 @@ import ErrorPage from '../pages/_error';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 import Image from '../components/resuable/image';
 
+const fallbackImageURLs = ({ image, size = 'thumbnail' }) => {
+
+  if (!image) {
+    return null;
+  }
+
+  let imageURL;
+  const imageFormats = image.formats;
+  const imageFormatSizes = Object.keys(imageFormats);
+  switch (size) {
+    case 'thumbnail':
+      return imageFormats.thumbnail.url;
+
+    case 'small':
+      if (imageFormatSizes.includes('small')) {
+        imageURL = imageFormats.small.url;
+      } else if (imageFormatSizes.includes('thumbnail')) {
+        imageURL = imageFormats.thumbnail.url
+      }
+      break;
+
+    case 'medium':
+      if (imageFormatSizes.includes('medium')) {
+        imageURL = imageFormats.medium.url;
+      }
+      else if (imageFormatSizes.includes('small')) {
+        imageURL = imageFormats.small.url;
+      }
+      else if (imageFormatSizes.includes('thumbnail')) {
+        imageURL = imageFormats.thumbnail.url
+      }
+      break;
+
+
+    case 'large':
+      if (imageFormatSizes.includes('large')) {
+        imageURL = imageFormats.large.url;
+      }
+      else if (imageFormatSizes.includes('medium')) {
+        imageURL = imageFormats.medium.url;
+      }
+      else if (imageFormatSizes.includes('small')) {
+        imageURL = imageFormats.small.url;
+      }
+      else if (imageFormatSizes.includes('thumbnail')) {
+        imageURL = imageFormats.thumbnail.url
+      }
+      break;
+  }
+
+  return imageURL;
+
+}
+
 const Home = (props) => {
 
   const [businessInfo, setBusinessInfo] = useState(null);
@@ -56,8 +110,13 @@ const Home = (props) => {
       <div className="page-home">
         <header className="jumbotron">
           {homePage.jumbotronBackground && <div className="jumbotron-bg">
-            <Image className="jumbotron-bg-img mobile-img" src={homePage.jumbotronBackground.formats.small.url} alt="jumbotron background" layout="fill" />
-            <Image className="jumbotron-bg-img desktop-img" src={homePage.jumbotronBackground.formats.large.url} alt="jumbotron background" layout="fill" />
+            <img className="jumbotron-bg-img mobile-img"
+              src={fallbackImageURLs({ image: homePage.jumbotronBackground, size: 'medium' })}
+              alt="jumbotron background" />
+            <img
+              className="jumbotron-bg-img desktop-img"
+              src={fallbackImageURLs({ image: homePage.jumbotronBackground, size: 'large' })}
+              alt="jumbotron background" />
             <div className="jumbotron-bg-img-overlay"></div>
           </div>}
 
@@ -109,11 +168,13 @@ const Home = (props) => {
             <h2 className="business-info__title">Business Info</h2>
             <div className="main__business-info">
               <div className="restaurant-image__container">
-                {homePage.restaurantImage && <Image
-                  className="restaurant-image"
-                  src={homePage.restaurantImage.formats.medium.url}
-                  alt="Restaurant Image"
-                  layout="fill" />}
+                <div>
+                  {homePage.restaurantImage && <img
+                    className="restaurant-image"
+                    src={fallbackImageURLs({ image: homePage.restaurantImage, size: 'medium' })}
+                    alt="Restaurant Image" />}
+                </div>
+
               </div>
               <BusinessDetails
                 infoClass="business-info__details"
