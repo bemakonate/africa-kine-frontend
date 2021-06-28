@@ -5,6 +5,7 @@ import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import axios from '../constants/instances/backend';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
+import { shortenText } from '../constants/helpers';
 
 
 const MenuPage = (props) => {
@@ -28,18 +29,20 @@ const MenuPage = (props) => {
     }, [])
 
 
+
     if (loadingError) {
         return <ErrorPage />
     }
 
     if (restaurantCategories) {
         const categories = restaurantCategories;
+        const sortedCategories = categories.sort((c1, c2) => c1.id - c2.id);
         MenuPageJSX = (
             <React.Fragment>
                 <nav className="menu-nav">
                     <div className="global__container">
                         <div className="menu-nav__content-container">
-                            {categories && categories.map(category => (
+                            {sortedCategories && sortedCategories.map(category => (
                                 <a key={category.id} className="menu-nav__item" href={`#category-${category.id}`}>{category.title}</a>
                             ))}
                         </div>

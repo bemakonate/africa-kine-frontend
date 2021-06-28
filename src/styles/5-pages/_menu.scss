@@ -1,6 +1,5 @@
 .menu-container{
     padding:50px 1rem 0;
-
 }
 
 .menu-nav{
@@ -25,6 +24,7 @@
 }
 
 .menu-nav__content-container{
+    width:130%;
     @include flex();
 }
 
