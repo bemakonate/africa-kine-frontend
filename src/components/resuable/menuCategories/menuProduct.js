@@ -3,7 +3,7 @@ import * as asyncActions from '../../../store/asyncActions'
 import { connect } from 'react-redux';
 import classes from '../../../styles/modules/menuProducts.module.scss';
 import { shortenText } from '../../../constants/helpers';
-import Image from 'next/image';
+import Image from '../../../components/resuable/image';
 
 const MenuProduct = ({ product, openProductModal }) => {
     const menuProductClasses = [classes.product];
@@ -27,7 +27,9 @@ const MenuProduct = ({ product, openProductModal }) => {
 
             {product.image && <div className={classes.productImgContainer}>
                 <div className={classes.productImgOverlay}></div>
-                <Image className={classes.productImg} src={product.image.formats.thumbnail.url} alt="" layout="fill" />
+                <Image
+                    className={classes.productImg}
+                    src={product.image.formats.thumbnail.url} alt="" layout="fill" />
             </div>}
 
         </div>

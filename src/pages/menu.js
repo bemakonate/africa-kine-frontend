@@ -6,6 +6,7 @@ import ErrorPage from '../pages/_error';
 import axios from '../constants/instances/backend';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 
+
 const MenuPage = (props) => {
     let MenuPageJSX = <LoadingBackdrop />;
 

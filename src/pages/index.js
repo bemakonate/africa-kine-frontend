@@ -7,9 +7,7 @@ import BusinessDetails from '../components/resuable/businessDetails';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
-import Image from 'next/image';
-
-
+import Image from '../components/resuable/image';
 
 const Home = (props) => {
 

@@ -7,7 +7,7 @@ import Spinner from './spinner';
 import classes from '../../styles/modules/productModal.module.scss'
 import { IoCloseCircle } from 'react-icons/io5';
 import { BiDollar } from 'react-icons/bi';
-import Image from 'next/image';
+import Image from '../../components/resuable/image';
 
 const DollarSign = (props) =>
     <span style={{ display: 'flex', alignItems: 'center' }}>
