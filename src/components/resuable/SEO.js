@@ -4,30 +4,30 @@ import axios from '../../constants/instances/backend';
 
 const SEO = ({ title, description }) => {
 
-    const [seoData, setSeoData] = useState(null);
+    // const [seoData, setSeoData] = useState(null);
 
-    useEffect(() => {
-        const run = async () => {
-            const res = await axios.get(`/seo`);
-            setSeoData(res.data);
-        }
-        run();
-    }, []);
+    // useEffect(() => {
+    //     const run = async () => {
+    //         const res = await axios.get(`/seo`);
+    //         setSeoData(res.data);
+    //     }
+    //     run();
+    // }, []);
 
 
-    let seoJSX = null;
-    if (seoData) {
-        seoJSX = (
-            <React.Fragment>
-                <title> {title} | {seoData.title}</title>
-                <meta name="description" content={description || seoData.description} />
-                <meta property="og:title" content={seoData.title} />
-                <meta property="og:description" content={seoData.description} />
-                <meta property="og:url" content={process.env.SITE_URL} />
-                <meta property="og:type" content="website" />
-            </React.Fragment>
-        )
-    }
+    // let seoJSX = null;
+    // if (seoData) {
+    //     seoJSX = (
+    //         <React.Fragment>
+    //             <title> {title} | {seoData.title}</title>
+    //             <meta name="description" content={description || seoData.description} />
+    //             <meta property="og:title" content={seoData.title} />
+    //             <meta property="og:description" content={seoData.description} />
+    //             <meta property="og:url" content={process.env.SITE_URL} />
+    //             <meta property="og:type" content="website" />
+    //         </React.Fragment>
+    //     )
+    // }
     return (
         <Head>
 
@@ -37,7 +37,14 @@ const SEO = ({ title, description }) => {
             <link rel="manifest" href="/site.webmanifest" />
             <link rel="shortcut icon" href="/favicon.ico" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            {seoJSX}
+
+            <title> {title} | Africa Kine</title>
+            <meta name="description" content="Enter the spirit of African food" />
+            <meta property="og:title" content="Africa Kine" />
+            <meta property="og:description" content="Enter the spirit of African food" />
+            <meta property="og:url" content="https://www.africakinerestaurant.com/" />
+            <meta property="og:type" content="website" />
+
         </Head>
 
     )

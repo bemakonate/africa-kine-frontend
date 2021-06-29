@@ -2,6 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.africakinerestaurant.com/</loc>
-    <lastmod>2021-06-28</lastmod>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.africakinerestaurant.com/contact</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.africakinerestaurant.com/ordering</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.africakinerestaurant.com/menu</loc>
+    <changefreq>daily</changefreq>
   </url>
 </urlset>
