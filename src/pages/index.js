@@ -9,44 +9,45 @@ import ErrorPage from '../pages/_error';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 import Image from '../components/resuable/image';
 
-const Home = (props) => {
+const Home = ({ businessInfo, error, homePage }) => {
+  let HomePageJSX = null;
 
-  const [businessInfo, setBusinessInfo] = useState(null);
-  const [homePage, setHomePage] = useState(null);
-  const [loadingError, setLoadingError] = useState(false);
+  // const [businessInfo, setBusinessInfo] = useState(null);
+  // const [homePage, setHomePage] = useState(null);
+  // const [loadingError, setLoadingError] = useState(false);
 
-  let HomePageJSX = <LoadingBackdrop />;
-
-
-
-  useEffect(() => {
-    const run = async () => {
-      try {
-        const res = await Promise.all([
-          axios.get('/home-page'),
-          axios.get('/business-info')
-        ]);
-
-        const homePage = res[0].data;
-        const businessInfo = res[1].data;
-
-        setHomePage(homePage);
-        setBusinessInfo(businessInfo);
-        setLoadingError(false);
-
-      } catch (error) {
-        setLoadingError(true);
-      }
-    }
-
-    run();
-
-  }, [])
+  // let HomePageJSX = <LoadingBackdrop />;
 
 
 
+  // useEffect(() => {
+  //   const run = async () => {
+  //     try {
+  //       const res = await Promise.all([
+  //         axios.get('/home-page'),
+  //         axios.get('/business-info')
+  //       ]);
 
-  if (loadingError) {
+  //       const homePage = res[0].data;
+  //       const businessInfo = res[1].data;
+
+  //       setHomePage(homePage);
+  //       setBusinessInfo(businessInfo);
+  //       setLoadingError(false);
+
+  //     } catch (error) {
+  //       setLoadingError(true);
+  //     }
+  //   }
+
+  //   run();
+
+  // }, [])
+
+
+
+
+  if (error) {
     return <ErrorPage />
   }
 
@@ -135,6 +136,24 @@ const Home = (props) => {
       {HomePageJSX}
     </Layout >
   )
+}
+
+
+export const getStaticProps = async (ctx) => {
+  try {
+
+    const res = await Promise.all([
+      axios.get(`/home-page`),
+      axios.get(`/business-info`),
+    ]);
+
+    const homePage = res[0].data;
+    const businessInfo = res[1].data;
+    return { props: { homePage, businessInfo } };
+  } catch (error) {
+    return { props: { error } };
+  }
+
 }
 
 export default Home;
