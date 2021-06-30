@@ -8,29 +8,31 @@ import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 import { shortenText } from '../constants/helpers';
 
 
-const MenuPage = (props) => {
-    let MenuPageJSX = <LoadingBackdrop />;
+const MenuPage = ({ restaurantCategories, error }) => {
+    // let MenuPageJSX = <LoadingBackdrop />;
 
-    const [restaurantCategories, setRestaurantCategories] = useState(null);
-    const [loadingError, setLoadingError] = useState(false);
+    // const [restaurantCategories, setRestaurantCategories] = useState(null);
+    // const [loadingError, setLoadingError] = useState(false);
 
-    useEffect(() => {
-        const run = async () => {
-            try {
-                const res = await axios.get('/restaurant-settings/categories');
-                const data = res.data;
-                setRestaurantCategories(data);
-                setLoadingError(false);
-            } catch (error) {
-                setLoadingError(true);
-            }
-        }
-        run();
-    }, [])
+    // useEffect(() => {
+    //     const run = async () => {
+    //         try {
+    //             const res = await axios.get('/restaurant-settings/categories');
+    //             const data = res.data;
+    //             setRestaurantCategories(data);
+    //             setLoadingError(false);
+    //         } catch (error) {
+    //             setLoadingError(true);
+    //         }
+    //     }
+    //     run();
+    // }, [])
+
+    let MenuPageJSX = null;
 
 
 
-    if (loadingError) {
+    if (error) {
         return <ErrorPage />
     }
 
@@ -68,16 +70,16 @@ const MenuPage = (props) => {
 }
 
 
-// export const getStaticProps = async (ctx) => {
-//     try {
-//         const res = await axios.get('/restaurant-settings/categories');
-//         const restaurantCategories = res.data;
-//         return { props: { restaurantCategories } };
-//     } catch (error) {
-//         return { props: { error } };
-//     }
+export const getStaticProps = async (ctx) => {
+    try {
+        const res = await axios.get('/restaurant-settings/categories');
+        const restaurantCategories = res.data;
+        return { props: { restaurantCategories } };
+    } catch (error) {
+        return { props: { error } };
+    }
 
-// };
+};
 
 
 export default MenuPage;

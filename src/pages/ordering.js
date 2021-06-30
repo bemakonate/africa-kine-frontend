@@ -5,28 +5,30 @@ import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 
-const Ordering = (props) => {
-    let OrderingPageJSX = <LoadingBackdrop />;
+const Ordering = ({ orderingPage, error }) => {
+    // let OrderingPageJSX = <LoadingBackdrop />;
 
-    const [orderingPage, setOrderingPage] = useState(null);
-    const [loadingError, setLoadingError] = useState(false);
+    // const [orderingPage, setOrderingPage] = useState(null);
+    // const [loadingError, setLoadingError] = useState(false);
 
-    useEffect(() => {
-        const run = async () => {
-            try {
-                const res = await axios.get('/ordering-page');
-                const orderingPage = res.data;
+    // useEffect(() => {
+    //     const run = async () => {
+    //         try {
+    //             const res = await axios.get('/ordering-page');
+    //             const orderingPage = res.data;
 
-                setOrderingPage(orderingPage);
-                setLoadingError(false);
-            } catch (error) {
-                setLoadingError(true);
-            }
-        }
-        run();
-    }, [])
+    //             setOrderingPage(orderingPage);
+    //             setLoadingError(false);
+    //         } catch (error) {
+    //             setLoadingError(true);
+    //         }
+    //     }
+    //     run();
+    // }, [])
 
-    if (loadingError) {
+    let OrderingPageJSX = null;
+
+    if (error) {
         return <ErrorPage />
     }
 
@@ -62,15 +64,15 @@ const Ordering = (props) => {
 
 
 
-// export const getStaticProps = async (ctx) => {
-//     try {
-//         const res = await axios.get('/ordering-page');
-//         const orderingPage = res.data;
-//         return { props: { orderingPage } };
-//     } catch (error) {
-//         return { props: { error } };
-//     }
+export const getStaticProps = async (ctx) => {
+    try {
+        const res = await axios.get('/ordering-page');
+        const orderingPage = res.data;
+        return { props: { orderingPage } };
+    } catch (error) {
+        return { props: { error } };
+    }
 
-// }
+}
 
 export default Ordering
