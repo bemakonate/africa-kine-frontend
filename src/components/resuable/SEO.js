@@ -28,6 +28,8 @@ const SEO = ({ title, description }) => {
     //         </React.Fragment>
     //     )
     // }
+
+    const desc = "Welcome to Africa Kine, located in the Heart of Harlem, where you will find some of the best African cuisine that the city of New York has to offer. With a service that is open to having interesting conversations and ready to take your order and ,if you want, give you strong advice on what you should order and try. ";
     return (
         <Head>
 
@@ -39,11 +41,23 @@ const SEO = ({ title, description }) => {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
 
             <title> {title} | Africa Kine</title>
-            <meta name="description" content="Enter the spirit of African food" />
+            <meta name="description" content={desc} />
             <meta property="og:title" content="Africa Kine" />
-            <meta property="og:description" content="Enter the spirit of African food" />
+            <meta property="og:description" content={desc} />
             <meta property="og:url" content="https://www.africakinerestaurant.com/" />
             <meta property="og:type" content="website" />
+            <meta property="og:locale" content="en_US" />
+
+
+            {/* Twitter Cards */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@africakine" />
+            <meta name="twitter:title" content="Africa Kine" />
+            <meta name="twitter:description" content={desc} />
+            <meta name="twitter:image" content="https://uploads.africakinerestaurant.com/restaurantWebsiteImage.png" />
+
+
+
 
         </Head>
 
