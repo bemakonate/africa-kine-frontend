@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MenuProducts from './menuProducts';
 import classes from "../../../styles/modules/menuCategory.module.scss";
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
+import { schemaDataHiddenInputs } from '../../../constants/helpers';
 
 const MenuCategory = (props) => {
     const category = props.category;
@@ -14,11 +15,34 @@ const MenuCategory = (props) => {
     useEffect(() => { !subCategoryId && setSubCategoryId('all') }, [subCategoryId])
 
 
+    const categoryScope = { itemprop: 'hasMenuSection', itemscope: 'null', itemtype: "https://schema.org/MenuSection" }
+    const categorySchemaData = [{ itemprop: 'name', content: category.title }, { itemprop: 'description', content: category.content }]
+
+    const subCategoryScope = { itemprop: 'hasMenuSection', itemscope: 'null', itemtype: "https://schema.org/MenuSection" }
+    const allSubCategorySchemaData = [{ itemprop: 'name', content: 'all' }]
+    const foundSubCategorySchemaData = (foundSubCategory) => [{ itemprop: 'name', content: foundSubCategory.title }]
+
+
+
     if (foundSubCategory) {
-        subCategoryProductsJSX = <MenuProducts products={foundSubCategory.products} orderingMode={props.orderingMode} />
+
+        subCategoryProductsJSX = (
+            <div {...subCategoryScope}>
+                <MenuProducts products={foundSubCategory.products} orderingMode={props.orderingMode} />
+                {schemaDataHiddenInputs([...foundSubCategorySchemaData(foundSubCategory)])}
+            </div>
+
+        )
     }
     else if (subCategoryId === 'all') {
-        subCategoryProductsJSX = <MenuProducts products={category.products} orderingMode={props.orderingMode} />
+
+        subCategoryProductsJSX = (
+            <div {...subCategoryScope}>
+                <MenuProducts products={category.products} orderingMode={props.orderingMode} />
+                {schemaDataHiddenInputs(allSubCategorySchemaData)}
+            </div>
+
+        )
     }
     else {
         subCategoryProductsJSX = "This subcategory doesn't exist"
@@ -48,7 +72,8 @@ const MenuCategory = (props) => {
     )
 
     return (
-        <div className={classes.category} id={`category-${category.id}`}>
+        <div className={classes.category} id={`category-${category.id}`} {...categoryScope}>
+            {schemaDataHiddenInputs(categorySchemaData)}
             <header className={classes.categoryHeader}>
                 <div>
                     <h2 className={classes.categoryTitle}>{category.title}</h2>

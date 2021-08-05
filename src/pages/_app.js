@@ -14,8 +14,8 @@ const MyApp = ({ Component, pageProps }) => {
   )
 }
 
-export function reportWebVitals(metric) {
-  console.log(metric)
-}
+// export function reportWebVitals(metric) {
+//   console.log(metric)
+// }
 
 export default MyApp

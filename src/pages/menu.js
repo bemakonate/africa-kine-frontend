@@ -4,41 +4,43 @@ import MenuCategories from '../components/resuable/menuCategories';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import axios from '../constants/instances/backend';
-import LoadingBackdrop from '../components/resuable/loadingBackdrop';
-import { shortenText } from '../constants/helpers';
+import { schemaDataHiddenInputs, openHoursToDateTime, priceRangeToDollars } from '../constants/helpers';
+// import { MENU_QUERY } from '../graphql/queries';
+// import { client } from '../graphql/apolloClient';
 
 
-const MenuPage = ({ restaurantCategories, error }) => {
-    // let MenuPageJSX = <LoadingBackdrop />;
+const MenuPage = ({ categories, businessInfo, businessHours, error }) => {
 
-    // const [restaurantCategories, setRestaurantCategories] = useState(null);
-    // const [loadingError, setLoadingError] = useState(false);
-
-    // useEffect(() => {
-    //     const run = async () => {
-    //         try {
-    //             const res = await axios.get('/restaurant-settings/categories');
-    //             const data = res.data;
-    //             setRestaurantCategories(data);
-    //             setLoadingError(false);
-    //         } catch (error) {
-    //             setLoadingError(true);
-    //         }
-    //     }
-    //     run();
-    // }, [])
 
     let MenuPageJSX = null;
+    const openHours = JSON.parse(businessHours.open);
+    const openHoursDateTime = openHoursToDateTime(openHours)
 
+
+    const restaurantScope = { itemScope: 'null', itemType: "https://schema.org/Restaurant" }
+    const restaurantSchemaData = [
+        { itemprop: 'image', content: businessInfo.companyImage ? businessInfo.companyImage.url : 'null' },
+        { itemprop: 'name', content: businessInfo.companyName },
+        { itemprop: 'address', content: businessInfo.location },
+        { itemprop: 'telephone', content: businessInfo.phone },
+        { itemprop: 'menu', content: `${process.env.SITE_URL}/menu` },
+        { itemprop: 'servesCuisine', content: businessInfo.servesCuisine },
+        { itemprop: 'url', content: process.env.SITE_URL },
+        { itemprop: 'openingHours', content: openHoursDateTime },
+        { itemprop: 'priceRange', content: priceRangeToDollars(businessInfo.priceRange) }
+    ]
+
+    const menuScope = { itemScope: 'null', itemprop: 'hasMenu', itemType: 'https://schema.org/Menu' }
+    const menuSchemaData = [{ itemprop: 'inLanguage', content: 'English' }]
 
 
     if (error) {
         return <ErrorPage />
     }
 
-    if (restaurantCategories) {
-        const categories = restaurantCategories;
-        const sortedCategories = categories.sort((c1, c2) => c1.id - c2.id);
+    if (categories) {
+        const sortedCategories = [...categories].sort((c1, c2) => Number(c1.id) - Number(c2.id));
+
         MenuPageJSX = (
             <React.Fragment>
                 <nav className="menu-nav">
@@ -60,10 +62,20 @@ const MenuPage = ({ restaurantCategories, error }) => {
     }
 
 
+
     return (
         <Layout>
             <SEO title="Menu" />
-            {MenuPageJSX}
+            <div {...restaurantScope}>
+                {schemaDataHiddenInputs(restaurantSchemaData)}
+
+                <div {...menuScope}>
+                    {schemaDataHiddenInputs(menuSchemaData)}
+                    {MenuPageJSX}
+                </div>
+
+            </div>
+
         </Layout>
 
     )
@@ -72,9 +84,22 @@ const MenuPage = ({ restaurantCategories, error }) => {
 
 export const getStaticProps = async (ctx) => {
     try {
-        const res = await axios.get('/restaurant-settings/categories');
-        const restaurantCategories = res.data;
-        return { props: { restaurantCategories } };
+        // const res = await axios.get('/restaurant-settings/categories');
+        // const categories = res.data;
+        // const { data } = await client.query({ query: MENU_QUERY })
+
+
+        const res = await Promise.all([
+            axios.get('/restaurant-settings/categories'),
+            axios.get(`/business-info`),
+            axios.get('/restaurant-settings/business'),
+        ])
+
+        const categories = res[0].data;
+        const businessInfo = res[1].data;
+        const businessHours = res[2].data.business.hours;
+
+        return { props: { categories, businessInfo, businessHours } };
     } catch (error) {
         return { props: { error } };
     }

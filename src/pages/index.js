@@ -12,40 +12,6 @@ import Image from '../components/resuable/image';
 const Home = ({ businessInfo, error, homePage }) => {
   let HomePageJSX = null;
 
-  // const [businessInfo, setBusinessInfo] = useState(null);
-  // const [homePage, setHomePage] = useState(null);
-  // const [loadingError, setLoadingError] = useState(false);
-
-  // let HomePageJSX = <LoadingBackdrop />;
-
-
-
-  // useEffect(() => {
-  //   const run = async () => {
-  //     try {
-  //       const res = await Promise.all([
-  //         axios.get('/home-page'),
-  //         axios.get('/business-info')
-  //       ]);
-
-  //       const homePage = res[0].data;
-  //       const businessInfo = res[1].data;
-
-  //       setHomePage(homePage);
-  //       setBusinessInfo(businessInfo);
-  //       setLoadingError(false);
-
-  //     } catch (error) {
-  //       setLoadingError(true);
-  //     }
-  //   }
-
-  //   run();
-
-  // }, [])
-
-
-
 
   if (error) {
     return <ErrorPage />

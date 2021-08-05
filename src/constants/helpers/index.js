@@ -43,3 +43,46 @@ export const shortenText = (str, max) => {
     return str;
 
 }
+
+
+export const schemaDataHiddenInputs = (list) => {
+    return list.map(data => <input type="hidden" itemprop={data.itemprop} content={data.content} />)
+}
+
+
+export const priceRangeToDollars = (arg = 'cheap') => {
+    const value = arg.toLowerCase();
+    let priceRange = '$';
+    switch (value) {
+        case 'cheap':
+            priceRange = '$';
+            break;
+        case 'moderate':
+            priceRange = '$$';
+            break;
+        case 'expensive':
+            priceRange = "$$$";
+            break;
+        case 'luxury':
+            priceRange = "$$$$";
+            break;
+    }
+
+    return priceRange;
+}
+
+export const openHoursToDateTime = (givenOpenHours) => {
+    const openHours = { ...givenOpenHours };
+    const openHoursStr = [];
+    const week = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    for (const num in openHours) {
+        if (!openHours[num]) delete openHours[num]
+    }
+
+    for (const num in openHours) {
+        openHoursStr.push(`${week[num]} ${openHours[num][0]}-${openHours[num][1]}`)
+    }
+
+
+    return openHoursStr.join(',');
+}
