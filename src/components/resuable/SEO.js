@@ -40,7 +40,7 @@ const SEO = ({ title, description }) => {
             <link rel="shortcut icon" href="/favicon.ico" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-            <title> {title} | Africa Kine Restaurant - Harlem - New York, NY</title>
+            <title> {title} | Africa Kine Restaurant - Harlem - New York, NY 10300 - African</title>
             <meta name="description" content={desc} />
             <meta property="og:title" content="Africa Kine Restaurant - Harlem - New York" />
             <meta property="og:description" content={desc} />
