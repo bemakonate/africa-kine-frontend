@@ -42,7 +42,7 @@ const SEO = ({ title, description }) => {
 
             <title> {title} | Africa Kine Restaurant - Harlem - New York, NY 10300 - African</title>
             <meta name="description" content={desc} />
-            <meta property="og:title" content="Africa Kine Restaurant - Harlem - New York" />
+            <meta property="og:title" content="Africa Kine Restaurant - Harlem - New York 10300 - African" />
             <meta property="og:description" content={desc} />
             <meta property="og:url" content="https://www.africakinerestaurant.com/" />
             <meta property="og:type" content="website" />
