@@ -3,30 +3,19 @@ import Layout from '../components/layout';
 import axios from '../constants/instances/backend';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
-import LoadingBackdrop from '../components/resuable/loadingBackdrop';
+import * as gtag from '../../lib/gtag';
 
 const Ordering = ({ orderingPage, error }) => {
-    // let OrderingPageJSX = <LoadingBackdrop />;
-
-    // const [orderingPage, setOrderingPage] = useState(null);
-    // const [loadingError, setLoadingError] = useState(false);
-
-    // useEffect(() => {
-    //     const run = async () => {
-    //         try {
-    //             const res = await axios.get('/ordering-page');
-    //             const orderingPage = res.data;
-
-    //             setOrderingPage(orderingPage);
-    //             setLoadingError(false);
-    //         } catch (error) {
-    //             setLoadingError(true);
-    //         }
-    //     }
-    //     run();
-    // }, [])
-
     let OrderingPageJSX = null;
+
+    const orderLinkClicked = (link) => {
+        gtag.event({
+            action: "order_link_clicked",
+            category: "ecommerce",
+            label: "Ordering Link",
+            value: link
+        })
+    }
 
     if (error) {
         return <ErrorPage />
@@ -44,7 +33,7 @@ const Ordering = ({ orderingPage, error }) => {
                     <div className="platform-links">
                         {orderingPage.orderingPlatforms.length > 0 && orderingPage.orderingPlatforms.map((orderingPlatform, index) => {
                             return orderingPlatform.name &&
-                                <a key={`platform-${index}`} className="platform-link" href={orderingPlatform.link} target="_blank">
+                                <a onClick={() => orderLinkClicked(orderingPlatform.link)} key={`platform-${index}`} className="platform-link" href={orderingPlatform.link} target="_blank">
                                     {orderingPlatform.name}
                                 </a>
                         })}
