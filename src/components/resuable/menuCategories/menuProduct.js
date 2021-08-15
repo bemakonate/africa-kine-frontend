@@ -2,40 +2,25 @@ import React from 'react';
 import * as asyncActions from '../../../store/asyncActions'
 import { connect } from 'react-redux';
 import classes from '../../../styles/modules/menuProducts.module.scss';
-import { shortenText, schemaDataHiddenInputs } from '../../../constants/helpers';
+import { shortenText } from '../../../constants/helpers';
 import Image from '../../../components/resuable/image';
 
 const MenuProduct = ({ product, openProductModal }) => {
     const menuProductClasses = [classes.product];
-
-    const productScope = { itemscope: 'null', itemprop: 'hasMenuItem', itemtype: "https://schema.org/MenuItem" }
-    const productSchemaData = [
-        { itemprop: 'name', content: product.name },
-        { itemprop: 'description', content: product.description },
-        { itemprop: 'image', content: product.image ? product.image.url : null }
-    ];
-    const offerScope = { itemprop: 'offers', itemScope: 'null', itemType: "https://schema.org/Offer" }
-    const offerSchemaData = [{ itemprop: 'priceCurrency', content: 'USD' }, { itemprop: 'price', content: product.price.toFixed(2) }]
-
-
 
     if (!product.image) {
         menuProductClasses.push(classes.noImgProduct);
     }
 
     return (
-        <div key={product.id} className={menuProductClasses.join(' ')} {...productScope}
+        <div key={product.id} className={menuProductClasses.join(' ')}
             onClick={() => openProductModal({ props: { productId: product.id } })}>
-            {schemaDataHiddenInputs(productSchemaData)}
             <div className={classes.productText}>
                 <p className={classes.productTitle}>{shortenText(product.name, 20)}</p>
                 <p className={classes.productDescription}>{shortenText(product.description, 100)}</p>
             </div>
 
-            {product.price > 0 && <p className={classes.productPrice} {...offerScope}>
-                <span>${product.price}</span>
-                {schemaDataHiddenInputs(offerSchemaData)}
-            </p>}
+            {product.price > 0 && <p className={classes.productPrice}> <span>${product.price}</span> </p>}
 
             {product.image && <div className={classes.productImgContainer}>
                 <div className={classes.productImgOverlay}></div>

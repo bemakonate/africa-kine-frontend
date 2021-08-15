@@ -26,7 +26,7 @@ const Ordering = ({ orderingPage, error }) => {
             <div className="ordering-page">
                 <div className="global__container">
                     <header className="page-header">
-                        <h1 className="page-title">Ordering</h1>
+                        <h1 className="page-title">Order Online from <br />Our Delivery Platforms!</h1>
                         <p className="page-tagline">Use our ordering platforms to order our products</p>
                     </header>
 
@@ -44,7 +44,7 @@ const Ordering = ({ orderingPage, error }) => {
     }
     return (
         <Layout>
-            <SEO title="Ordering" />
+            <SEO title="Order Online and Delivery" desc="Africa Kine has a flexible option of ordering platforms you can order from. If you want to order online online you can call us. And we have the option of delivery" />
             {OrderingPageJSX}
         </Layout>
 

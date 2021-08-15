@@ -4,34 +4,26 @@ import MenuCategories from '../components/resuable/menuCategories';
 import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import axios from '../constants/instances/backend';
-import { schemaDataHiddenInputs, openHoursToDateTime, priceRangeToDollars } from '../constants/helpers';
+import { getRestaurantStructuredData, getMenuSections } from '../constants/helpers';
 // import { MENU_QUERY } from '../graphql/queries';
 // import { client } from '../graphql/apolloClient';
 
 
 const MenuPage = ({ categories, businessInfo, businessHours, error }) => {
-
-
     let MenuPageJSX = null;
-    const openHours = JSON.parse(businessHours.open);
-    const openHoursDateTime = openHoursToDateTime(openHours)
+
+    const restaurantStructuredData = getRestaurantStructuredData({ businessInfo, businessHours });
+    const menuStructuredData = {
+        "@type": "Menu",
+        "inLanguage": "English",
+        "hasMenuSection": getMenuSections(categories),
+    }
 
 
-    const restaurantScope = { itemScope: 'null', itemType: "https://schema.org/Restaurant" }
-    const restaurantSchemaData = [
-        { itemprop: 'image', content: businessInfo.companyImage ? businessInfo.companyImage.url : 'null' },
-        { itemprop: 'name', content: businessInfo.companyName },
-        { itemprop: 'address', content: businessInfo.location },
-        { itemprop: 'telephone', content: businessInfo.phone },
-        { itemprop: 'menu', content: `${process.env.SITE_URL}/menu` },
-        { itemprop: 'servesCuisine', content: businessInfo.servesCuisine },
-        { itemprop: 'url', content: process.env.SITE_URL },
-        { itemprop: 'openingHours', content: openHoursDateTime },
-        { itemprop: 'priceRange', content: priceRangeToDollars(businessInfo.priceRange) }
-    ]
-
-    const menuScope = { itemScope: 'null', itemprop: 'hasMenu', itemType: 'https://schema.org/Menu' }
-    const menuSchemaData = [{ itemprop: 'inLanguage', content: 'English' }]
+    const newRestaurantStructuredData = {
+        ...restaurantStructuredData,
+        "hasMenu": { ...menuStructuredData }
+    }
 
 
     if (error) {
@@ -53,7 +45,7 @@ const MenuPage = ({ categories, businessInfo, businessHours, error }) => {
                     </div>
                 </nav>
                 <div className="menu-container">
-                    <h1 className="menu-page-title">Menu</h1>
+                    <h1 className="menu-page-title">Our <br /> West African /<br /> Sengalese Menu</h1>
                     <MenuCategories categories={categories} />
                 </div>
             </React.Fragment>
@@ -65,15 +57,9 @@ const MenuPage = ({ categories, businessInfo, businessHours, error }) => {
 
     return (
         <Layout>
-            <SEO title="Menu" />
-            <div {...restaurantScope}>
-                {schemaDataHiddenInputs(restaurantSchemaData)}
-
-                <div {...menuScope}>
-                    {schemaDataHiddenInputs(menuSchemaData)}
-                    {MenuPageJSX}
-                </div>
-
+            <SEO title="Menu - view all of our west african dishes" desc="Africa Kine menu offers a wide variety of sengalese and west african food for you to select from. Our interactive website menu allows you to see the price and description of each food" jsonLD={newRestaurantStructuredData} />
+            <div>
+                {MenuPageJSX}
             </div>
 
         </Layout>

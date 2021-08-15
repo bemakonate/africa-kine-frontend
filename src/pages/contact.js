@@ -23,12 +23,12 @@ const Contact = ({ contactPage, businessInfo, error }) => {
 
     return (
         <Layout>
-            <SEO title="Contact" />
+            <SEO title="Contact us and call our phone number" desc="Would you like to contact us? View and call Africa Kine phone number from our contact page, or send us an email for possible registrations and other events" />
             <div className="page-contact">
 
                 <div className="global__container">
                     <header className="page-contact__header">
-                        <h1 className="page-contact__title">Contact</h1>
+                        <h1 className="page-contact__title">Contact &amp; <br /> Phone Number</h1>
                         <p className="page-contact__tagline">Reach out and we will do our best to respond <AiOutlineSmile className="page-contact__tagline-icon" /></p>
                     </header>
 

@@ -45,9 +45,6 @@ export const shortenText = (str, max) => {
 }
 
 
-export const schemaDataHiddenInputs = (list) => {
-    return list.map(data => <input type="hidden" itemprop={data.itemprop} content={data.content} />)
-}
 
 
 export const priceRangeToDollars = (arg = 'cheap') => {
@@ -71,18 +68,91 @@ export const priceRangeToDollars = (arg = 'cheap') => {
     return priceRange;
 }
 
-export const openHoursToDateTime = (givenOpenHours) => {
-    const openHours = { ...givenOpenHours };
-    const openHoursStr = [];
-    const week = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+
+export const getOpeningHoursSpecification = (businessHours) => {
+    const openingHoursSpecification = [];
+
+    const openHours = JSON.parse(businessHours.open);
+    const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     for (const num in openHours) {
         if (!openHours[num]) delete openHours[num]
     }
 
     for (const num in openHours) {
-        openHoursStr.push(`${week[num]} ${openHours[num][0]}-${openHours[num][1]}`)
+        openingHoursSpecification.push({
+            "@type": "OpeningHoursSpecification",
+            "closes": openHours[num][1],
+            "dayOfWeek": week[num],
+            "opens": openHours[num][0],
+        })
     }
 
+    return openingHoursSpecification;
 
-    return openHoursStr.join(',');
+}
+
+export const getMenuItems = (products) => {
+
+    const menuItems = products.map(product => {
+        return {
+            "@type": "MenuItem",
+            "name": product.name,
+            "description": product.description,
+            "image": product.image ? product.image.url : null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "USD",
+                "price": product.price ? product.price.toFixed(2) : null,
+            }
+        }
+    })
+
+    return menuItems;
+}
+
+
+export const getRestaurantStructuredData = ({ businessInfo, businessHours, siteURL = process.env.SITE_URL }) => {
+    const structuredData = {
+        "@context": "http://schema.org",
+        "@type": "Restaurant",
+        "@id": siteURL,
+        "name": businessInfo.companyName,
+        "image": businessInfo.companyImage ? businessInfo.companyImage.url : 'null',
+        "acceptsReservations": `${siteURL}/contact`,
+        "menu": `${siteURL}/menu`,
+        "servesCuisine": businessInfo.servesCuisine,
+        "telephone": businessInfo.phone,
+        "priceRange": priceRangeToDollars(businessInfo.priceRange),
+        "url": siteURL,
+        "paymentAccepted": "Cash, Credit Card",
+        "currenciesAccepted": "USD",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "2267 7th Ave",
+            "addressLocality": "New York",
+            "addressRegion": "NY",
+            "addressCountry": "US",
+            "postalCode": "10030"
+        },
+        "openingHoursSpecification": getOpeningHoursSpecification(businessHours),
+        "potentialAction": {
+            "@type": "OrderAction",
+            "target": [`${siteURL}/order`],
+            "deliveryMethod": [`${siteURL}/order`],
+        }
+    }
+
+    return structuredData;
+}
+
+export const getMenuSections = (categories) => {
+    return categories.map(category => {
+        return {
+            "@type": "MenuSection",
+            "name": category.title,
+            "description": category.tagline,
+            "hasMenuItem": getMenuItems(category.products),
+        }
+    })
 }
