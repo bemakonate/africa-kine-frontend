@@ -56,7 +56,7 @@
     
     .section__intro{
       background: #f7f7f7;
-      color: black;
+      color: rgb(73, 73, 73);
     }
 
     .popular-menu__title{
@@ -185,7 +185,7 @@
 
     .section__contact,
     .section__order{
-      padding:15vh 0 15vh 10vw;
+      padding:15vh 5vw 15vh 5vw;
     }
   
   }
@@ -200,6 +200,10 @@
     }
 
   
+    .section__contact,
+    .section__order{
+      padding:15vh 5vw 15vh 8vw;
+    }
   }
 
  

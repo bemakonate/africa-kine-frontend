@@ -14,7 +14,7 @@ const SEO = ({ title, desc, jsonLD }) => {
             <link rel="shortcut icon" href="/favicon.ico" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-            <title> {title} | Africa Kine Restaurant </title>
+            <title> Africa Kine Restaurant &#124; {title} </title>
             <meta name="description" content={desc} />
             <meta property="og:title" content={`${title} | Africa Kine Restaurant`} />
             <meta property="og:description" content={desc} />

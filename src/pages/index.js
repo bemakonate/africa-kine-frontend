@@ -24,24 +24,24 @@ const Home = ({ businessInfo, error, homePage, businessHours }) => {
     HomePageJSX = (
       <React.Fragment>
         <SEO
-          title="The best sengalese food in Harlem, New York City"
+          title="Menu | Order | West African | Harlem"
           jsonLD={restaurantStructuredData}
-          desc="The Africa Kine restaurant is the place where you will find the best sengalese and west african food in Harlem, New York. Make sure to visit the Africa Kine website for more information." />
+          desc="View Africa Kine Restaurant menu, Order Online and Pick up, Call Africa Kine Phone Number, and Best Senegalese in Harlem" />
         <div className="page-home" >
           <header className="jumbotron">
             {homePage.jumbotronBackground && <div className="jumbotron-bg">
-              <Image className="jumbotron-bg-img mobile-img" src={homePage.jumbotronBackground.formats.small.url} alt="Business jumbtron image" layout="fill" />
-              <Image className="jumbotron-bg-img desktop-img" src={homePage.jumbotronBackground.formats.large.url} alt="Business jumbtron image" layout="fill" />
+              <Image className="jumbotron-bg-img mobile-img" src={homePage.jumbotronBackground.formats.small.url} alt="Africa Kine Restaurant" layout="fill" />
+              <Image className="jumbotron-bg-img desktop-img" src={homePage.jumbotronBackground.formats.large.url} alt="Africa Kine Restaurant" layout="fill" />
               <div className="jumbotron-bg-img-overlay"></div>
             </div>}
 
 
             <div className="jumbotron-content global__container">
-              <h1 className="jumbotron-title">The Best <br /> Sengalese <br /> Food in Harlem </h1>
+              <h1 className="jumbotron-title">Africa Kine <br />Restaurant</h1>
               <div className="jumbotron__btns">
-                <Link href="/menu"><button className="jumbotron__btn">Menu</button></Link>
-                <Link href="/ordering"><button className="jumbotron__btn">Order</button></Link>
-                <Link href="/contact"><button className="jumbotron__btn">Contact Us</button></Link>
+                <Link href="/menu"><button className="jumbotron__btn">Vist Menu</button></Link>
+                <Link href="/ordering"><button className="jumbotron__btn">Order Now</button></Link>
+                <Link href="/contact"><button className="jumbotron__btn">Contact Now</button></Link>
               </div>
             </div>
 
@@ -56,7 +56,7 @@ const Home = ({ businessInfo, error, homePage, businessHours }) => {
 
           {homePage.popularProducts.length > 0 && <section className="section__popular-menu" >
             <div className="global__container">
-              <h2 className="popular-menu__title">Popular Menu</h2>
+              <h2 className="popular-menu__title">Menu</h2>
               <div className="popular-menu__container">
                 {homePage.popularProducts && <MenuProducts products={homePage.popularProducts} />}
               </div>
@@ -67,14 +67,14 @@ const Home = ({ businessInfo, error, homePage, businessHours }) => {
           <div className="contact-order-group global__section-padding">
             <section className="section__contact">
               <h2 className="section__contact-title">Contact Us</h2>
-              <span>Give us a call ?</span>
-              <Link href="/contact" className="contact-link__btn">Contact Us</Link>
+              <span>Don't be afraid to give us a phone call. We have reception ready to answer your phone call. Sometimes we are very business due to high demand so please be patient and wait your turn, we will do our best to recieve your call.</span>
+              <Link href="/contact" className="contact-link__btn">Go to contact</Link>
             </section>
 
             <section className="section__order">
               <h2 className="section__contact-title">Order Online</h2>
-              <span>Use our flexible ordering platforms</span>
-              <Link href="/ordering" className="order-link__btn">Ordering Online</Link>
+              <span>We at Africa Kine give our customer the option to order online and have delivery from a wide variety of platforms that they think is the best fit for them.To order you give a phone call &#40;Contact page&#41; or go our ordering page &#40;link below&#41; </span>
+              <Link href="/ordering" className="order-link__btn">Go order online</Link>
             </section>
           </div>
 
@@ -86,7 +86,7 @@ const Home = ({ businessInfo, error, homePage, businessHours }) => {
                   {homePage.restaurantImage && <Image
                     className="restaurant-image"
                     src={homePage.restaurantImage.formats.medium.url}
-                    alt="Restaurant Image"
+                    alt="Africa Kine Restaurant"
                     layout="fill" />}
                 </div>
                 <BusinessDetails
