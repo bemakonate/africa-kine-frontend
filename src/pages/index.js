@@ -50,7 +50,7 @@ const Home = ({ businessInfo, error, homePage, businessHours }) => {
           <section className="section__intro">
             <div className="global__container">
               <h2>Welcome!!</h2>
-              <p>{homePage.introductionText}</p>
+              <p>Enter into the spirit of the <strong>Africa Kine Restaurant </strong>located in the center of Harlem. Here at Africa Kine in Harlem we can confidently say you will experience some of the best senegalese and west african food New York City has to offer. Publications from the <a className="embedded-link" href="https://www.nytimes.com/2016/02/03/dining/hungry-city-africa-kine-harlem.html" target="__blank">New York Times</a> and <a className="embedded-link" href="https://ny.eater.com/venue/65804/africa-kine-restaurant" target="__blank">Eater NY</a> will support the fact that we are a highly respected restaurant. Other than the fact that we are well respected, we are also well loved by our customers. Thanks to our dedicated staff members who will not only try to deliver your food in an orderly fashion, but build relationships with our costumers. Thus, creating the spirit and vibe of community while our customers bond over delicious food. Order and pick up to experience the vibe or simply use our website to make the experience easier.</p>
             </div>
           </section>
 

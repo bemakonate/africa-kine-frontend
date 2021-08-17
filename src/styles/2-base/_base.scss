@@ -93,6 +93,11 @@ img {
     position: relative;
 }
 
+.embedded-link{
+    color:rgb(19, 92, 19);
+    font-weight:700;
+    font-style: italic;
+}
 
 @include mq('large') {
     body {
