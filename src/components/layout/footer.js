@@ -5,17 +5,17 @@ import { RiFacebookBoxLine, RiInstagramLine, RiTwitterLine } from 'react-icons/r
 import { CgCopyright } from 'react-icons/cg';
 import { FaYelp } from 'react-icons/fa';
 
-const footer = () => {
+const footer = ({ businessInfo }) => {
 
-    const [businessInfo, setBusinessInfo] = useState(null);
+    // const [businessInfo, setBusinessInfo] = useState(null);
 
-    useEffect(() => {
-        const run = async () => {
-            const res = await axios.get(`/business-info`);
-            setBusinessInfo(res.data);
-        }
-        run();
-    }, [])
+    // useEffect(() => {
+    //     const run = async () => {
+    //         const res = await axios.get(`/business-info`);
+    //         setBusinessInfo(res.data);
+    //     }
+    //     run();
+    // }, [])
 
     let footerJSX = null;
 

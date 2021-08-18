@@ -5,7 +5,7 @@ import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import * as gtag from '../../lib/gtag';
 
-const Ordering = ({ orderingPage, error }) => {
+const Ordering = ({ orderingPage, error, businessInfo }) => {
     let OrderingPageJSX = null;
 
     const orderLinkClicked = (link) => {
@@ -43,7 +43,7 @@ const Ordering = ({ orderingPage, error }) => {
         )
     }
     return (
-        <Layout>
+        <Layout businessInfo={businessInfo}>
             <SEO title="Order Online and Delivery" desc="Africa Kine has a flexible option of ordering platforms you can order from. If you want to order online online you can call us. And we have the option of delivery" />
             {OrderingPageJSX}
         </Layout>
@@ -53,11 +53,20 @@ const Ordering = ({ orderingPage, error }) => {
 
 
 
+
 export const getStaticProps = async (ctx) => {
     try {
-        const res = await axios.get('/ordering-page');
-        const orderingPage = res.data;
-        return { props: { orderingPage } };
+
+        const res = await Promise.all([
+            axios.get('/ordering-page'),
+            axios.get(`/business-info`),
+
+        ])
+
+        const orderingPage = res[0].data;
+        const businessInfo = res[1].data;
+
+        return { props: { orderingPage, businessInfo } };
     } catch (error) {
         return { props: { error } };
     }

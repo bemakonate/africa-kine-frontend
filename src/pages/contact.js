@@ -22,7 +22,7 @@ const Contact = ({ contactPage, businessInfo, error }) => {
     }
 
     return (
-        <Layout>
+        <Layout businessInfo={businessInfo}>
             <SEO title="Contact us and call our phone number" desc="Would you like to contact us? View and call Africa Kine phone number from our contact page, or send us an email for possible registrations and other events" />
             <div className="page-contact">
 

@@ -105,7 +105,7 @@ const Home = ({ businessInfo, error, homePage, businessHours }) => {
 
 
   return (
-    <Layout>
+    <Layout businessInfo={businessInfo}>
 
       {HomePageJSX}
     </Layout >

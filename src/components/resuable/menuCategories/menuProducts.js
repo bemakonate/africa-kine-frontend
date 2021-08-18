@@ -5,7 +5,7 @@ import MenuProduct from "./menuProduct";
 const MenuProducts = (props) => {
     return (
         <div className={classes.products}>
-            {props.products.map(product => <MenuProduct product={product} />)}
+            {props.products.map(product => <MenuProduct key={product.id} product={product} />)}
         </div>
     )
 };

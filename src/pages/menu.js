@@ -56,7 +56,7 @@ const MenuPage = ({ categories, businessInfo, businessHours, error }) => {
 
 
     return (
-        <Layout>
+        <Layout businessInfo={businessInfo}>
             <SEO title="Menu - view all of our west african dishes" desc="Africa Kine menu offers a wide variety of sengalese and west african food for you to select from. Our interactive website menu allows you to see the price and description of each food" jsonLD={newRestaurantStructuredData} />
             <div>
                 {MenuPageJSX}

@@ -19,7 +19,7 @@ const Layout = (props) => {
                 {props.children}
                 <div className="footer-margin"></div>
 
-                <Footer />
+                <Footer businessInfo={props.businessInfo} />
             </div>
 
         </div>

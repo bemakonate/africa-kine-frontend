@@ -4,7 +4,7 @@ import Link from '../../resuable/link';
 import { connect } from 'react-redux';
 
 const navbar = (props) => {
-    const companyName = props.businessData ? props.businessData.companyName : 'Company Name';
+    const companyName = 'Africa Kine';
     return (
         <nav className="navbar">
             <Link href="/" className="nav__title">{companyName}</Link>
