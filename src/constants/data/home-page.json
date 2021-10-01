@@ -1,0 +1,248 @@
+{
+    "id": 1,
+    "introductionText": "Enter into the spirit of the Africa Kine Restaurant located in the center of Harlem. Here at Africa Kine in Harlem we can confidently say you will experience some of the best senegalese and west african food New York City has to offer. Publications from the New York Times and Eater NY will support the fact that we are a highly respected restaurant. Other than the fact that we are well respected, we are also well loved by our customers. Thanks to our dedicated staff members who will not only try to deliver your food in an orderly fashion, but build relationships with our costumers. Thus, creating the spirit and vibe of community while our customers bond over delicious food. Order and pick up to experience the vibe or simply use our website to make the experience easier. ",
+    "created_at": "2021-06-23T02:00:36.787Z",
+    "updated_at": "2021-08-17T19:41:52.285Z",
+    "jumbotronBackground": {
+        "id": 3,
+        "name": "jumbotron background.jpeg",
+        "alternativeText": "",
+        "caption": "",
+        "width": 4000,
+        "height": 2665,
+        "formats": {
+            "large": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/large_jumbotron_background_7d9e06634f.jpeg",
+                "hash": "large_jumbotron_background_7d9e06634f",
+                "mime": "image/jpeg",
+                "name": "large_jumbotron background.jpeg",
+                "path": null,
+                "size": 100.91,
+                "width": 1000,
+                "height": 666
+            },
+            "small": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/small_jumbotron_background_7d9e06634f.jpeg",
+                "hash": "small_jumbotron_background_7d9e06634f",
+                "mime": "image/jpeg",
+                "name": "small_jumbotron background.jpeg",
+                "path": null,
+                "size": 28.07,
+                "width": 500,
+                "height": 333
+            },
+            "medium": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/medium_jumbotron_background_7d9e06634f.jpeg",
+                "hash": "medium_jumbotron_background_7d9e06634f",
+                "mime": "image/jpeg",
+                "name": "medium_jumbotron background.jpeg",
+                "path": null,
+                "size": 58.51,
+                "width": 750,
+                "height": 500
+            },
+            "thumbnail": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/thumbnail_jumbotron_background_7d9e06634f.jpeg",
+                "hash": "thumbnail_jumbotron_background_7d9e06634f",
+                "mime": "image/jpeg",
+                "name": "thumbnail_jumbotron background.jpeg",
+                "path": null,
+                "size": 7.58,
+                "width": 234,
+                "height": 156
+            }
+        },
+        "hash": "jumbotron_background_7d9e06634f",
+        "ext": ".jpeg",
+        "mime": "image/jpeg",
+        "size": 1403.45,
+        "url": "https://uploads.africakinerestaurant.com/jumbotron_background_7d9e06634f.jpeg",
+        "previewUrl": null,
+        "provider": "aws-s3-plus-cdn",
+        "provider_metadata": null,
+        "created_at": "2021-06-27T23:30:03.002Z",
+        "updated_at": "2021-06-27T23:30:03.024Z"
+    },
+    "restaurantImage": {
+        "id": 5,
+        "name": "restaurant.jpeg",
+        "alternativeText": "",
+        "caption": "",
+        "width": 1200,
+        "height": 797,
+        "formats": {
+            "large": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/large_restaurant_28b55a5d9f.jpeg",
+                "hash": "large_restaurant_28b55a5d9f",
+                "mime": "image/jpeg",
+                "name": "large_restaurant.jpeg",
+                "path": null,
+                "size": 122.85,
+                "width": 1000,
+                "height": 664
+            },
+            "small": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/small_restaurant_28b55a5d9f.jpeg",
+                "hash": "small_restaurant_28b55a5d9f",
+                "mime": "image/jpeg",
+                "name": "small_restaurant.jpeg",
+                "path": null,
+                "size": 37.83,
+                "width": 500,
+                "height": 332
+            },
+            "medium": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/medium_restaurant_28b55a5d9f.jpeg",
+                "hash": "medium_restaurant_28b55a5d9f",
+                "mime": "image/jpeg",
+                "name": "medium_restaurant.jpeg",
+                "path": null,
+                "size": 75.58,
+                "width": 750,
+                "height": 498
+            },
+            "thumbnail": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/thumbnail_restaurant_28b55a5d9f.jpeg",
+                "hash": "thumbnail_restaurant_28b55a5d9f",
+                "mime": "image/jpeg",
+                "name": "thumbnail_restaurant.jpeg",
+                "path": null,
+                "size": 10.55,
+                "width": 235,
+                "height": 156
+            }
+        },
+        "hash": "restaurant_28b55a5d9f",
+        "ext": ".jpeg",
+        "mime": "image/jpeg",
+        "size": 166.03,
+        "url": "https://uploads.africakinerestaurant.com/restaurant_28b55a5d9f.jpeg",
+        "previewUrl": null,
+        "provider": "aws-s3-plus-cdn",
+        "provider_metadata": null,
+        "created_at": "2021-06-28T01:56:20.449Z",
+        "updated_at": "2021-06-28T01:56:20.465Z"
+    },
+    "popularProducts": [
+        {
+            "id": 15,
+            "name": "Dibi",
+            "price": 16,
+            "sideProductsPerQuantity": 0,
+            "description": "Grilled lamb served with salad, tomatoes, eggs, and seasoned onions. Served with choice of Appetizers ",
+            "created_at": "2021-06-24T03:18:31.583Z",
+            "updated_at": "2021-06-30T06:44:02.261Z",
+            "image": {
+                "id": 25,
+                "name": "dibi.jpeg",
+                "alternativeText": "",
+                "caption": "",
+                "width": 660,
+                "height": 440,
+                "formats": {
+                    "small": {
+                        "ext": ".jpeg",
+                        "url": "https://uploads.africakinerestaurant.com/small_dibi_9ca909b3ee.jpeg",
+                        "hash": "small_dibi_9ca909b3ee",
+                        "mime": "image/jpeg",
+                        "name": "small_dibi.jpeg",
+                        "path": null,
+                        "size": 39.74,
+                        "width": 500,
+                        "height": 333
+                    },
+                    "thumbnail": {
+                        "ext": ".jpeg",
+                        "url": "https://uploads.africakinerestaurant.com/thumbnail_dibi_9ca909b3ee.jpeg",
+                        "hash": "thumbnail_dibi_9ca909b3ee",
+                        "mime": "image/jpeg",
+                        "name": "thumbnail_dibi.jpeg",
+                        "path": null,
+                        "size": 11.31,
+                        "width": 234,
+                        "height": 156
+                    }
+                },
+                "hash": "dibi_9ca909b3ee",
+                "ext": ".jpeg",
+                "mime": "image/jpeg",
+                "size": 50.89,
+                "url": "https://uploads.africakinerestaurant.com/dibi_9ca909b3ee.jpeg",
+                "previewUrl": null,
+                "provider": "aws-s3-plus-cdn",
+                "provider_metadata": null,
+                "created_at": "2021-06-30T06:43:33.937Z",
+                "updated_at": "2021-06-30T06:43:34.032Z"
+            }
+        },
+        {
+            "id": 16,
+            "name": "Dibi Guinaar (Dibi Chicken)",
+            "price": 0,
+            "sideProductsPerQuantity": 0,
+            "description": "Chopped grilled chicken served with salad, tomato, eggs, and seasoned onions.",
+            "created_at": "2021-06-24T03:19:06.662Z",
+            "updated_at": "2021-06-30T06:44:15.525Z",
+            "image": {
+                "id": 24,
+                "name": "Dibi Guinaar.jpeg",
+                "alternativeText": "",
+                "caption": "",
+                "width": 660,
+                "height": 440,
+                "formats": {
+                    "small": {
+                        "ext": ".jpeg",
+                        "url": "https://uploads.africakinerestaurant.com/small_Dibi_Guinaar_79e419b395.jpeg",
+                        "hash": "small_Dibi_Guinaar_79e419b395",
+                        "mime": "image/jpeg",
+                        "name": "small_Dibi Guinaar.jpeg",
+                        "path": null,
+                        "size": 40.25,
+                        "width": 500,
+                        "height": 333
+                    },
+                    "thumbnail": {
+                        "ext": ".jpeg",
+                        "url": "https://uploads.africakinerestaurant.com/thumbnail_Dibi_Guinaar_79e419b395.jpeg",
+                        "hash": "thumbnail_Dibi_Guinaar_79e419b395",
+                        "mime": "image/jpeg",
+                        "name": "thumbnail_Dibi Guinaar.jpeg",
+                        "path": null,
+                        "size": 11.72,
+                        "width": 234,
+                        "height": 156
+                    }
+                },
+                "hash": "Dibi_Guinaar_79e419b395",
+                "ext": ".jpeg",
+                "mime": "image/jpeg",
+                "size": 50.97,
+                "url": "https://uploads.africakinerestaurant.com/Dibi_Guinaar_79e419b395.jpeg",
+                "previewUrl": null,
+                "provider": "aws-s3-plus-cdn",
+                "provider_metadata": null,
+                "created_at": "2021-06-30T06:43:33.932Z",
+                "updated_at": "2021-06-30T06:43:34.032Z"
+            }
+        },
+        {
+            "id": 42,
+            "name": "Espresso ",
+            "price": 0,
+            "sideProductsPerQuantity": 0,
+            "description": "A blend of fine Arabica and Robusta beans finely grounded and brewed to produce a Neapolitan style shot of coffee ",
+            "created_at": "2021-06-25T01:55:14.498Z",
+            "updated_at": "2021-06-25T01:55:18.920Z",
+            "image": null
+        }
+    ]
+}

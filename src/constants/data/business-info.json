@@ -1,0 +1,80 @@
+{
+    "id": 1,
+    "companyName": "Africa Kine",
+    "phone": "12126669400",
+    "email": "africaresto94@gmail.com",
+    "location": "2267 Adam Clayton Powell Jr Blvd, New York, NY 10027",
+    "phone2": "12126669500",
+    "facebookURL": "https://www.facebook.com/pages/category/Senegalese-Restaurant/Africakin%C3%A9-Restaurent-711376298902571/https://www.facebook.com/pages/category/Senegalese-Restaurant/Africakin%C3%A9-Restaurent-711376298902571/",
+    "instagramURL": "https://www.instagram.com/explore/locations/228825089/africakine-restaurent/?hl=en",
+    "yelpURL": "https://www.yelp.com/biz/africa-kine-restaurant-new-york-2",
+    "created_at": "2021-06-23T02:00:01.144Z",
+    "updated_at": "2021-08-05T23:17:09.047Z",
+    "twitterURL": "https://twitter.com/africakine?lang=en",
+    "servesCuisine": "African",
+    "priceRange": "Moderate",
+    "companyImage": {
+        "id": 5,
+        "name": "restaurant.jpeg",
+        "alternativeText": "",
+        "caption": "",
+        "width": 1200,
+        "height": 797,
+        "formats": {
+            "large": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/large_restaurant_28b55a5d9f.jpeg",
+                "hash": "large_restaurant_28b55a5d9f",
+                "mime": "image/jpeg",
+                "name": "large_restaurant.jpeg",
+                "path": null,
+                "size": 122.85,
+                "width": 1000,
+                "height": 664
+            },
+            "small": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/small_restaurant_28b55a5d9f.jpeg",
+                "hash": "small_restaurant_28b55a5d9f",
+                "mime": "image/jpeg",
+                "name": "small_restaurant.jpeg",
+                "path": null,
+                "size": 37.83,
+                "width": 500,
+                "height": 332
+            },
+            "medium": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/medium_restaurant_28b55a5d9f.jpeg",
+                "hash": "medium_restaurant_28b55a5d9f",
+                "mime": "image/jpeg",
+                "name": "medium_restaurant.jpeg",
+                "path": null,
+                "size": 75.58,
+                "width": 750,
+                "height": 498
+            },
+            "thumbnail": {
+                "ext": ".jpeg",
+                "url": "https://uploads.africakinerestaurant.com/thumbnail_restaurant_28b55a5d9f.jpeg",
+                "hash": "thumbnail_restaurant_28b55a5d9f",
+                "mime": "image/jpeg",
+                "name": "thumbnail_restaurant.jpeg",
+                "path": null,
+                "size": 10.55,
+                "width": 235,
+                "height": 156
+            }
+        },
+        "hash": "restaurant_28b55a5d9f",
+        "ext": ".jpeg",
+        "mime": "image/jpeg",
+        "size": 166.03,
+        "url": "https://uploads.africakinerestaurant.com/restaurant_28b55a5d9f.jpeg",
+        "previewUrl": null,
+        "provider": "aws-s3-plus-cdn",
+        "provider_metadata": null,
+        "created_at": "2021-06-28T01:56:20.449Z",
+        "updated_at": "2021-06-28T01:56:20.465Z"
+    }
+}

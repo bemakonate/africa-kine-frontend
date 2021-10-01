@@ -5,7 +5,10 @@ import SEO from '../components/resuable/SEO';
 import ErrorPage from '../pages/_error';
 import * as gtag from '../../lib/gtag';
 
-const Ordering = ({ orderingPage, error, businessInfo }) => {
+import orderingPage from '../constants/data/ordering-page.json';
+import businessInfo from '../constants/data/business-info.json';
+
+const Ordering = ({ error }) => {
     let OrderingPageJSX = null;
 
     const orderLinkClicked = (link) => {
@@ -54,23 +57,23 @@ const Ordering = ({ orderingPage, error, businessInfo }) => {
 
 
 
-export const getStaticProps = async (ctx) => {
-    try {
+// export const getStaticProps = async (ctx) => {
+//     try {
 
-        const res = await Promise.all([
-            axios.get('/ordering-page'),
-            axios.get(`/business-info`),
+//         const res = await Promise.all([
+//             axios.get('/ordering-page'),
+//             axios.get(`/business-info`),
 
-        ])
+//         ])
 
-        const orderingPage = res[0].data;
-        const businessInfo = res[1].data;
+//         const orderingPage = res[0].data;
+//         const businessInfo = res[1].data;
 
-        return { props: { orderingPage, businessInfo } };
-    } catch (error) {
-        return { props: { error } };
-    }
+//         return { props: { orderingPage, businessInfo } };
+//     } catch (error) {
+//         return { props: { error } };
+//     }
 
-}
+// }
 
 export default Ordering

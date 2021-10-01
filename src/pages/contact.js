@@ -9,7 +9,10 @@ import ErrorPage from '../pages/_error';
 import LoadingBackdrop from '../components/resuable/loadingBackdrop';
 
 
-const Contact = ({ contactPage, businessInfo, error }) => {
+import contactPage from '../constants/data/contact-page.json'
+import businessInfo from '../constants/data/business-info.json'
+
+const Contact = ({ error }) => {
     if (error) {
         return <ErrorPage />
     }
@@ -62,21 +65,21 @@ const Contact = ({ contactPage, businessInfo, error }) => {
     )
 }
 
-export const getStaticProps = async (ctx) => {
-    try {
+// export const getStaticProps = async (ctx) => {
+//     try {
 
-        const res = await Promise.all([
-            axios.get(`/contact-page`),
-            axios.get(`/business-info`),
-        ]);
+//         const res = await Promise.all([
+//             axios.get(`/contact-page`),
+//             axios.get(`/business-info`),
+//         ]);
 
-        const contactPage = res[0].data;
-        const businessInfo = res[1].data;
-        return { props: { contactPage, businessInfo } };
-    } catch (error) {
-        return { props: { error } };
-    }
+//         const contactPage = res[0].data;
+//         const businessInfo = res[1].data;
+//         return { props: { contactPage, businessInfo } };
+//     } catch (error) {
+//         return { props: { error } };
+//     }
 
-}
+// }
 
 export default Contact;

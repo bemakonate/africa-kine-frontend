@@ -10,7 +10,13 @@ import Image from '../components/resuable/image';
 import { getRestaurantStructuredData } from '../constants/helpers';
 
 
-const Home = ({ businessInfo, error, homePage, businessHours }) => {
+
+import homePage from '../constants/data/home-page.json'
+import businessInfo from '../constants/data/business-info.json'
+import businessHours from '../constants/data/business-hours.json'
+
+
+const Home = ({ error }) => {
   let HomePageJSX = null;
 
   if (error) {
@@ -67,7 +73,7 @@ const Home = ({ businessInfo, error, homePage, businessHours }) => {
           <div className="contact-order-group global__section-padding">
             <section className="section__contact">
               <h2 className="section__contact-title">Contact Us</h2>
-              <span>Don't be afraid to give us a phone call. We have reception ready to answer your phone call. Sometimes we are very business due to high demand so please be patient and wait your turn, we will do our best to recieve your call.</span>
+              <span>Don't be afraid to give us a phone call. We have reception ready to answer your phone call. Sometimes we are very business due to high demand so please be patient and wait your turn, we will do our best to return your call.</span>
               <Link href="/contact" className="contact-link__btn">Go to contact</Link>
             </section>
 
@@ -113,23 +119,27 @@ const Home = ({ businessInfo, error, homePage, businessHours }) => {
 }
 
 
-export const getStaticProps = async (ctx) => {
-  try {
+// export const getStaticProps = async (ctx) => {
+//   try {
 
-    const res = await Promise.all([
-      axios.get(`/home-page`),
-      axios.get(`/business-info`),
-      axios.get('/restaurant-settings/business'),
-    ]);
+//     // const res = await Promise.all([
+//     //   axios.get(`/home-page`),
+//     //   axios.get(`/business-info`),
+//     //   axios.get('/restaurant-settings/business'),
+//     // ]);
 
-    const homePage = res[0].data;
-    const businessInfo = res[1].data;
-    const businessHours = res[2].data.business.hours;
-    return { props: { homePage, businessInfo, businessHours } };
-  } catch (error) {
-    return { props: { error } };
-  }
 
-}
+
+
+
+//     // const homePage = res[0].data;
+//     // const businessInfo = res[1].data;
+//     // const businessHours = res[2].data.business.hours;
+//     return { props: { homePage, businessInfo, businessHours } };
+//   } catch (error) {
+//     return { props: { error } };
+//   }
+
+// }
 
 export default Home;

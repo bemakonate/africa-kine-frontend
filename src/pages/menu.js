@@ -9,7 +9,12 @@ import { getRestaurantStructuredData, getMenuSections } from '../constants/helpe
 // import { client } from '../graphql/apolloClient';
 
 
-const MenuPage = ({ categories, businessInfo, businessHours, error }) => {
+import categories from '../constants/data/categories.json';
+import businessInfo from '../constants/data/business-info.json';
+import businessHours from '../constants/data/business-hours.json';
+
+
+const MenuPage = ({ error }) => {
     let MenuPageJSX = null;
 
     const restaurantStructuredData = getRestaurantStructuredData({ businessInfo, businessHours });
@@ -68,29 +73,29 @@ const MenuPage = ({ categories, businessInfo, businessHours, error }) => {
 }
 
 
-export const getStaticProps = async (ctx) => {
-    try {
-        // const res = await axios.get('/restaurant-settings/categories');
-        // const categories = res.data;
-        // const { data } = await client.query({ query: MENU_QUERY })
+// export const getStaticProps = async (ctx) => {
+//     try {
+//         // const res = await axios.get('/restaurant-settings/categories');
+//         // const categories = res.data;
+//         // const { data } = await client.query({ query: MENU_QUERY })
 
 
-        const res = await Promise.all([
-            axios.get('/restaurant-settings/categories'),
-            axios.get(`/business-info`),
-            axios.get('/restaurant-settings/business'),
-        ])
+//         const res = await Promise.all([
+//             axios.get('/restaurant-settings/categories'),
+//             axios.get(`/business-info`),
+//             axios.get('/restaurant-settings/business'),
+//         ])
 
-        const categories = res[0].data;
-        const businessInfo = res[1].data;
-        const businessHours = res[2].data.business.hours;
+//         const categories = res[0].data;
+//         const businessInfo = res[1].data;
+//         const businessHours = res[2].data.business.hours;
 
-        return { props: { categories, businessInfo, businessHours } };
-    } catch (error) {
-        return { props: { error } };
-    }
+//         return { props: { categories, businessInfo, businessHours } };
+//     } catch (error) {
+//         return { props: { error } };
+//     }
 
-};
+// };
 
 
 export default MenuPage;

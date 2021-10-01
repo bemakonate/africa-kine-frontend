@@ -8,7 +8,7 @@ import Image from '../../../components/resuable/image';
 const MenuProduct = ({ product, openProductModal }) => {
     const menuProductClasses = [classes.product];
 
-    if (!product.image) {
+    if (true) {
         menuProductClasses.push(classes.noImgProduct);
     }
 
@@ -22,7 +22,7 @@ const MenuProduct = ({ product, openProductModal }) => {
 
             {product.price > 0 && <p className={classes.productPrice}> <span>${product.price}</span> </p>}
 
-            {product.image && <div className={classes.productImgContainer}>
+            {false && <div className={classes.productImgContainer}>
                 <div className={classes.productImgOverlay}></div>
                 <Image className={classes.productImg} src={product.image.formats.thumbnail.url} alt={product.name} layout="fill" />
             </div>}
